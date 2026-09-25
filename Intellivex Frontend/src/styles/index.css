@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens (Figma: Intellivex — Home page, 1440 × 4316)
+   Registered with Tailwind v4 @theme so every value is available as a
+   utility (bg-navy, text-accent, font-display, rounded-card, ...).
+------------------------------------------------------------------ */
+@theme {
+  /* Brand palette */
+  --color-navy: #192863;
+  --color-navy-deep: #131f4e;
+  --color-navy-soft: #22336f;
+  --color-accent: #3076ff;
+  --color-accent-deep: #0656f3;
+  --color-accent-soft: #b9cdf2;
+  --color-star: #f5b740;
+
+  /* Typography */
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-lato: "Lato", ui-sans-serif, system-ui, sans-serif;
+  --font-poppins: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  /* Nav items only — the neon pill spec is set in Poppins. */
+  --font-nav: "Poppins", ui-sans-serif, system-ui, sans-serif;
+
+  /* Shape */
+  --radius-card: 12px;
+  --radius-btn: 4px;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-float: float 7s var(--ease-out-soft) infinite;
+  --animate-float-slow: float 11s var(--ease-out-soft) infinite;
+  --animate-drift: drift 9s var(--ease-out-soft) infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -14px, 0);
+    }
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(10px, -10px, 0) rotate(4deg);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-navy);
+    color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* The whole marketing site is set in Outfit; Inter carries body copy. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Reusable primitives — anything repeated in three or more places.
+------------------------------------------------------------------ */
+@layer components {
+  
+  .container-wide {
+    @apply mx-auto w-full max-w-[1360px] px-5 sm:px-8 lg:px-10;
+  }
+
+  /* Every page section sits on a narrower 1060px column (190px gutters). */
+  .container-narrow {
+    @apply mx-auto w-full max-w-[1140px] px-5 sm:px-8 lg:px-10;
+  }
+
+  .section-pad {
+    @apply py-16 md:py-20 lg:py-[104px];
+  }
+
+  .section-pad-inner {
+    @apply py-14 md:py-16 lg:py-[70px];
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent to-accent-soft bg-clip-text text-transparent;
+  }
+
+  .surface-card {
+    @apply rounded-card border border-white/12 bg-white/[0.035];
+  }
+
+  
+  .nav-pill {
+    @apply relative cursor-pointer rounded-[8px] border border-transparent px-5 py-2.5 font-nav text-[16px] font-medium text-white;
+    transition: all 0.3s ease;
+  }
+
+  .nav-pill.is-active {
+    background-image: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+    border-color: rgba(37, 99, 235, 0.6);
+    box-shadow:
+      0 0 10px rgba(37, 99, 235, 0.6),
+      inset 0 0 8px rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-pill:hover {
+    background-image: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+    border-color: rgba(37, 99, 235, 0.6);
+    box-shadow:
+      0 0 16px rgba(59, 130, 246, 0.8),
+      inset 0 0 12px rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .nav-pill:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 2px;
+  }
+
+  .nav-pill:active {
+    background-image: none;
+    background-color: #1d4ed8;
+    box-shadow:
+      0 0 8px rgba(29, 78, 216, 0.6),
+      inset 0 0 6px rgba(255, 255, 255, 0.1);
+    transform: translateY(0) scale(0.98);
+  }
+
+  .eyebrow {
+    @apply font-display text-[13px] font-medium uppercase tracking-[0.14em] text-white/90;
+  }
+  
+  .nav-pill {
+    @apply relative isolate cursor-pointer whitespace-nowrap rounded-lg px-5 py-2.5 font-poppins text-[16px] font-medium text-white;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .nav-pill::before,
+  .nav-pill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 8px;
+    border: 1px solid rgba(37, 99, 235, 0.6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Resting plate — shown on the active item. */
+  .nav-pill::before {
+    background-image: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+    box-shadow:
+      0 0 10px rgba(37, 99, 235, 0.6),
+      inset 0 0 8px rgba(255, 255, 255, 0.1);
+  }
+
+
+  .nav-pill::after {
+    background-image: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+    box-shadow:
+      0 0 10px rgba(37, 99, 235, 0.6),
+      inset 0 0 8px rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-pill[aria-current]::before {
+    opacity: 1;
+  }
+
+  .nav-pill:hover::before {
+    opacity: 0;
+  }
+
+  .nav-pill:hover::after {
+    opacity: 1;
+  }
+
+  .nav-pill:hover {
+    transform: translateY(-2px);
+  }
+
+  .nav-pill:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .nav-pill:active::after {
+    opacity: 1;
+    background-image: linear-gradient(#1d4ed8, #1d4ed8);
+    box-shadow:
+      0 0 8px rgba(29, 78, 216, 0.6),
+      inset 0 0 6px rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-pill:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Deep navy field with the blue bloom that sits behind the hero art. */
+  .bg-hero-glow {
+    background-image:
+      radial-gradient(58% 62% at 74% 46%, rgba(48, 118, 255, 0.55) 0%, rgba(25, 40, 99, 0) 72%),
+      radial-gradient(42% 48% at 96% 32%, rgba(6, 86, 243, 0.42) 0%, rgba(25, 40, 99, 0) 70%);
+  }
+
+  /* Bloom that rises out of the footer behind the logo. */
+  .bg-footer-glow {
+    background-image: radial-gradient(
+      68% 130% at 34% 68%,
+      rgba(48, 118, 255, 0.6) 0%,
+      rgba(25, 40, 99, 0) 62%
+    );
+  }
+
+  /* Bloom behind an inner page's title band — brightest right of centre, with
+     a fainter wash bleeding in from the left. */
+  .bg-page-glow {
+    background-image:
+      radial-gradient(62% 150% at 68% 6%, rgba(48, 118, 255, 0.55) 0%, rgba(25, 40, 99, 0) 68%),
+      radial-gradient(46% 120% at 22% 0%, rgba(6, 86, 243, 0.34) 0%, rgba(25, 40, 99, 0) 70%);
+  }
+
+  /* Tail of the About Us header bloom, spilling into the top-right of the
+     About section. */
+  .bg-about-glow {
+    background-image: radial-gradient(
+      50% 30% at 88% 28%,
+      rgba(48, 118, 255, 0.34) 0%,
+      rgba(25, 40, 99, 0) 76%
+    );
+  }
+
+  /* Bloom pinned to the right edge of the Vision / Mission plates. */
+  .bg-panel-glow {
+    background-image: radial-gradient(
+      24% 92% at 94% 46%,
+      rgba(48, 118, 255, 0.95) 0%,
+      rgba(48, 118, 255, 0.34) 46%,
+      rgba(25, 40, 99, 0) 82%
+    );
+  }
+
+  /* Blue corner light inside the service cards. */
+  .bg-card-glow {
+    background-image: radial-gradient(
+      72% 78% at 88% 4%,
+      rgba(48, 118, 255, 0.55) 0%,
+      rgba(48, 118, 255, 0) 62%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,10 @@
+# Single-page app fallback (Netlify).
+#
+# The site routes on the client: `/` and `/about` are both rendered by
+# src/App.jsx, and only `index.html` is ever built. Without this rule a visitor
+# who opens or refreshes https://<site>/about asks the host for a file that
+# does not exist and gets a 404.
+#
+# 200 (rather than 301) rewrites rather than redirects, so the URL the visitor
+# typed stays in the address bar for the router to read.
+/*    /index.html   200
