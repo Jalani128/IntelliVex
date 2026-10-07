@@ -5,6 +5,7 @@ import PageHeader from '@/components/admin/layout/PageHeader'
 import { useApiQuery } from '@/hooks/useApiQuery'
 import { dashboardApi } from '@/services/admin/dashboard'
 import StatsGrid from './dashboard/StatsGrid'
+import SectionsGrid from './dashboard/SectionsGrid'
 import InquiryTrendChart from './dashboard/InquiryTrendChart'
 import ProjectsByIndustryChart from './dashboard/ProjectsByIndustryChart'
 import RecentInquiries from './dashboard/RecentInquiries'
@@ -22,6 +23,7 @@ export default function Dashboard() {
 
   // Each panel loads independently so one slow/failed endpoint doesn't block the page.
   const stats = useApiQuery(() => dashboardApi.getStats(range), [range])
+  const sections = useApiQuery(() => dashboardApi.getSections())
   const trend = useApiQuery(() => dashboardApi.getInquiryTrend(range), [range])
   const industries = useApiQuery(() => dashboardApi.getProjectsByIndustry())
   const inquiries = useApiQuery(() => dashboardApi.getRecentInquiries(8))
@@ -51,6 +53,8 @@ export default function Dashboard() {
 
       <div className="space-y-4 sm:space-y-6">
         <StatsGrid query={stats} />
+
+        <SectionsGrid query={sections} />
 
         <div className="grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-3">
           <InquiryTrendChart query={trend} range={range} className="xl:col-span-2" />

@@ -11,12 +11,9 @@ const FAQ_SHAPES = [
   { className: "right-[4%] bottom-[22%]", size: 82, drift: 15, duration: 12, delay: 0.7 },
 ];
 
-/**
- * "Frequently Asked Questions" — a numbered accordion. One panel is open at a
- * time and the first opens by default, matching the frame.
- */
-export default function ServiceFaq() {
-  const { title, items } = SERVICE_FAQ;
+
+export default function ServiceFaq({ content = SERVICE_FAQ }) {
+  const { title, items } = content;
   const [openIndex, setOpenIndex] = useState(0);
   const baseId = useId();
 

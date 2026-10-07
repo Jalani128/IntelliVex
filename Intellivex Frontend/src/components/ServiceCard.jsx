@@ -1,4 +1,4 @@
-export default function ServiceCard({ icon, title, description, href = "#" }) {
+export default function ServiceCard({ icon, title, description, tags = [], href = "#" }) {
   return (
     <a
       href={href}
@@ -15,6 +15,17 @@ export default function ServiceCard({ icon, title, description, href = "#" }) {
         {title}
       </h3>
       <p className="mt-3 font-body text-[14px] leading-[1.65] text-white/70">{description}</p>
+
+      {/* Sub-services, in the same pills as the AI & Data Innovation card. */}
+      {tags.length > 0 && (
+        <ul className="mt-6 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <li key={tag} className="rounded-[4px] bg-accent-deep px-3 py-1.5 font-body text-[12px] leading-[1.3] text-white transition-colors duration-300 group-hover:bg-accent">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
     </a>
   );
 }

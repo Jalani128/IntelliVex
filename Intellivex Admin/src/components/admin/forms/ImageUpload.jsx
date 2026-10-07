@@ -2,14 +2,31 @@ import { useEffect, useId, useState } from 'react'
 import { ImagePlus, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const MAX_MB = 5
+/** Common upload rules, matching the Laravel mime / max rules. */
+export const IMAGE_TYPES = {
+  photo: { types: ['image/jpeg', 'image/png', 'image/webp'], label: 'JPG, PNG or WebP' },
+  icon: { types: ['image/png', 'image/svg+xml'], label: 'PNG or SVG' },
+}
 
 /**
  * Image picker with preview. `value` is either a URL string (existing image)
  * or a File (new upload); `onChange` receives the File or null.
  * Upload itself happens when the form is submitted (multipart to Laravel).
+ * `contain` letterboxes the preview instead of cropping it — for logos and icons.
+ * `types` / `typesLabel` / `maxMb` narrow what can be picked (see IMAGE_TYPES).
+ * `previewClassName` replaces the preview background — e.g. the website navy for white icons.
  */
-export default function ImageUpload({ value, onChange, invalid, className }) {
+export default function ImageUpload({
+  value,
+  onChange,
+  invalid,
+  contain = false,
+  types,
+  typesLabel = 'PNG, JPG or WebP',
+  maxMb = 5,
+  className,
+  previewClassName = 'bg-muted',
+}) {
   const inputId = useId()
   const [preview, setPreview] = useState(null)
   const [error, setError] = useState('')
@@ -25,8 +42,8 @@ export default function ImageUpload({ value, onChange, invalid, className }) {
 
   const handleFile = (file) => {
     if (!file) return
-    if (!file.type.startsWith('image/')) return setError('Please choose an image file.')
-    if (file.size > MAX_MB * 1024 * 1024) return setError(`Image must be under ${MAX_MB} MB.`)
+    if (types ? !types.includes(file.type) : !file.type.startsWith('image/')) return setError(`Please choose a ${typesLabel} file.`)
+    if (file.size > maxMb * 1024 * 1024) return setError(`Image must be under ${maxMb} MB.`)
     setError('')
     onChange(file)
   }
@@ -34,8 +51,8 @@ export default function ImageUpload({ value, onChange, invalid, className }) {
   return (
     <div className={className}>
       {preview ? (
-        <div className="relative overflow-hidden rounded-lg border bg-muted">
-          <img src={preview} alt="" className="aspect-video w-full object-cover" />
+        <div className={cn('relative overflow-hidden rounded-lg border', previewClassName)}>
+          <img src={preview} alt="" className={cn('aspect-video w-full', contain ? 'object-contain p-6' : 'object-cover')} />
           <button
             type="button"
             onClick={() => onChange(null)}
@@ -62,10 +79,12 @@ export default function ImageUpload({ value, onChange, invalid, className }) {
             <ImagePlus className="size-5" />
           </span>
           <span className="text-sm font-medium">Click to upload or drag and drop</span>
-          <span className="text-xs text-muted-foreground">PNG, JPG or WebP up to {MAX_MB} MB</span>
+          <span className="text-xs text-muted-foreground">
+            {typesLabel} up to {maxMb} MB
+          </span>
         </label>
       )}
-      <input id={inputId} type="file" accept="image/*" className="sr-only" onChange={(e) => handleFile(e.target.files[0])} />
+      <input id={inputId} type="file" accept={types ? types.join(',') : 'image/*'} className="sr-only" onChange={(e) => handleFile(e.target.files[0])} />
       {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
     </div>
   )

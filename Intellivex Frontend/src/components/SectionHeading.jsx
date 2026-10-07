@@ -6,7 +6,7 @@ import Reveal from "./Reveal";
  * action) shared by Key Differentiators, Our Services, Featured Projects
  * and Real Reviews.
  */
-export default function SectionHeading({ eyebrow, title, highlight, description, action }) {
+export default function SectionHeading({ eyebrow, title, highlight, tail, description, action }) {
   return (
     <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
       <div className="max-w-full">
@@ -17,6 +17,7 @@ export default function SectionHeading({ eyebrow, title, highlight, description,
         <Reveal delay={0.08}>
           <h2 className="mt-3 font-display text-[32px] font-medium leading-[1.15] text-white sm:text-[40px] lg:text-[52px]">
             {title} <span className="text-gradient">{highlight}</span>
+            {tail && ` ${tail}`}
           </h2>
         </Reveal>
 

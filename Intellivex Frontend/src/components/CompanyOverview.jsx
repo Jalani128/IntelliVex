@@ -10,7 +10,8 @@ const OVERVIEW_SHAPES = [
   { className: "left-[3%] bottom-[14%]", size: 82, drift: 14, duration: 10, delay: 0.4 },
 ];
 
-export default function CompanyOverview() {
+/** `content` defaults to the built-in copy; the About page passes GET /api/about-page data. */
+export default function CompanyOverview({ content = OVERVIEW }) {
   return (
     <section
       id="company-overview"
@@ -20,18 +21,19 @@ export default function CompanyOverview() {
 
       <div className="container-narrow relative">
         <Reveal y={20}>
-          <Eyebrow>{OVERVIEW.eyebrow}</Eyebrow>
+          <Eyebrow>{content.eyebrow}</Eyebrow>
         </Reveal>
 
         <Reveal delay={0.1}>
           <h2 className="mt-4 max-w-[860px] font-display text-[32px] font-medium leading-[1.15] text-white sm:text-[40px] lg:text-[52px] lg:leading-[64px]">
-            {OVERVIEW.title} <span className="text-gradient">{OVERVIEW.highlight}</span>
+            {content.title} <span className="text-gradient">{content.highlight}</span>
+            {content.tail && ` ${content.tail}`}
           </h2>
         </Reveal>
 
         <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_306px] lg:gap-x-14">
           <div className="space-y-[26px]">
-            {OVERVIEW.paragraphs.map((text, i) => (
+            {content.paragraphs.map((text, i) => (
               <Reveal key={i} delay={0.2 + i * 0.08}>
                 <p className="font-body text-[15px] leading-[1.62] text-white/80 lg:text-[16px]">
                   {text}
@@ -40,11 +42,11 @@ export default function CompanyOverview() {
             ))}
           </div>
 
-          <TrustedPartnersCard {...OVERVIEW.partners} />
+          <TrustedPartnersCard {...content.partners} />
         </div>
 
         <div className="mt-12 space-y-6">
-          {OVERVIEW.pillars.map((pillar, i) => (
+          {content.pillars.map((pillar, i) => (
             <PillarPanel key={pillar.highlight} {...pillar} delay={i * 0.12} />
           ))}
         </div>

@@ -1,7 +1,12 @@
 import Reveal from "./Reveal";
+import RichContent from "./RichContent";
 
-export default function ClientPortfolioSuccessStory({ data }) {
-  const { successStory } = data;
+/**
+ * The client's success-story box — `successStory`: { title, html, image } from
+ * toClientDetail() (services/testimonials.js). Left out when the client has none.
+ */
+export default function ClientPortfolioSuccessStory({ successStory }) {
+  if (!successStory) return null;
 
   return (
     <section className="relative bg-navy pb-16 pt-4 sm:pb-20 lg:pb-24 lg:pt-6">
@@ -15,23 +20,22 @@ export default function ClientPortfolioSuccessStory({ data }) {
                   {successStory.title}
                 </h3>
 
-                <div className="mt-5 space-y-4 sm:mt-6 sm:space-y-5">
-                  {successStory.paragraphs.map((text, i) => (
-                    <p
-                      key={i}
-                      className="font-body text-[14px] leading-[1.7] text-white/75 sm:text-[15px] lg:text-[16px]"
-                    >
-                      {text}
-                    </p>
-                  ))}
-                </div>
+                <RichContent
+                  html={successStory.html}
+                  className="mt-5 text-[14px] leading-[1.7] text-white/75 sm:mt-6 sm:text-[15px] lg:text-[16px]"
+                />
               </div>
 
-              {/* Right Column: Office Mockup Photo */}
+              {/* Right Column: story photo */}
               <div className="overflow-hidden rounded-[12px] border border-white/10 shadow-[0_16px_36px_-12px_rgba(0,0,0,0.4)] sm:rounded-[16px]">
                 <img
                   src={successStory.image.src}
                   alt={successStory.image.alt}
+                  onError={(e) => {
+                    if (successStory.image.fallback && e.currentTarget.getAttribute("src") !== successStory.image.fallback) {
+                      e.currentTarget.src = successStory.image.fallback;
+                    }
+                  }}
                   className="h-[220px] w-full object-cover sm:h-[260px] lg:h-[300px]"
                 />
               </div>

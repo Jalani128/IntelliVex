@@ -1,6 +1,20 @@
+import { useState } from "react";
 import { Star } from "lucide-react";
 
-export default function TestimonialCard({ rating = 5, quote, name, role, initials }) {
+/** Reviewer photo; their initials when there's no photo or it fails to load. */
+function Avatar({ src, initials, name }) {
+  const [failed, setFailed] = useState(false);
+  if (src && !failed) {
+    return <img src={src} alt={name} onError={() => setFailed(true)} className="h-9 w-9 shrink-0 rounded-full object-cover" />;
+  }
+  return (
+    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-display text-[11px] font-semibold text-white">
+      {initials}
+    </span>
+  );
+}
+
+export default function TestimonialCard({ rating = 5, quote, name, role, initials, avatar }) {
   return (
     <article className="surface-card flex h-full flex-col p-8 transition-all duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-2 hover:border-accent/50 hover:shadow-[0_28px_60px_-24px_rgba(6,86,243,0.6)]">
       <div className="flex gap-1.5">
@@ -16,9 +30,7 @@ export default function TestimonialCard({ rating = 5, quote, name, role, initial
       <p className="mt-5 flex-1 font-body text-[14px] leading-[1.7] text-white/80">{quote}</p>
 
       <div className="mt-8 flex items-center gap-3">
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-accent font-display text-[11px] font-semibold text-white">
-          {initials}
-        </span>
+        <Avatar src={avatar} initials={initials} name={name} />
         <div>
           <p className="font-display text-[14px] font-semibold leading-tight text-white">{name}</p>
           <p className="font-body text-[12px] leading-tight text-white/60">{role}</p>

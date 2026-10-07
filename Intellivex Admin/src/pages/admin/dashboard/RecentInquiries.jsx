@@ -16,7 +16,7 @@ export default function RecentInquiries({ query, className }) {
   const updateStatus = async (row, status) => {
     try {
       await inquiriesApi.setStatus(row.id, status)
-      toast.success(`${row.name} marked as ${status}`)
+      toast.success(`${row.full_name} marked as ${status}`)
       query.refetch()
     } catch (err) {
       toast.error(err.message)
@@ -25,25 +25,25 @@ export default function RecentInquiries({ query, className }) {
 
   const columns = [
     {
-      key: 'name',
+      key: 'full_name',
       header: 'Contact',
       cell: (row) => (
         <div className="flex items-center gap-3">
           <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-xs font-semibold text-primary">
-            {initials(row.name)}
+            {initials(row.full_name)}
           </span>
           <div className="min-w-0">
-            <p className="truncate font-medium">{row.name}</p>
+            <p className="truncate font-medium">{row.full_name}</p>
             <p className="truncate text-xs text-muted-foreground">{row.email}</p>
           </div>
         </div>
       ),
     },
-    { key: 'service', header: 'Service', className: 'hidden md:table-cell', headerClassName: 'hidden md:table-cell' },
+    { key: 'subject', header: 'Subject', className: 'hidden md:table-cell', headerClassName: 'hidden md:table-cell' },
     {
-      key: 'created_at',
+      key: 'received_at',
       header: 'Received',
-      cell: (row) => <span className="text-muted-foreground">{formatDate(row.created_at)}</span>,
+      cell: (row) => <span className="text-muted-foreground">{formatDate(row.received_at)}</span>,
       className: 'hidden sm:table-cell',
       headerClassName: 'hidden sm:table-cell',
     },
@@ -54,7 +54,7 @@ export default function RecentInquiries({ query, className }) {
       className: 'w-12 text-right',
       cell: (row) => (
         <RowActions
-          label={`Actions for ${row.name}`}
+          label={`Actions for ${row.full_name}`}
           onView={() => navigate(`/admin/inquiries/${row.id}`)}
           extra={[
             row.status !== 'contacted' && { label: 'Mark contacted', icon: PhoneCall, onSelect: () => updateStatus(row, 'contacted') },

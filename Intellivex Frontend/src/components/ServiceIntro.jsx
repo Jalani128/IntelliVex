@@ -2,22 +2,15 @@ import Eyebrow from "./Eyebrow";
 import Reveal from "./Reveal";
 import SiteLink from "./SiteLink";
 import DecorSquares from "./DecorSquares";
+import RichContent from "./RichContent";
 import { SERVICE_INTRO } from "../data/serviceDetail";
 
 const INTRO_SHAPES = [
   { className: "left-[3%] bottom-[16%]", size: 82, drift: 14, duration: 10, delay: 0.4 },
 ];
 
-/**
- * The block a service page opens with: eyebrow, two-tone heading and copy across
- * the full column, then the service photo.
- *
- * Two shapes in the frames. With `tags`, the sibling-service pills sit on the
- * left and the photo is held to the right (Service Details). Without them the
- * photo runs the full column (Data Science).
- */
 export default function ServiceIntro({ content = SERVICE_INTRO }) {
-  const { eyebrow, title, highlight, paragraphs, tags, image } = content;
+  const { eyebrow, title, highlight, paragraphs = [], html, tags, image } = content;
 
   const photo = (
     <img
@@ -47,19 +40,24 @@ export default function ServiceIntro({ content = SERVICE_INTRO }) {
           </h2>
         </Reveal>
 
-        <div className="mt-6 space-y-[26px]">
-          {paragraphs.map((text, i) => (
-            <Reveal key={i} delay={0.18 + i * 0.08}>
-              <p className="font-body text-[15px] leading-[1.62] text-white/80 lg:text-[16px]">
-                {text}
-              </p>
-            </Reveal>
-          ))}
-        </div>
+        {html ? (
+          <Reveal delay={0.18}>
+            <RichContent html={html} className="mt-6" />
+          </Reveal>
+        ) : (
+          <div className="mt-6 space-y-[26px]">
+            {paragraphs.map((text, i) => (
+              <Reveal key={i} delay={0.18 + i * 0.08}>
+                <p className="font-body text-[15px] leading-[1.62] text-white/80 lg:text-[16px]">
+                  {text}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+        )}
 
         {tags ? (
-          /* The pill column is held to 360px so the list breaks across five rows
-             exactly as the frame does; the photo keeps its native 651px. */
+         
           <div className="mt-10 grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_651px] lg:gap-x-[49px]">
             <Reveal delay={0.3} className="lg:max-w-[360px]">
               <ul className="flex flex-wrap gap-x-[28px] gap-y-4">

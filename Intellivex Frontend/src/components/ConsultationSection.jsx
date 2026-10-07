@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Eyebrow from "./Eyebrow";
 import Reveal from "./Reveal";
 import DecorSquares from "./DecorSquares";
 import { CONSULTATION } from "../data/dataScience";
+import { INQUIRY_RULES, submitInquiry, validateInquiry } from "../services/contact";
 
 /* One cluster left of the heading, matching the frame. */
 const CONSULT_SHAPES = [
@@ -10,22 +11,62 @@ const CONSULT_SHAPES = [
 ];
 
 const FIELD =
-  "w-full rounded-md border border-white/10 bg-white/[0.07] px-4 py-2.5 font-body text-[14px] text-white placeholder:text-white/60 transition-colors duration-300 focus:border-accent focus:outline-none";
+  "w-full rounded-md border border-white/10 bg-white/[0.07] px-4 py-2.5 font-body text-[14px] text-white placeholder:text-white/60 transition-colors duration-300 focus:border-accent focus:outline-none aria-[invalid=true]:border-red-400/70";
 
-const EMPTY = { fullName: "", phone: "", email: "", subject: "", message: "" };
+const EMPTY = { full_name: "", phone: "", email: "", subject: "", message: "" };
+
+function FieldError({ id, message }) {
+  if (!message) return null;
+  return (
+    <span id={id} className="mt-1.5 block font-body text-[12px] text-red-300">
+      {message}
+    </span>
+  );
+}
 
 export default function ConsultationSection({ content = CONSULTATION }) {
   const { eyebrow, title, highlight, description, image, contact, address, form } = content;
   const [values, setValues] = useState(EMPTY);
-  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
+  // idle | loading | success | error
+  const [status, setStatus] = useState("idle");
+  const [notice, setNotice] = useState("");
 
-  const update = (key) => (e) => setValues((prev) => ({ ...prev, [key]: e.target.value }));
+  // The success banner clears itself after a few seconds.
+  useEffect(() => {
+    if (status !== "success") return undefined;
+    const id = setTimeout(() => setStatus("idle"), 6000);
+    return () => clearTimeout(id);
+  }, [status]);
 
-  const onSubmit = (e) => {
+  const update = (key) => (e) => {
+    setValues((prev) => ({ ...prev, [key]: e.target.value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setValues(EMPTY);
-    setTimeout(() => setSubmitted(false), 5000);
+    if (status === "loading") return;
+
+    const clientErrors = validateInquiry(values);
+    if (Object.keys(clientErrors).length) {
+      setErrors(clientErrors);
+      setStatus("idle");
+      return;
+    }
+
+    setStatus("loading");
+    setErrors({});
+    try {
+      const res = await submitInquiry(values);
+      setValues(EMPTY);
+      setNotice(res?.message || "Thank you! Your inquiry has been submitted successfully.");
+      setStatus("success");
+    } catch (err) {
+      setErrors(err.errors ?? {});
+      setNotice(err.message);
+      setStatus("error");
+    }
   };
 
   return (
@@ -98,17 +139,26 @@ export default function ConsultationSection({ content = CONSULTATION }) {
           <Reveal delay={0.24} className="w-full">
             <form
               onSubmit={onSubmit}
+              noValidate
+              aria-busy={status === "loading"}
               className="rounded-card border border-white/12 bg-white/[0.05] p-6 lg:p-8"
             >
               <h3 className="text-center font-display text-[22px] font-medium text-white lg:text-[24px]">
                 {form.title}
               </h3>
 
-              {submitted && (
-                <div className="mt-4 rounded-md border border-accent/40 bg-accent/20 px-4 py-3 text-center font-body text-[13px] text-white">
-                  Thank you! Your message has been sent successfully. We will get back to you shortly.
-                </div>
-              )}
+              <div aria-live="polite">
+                {status === "success" && (
+                  <div className="mt-4 rounded-md border border-accent/40 bg-accent/20 px-4 py-3 text-center font-body text-[13px] text-white">
+                    {notice}
+                  </div>
+                )}
+                {status === "error" && (
+                  <div role="alert" className="mt-4 rounded-md border border-red-400/40 bg-red-500/15 px-4 py-3 text-center font-body text-[13px] text-white">
+                    {notice}
+                  </div>
+                )}
+              </div>
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {form.fields.map((field) => (
@@ -121,8 +171,13 @@ export default function ConsultationSection({ content = CONSULTATION }) {
                       onChange={update(field.name)}
                       placeholder={field.label}
                       autoComplete={field.autoComplete}
+                      maxLength={INQUIRY_RULES[field.name]?.max}
+                      required
+                      aria-invalid={!!errors[field.name]}
+                      aria-describedby={errors[field.name] ? `${field.name}-error` : undefined}
                       className={FIELD}
                     />
+                    <FieldError id={`${field.name}-error`} message={errors[field.name]} />
                   </label>
                 ))}
               </div>
@@ -135,15 +190,21 @@ export default function ConsultationSection({ content = CONSULTATION }) {
                   value={values.message}
                   onChange={update("message")}
                   placeholder={form.message}
+                  maxLength={INQUIRY_RULES.message.max}
+                  required
+                  aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? "message-error" : undefined}
                   className={`${FIELD} resize-y`}
                 />
+                <FieldError id="message-error" message={errors.message} />
               </label>
 
               <button
                 type="submit"
-                className="mt-5 w-full rounded-md bg-accent px-6 py-3 font-display text-[15px] font-medium text-white transition-all duration-300 ease-[var(--ease-out-soft)] hover:bg-accent-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-soft"
+                disabled={status === "loading"}
+                className="mt-5 w-full rounded-md bg-accent px-6 py-3 font-display text-[15px] font-medium text-white transition-all duration-300 ease-[var(--ease-out-soft)] hover:bg-accent-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-soft disabled:cursor-wait disabled:opacity-70"
               >
-                {form.action}
+                {status === "loading" ? "Sending…" : form.action}
               </button>
             </form>
           </Reveal>

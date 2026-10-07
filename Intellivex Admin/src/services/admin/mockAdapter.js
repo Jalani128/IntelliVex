@@ -5,7 +5,49 @@ const LATENCY_MS = 450
 export const delay = (value, ms = LATENCY_MS) =>
   new Promise((resolve) => setTimeout(() => resolve(structuredClone(value)), ms))
 
+// Laravel query strings send booleans as 1 / 0.
+const asParam = (v) => (v === true ? '1' : v === false ? '0' : String(v))
+
 const notFound = () => Promise.reject({ message: 'Record not found', status: 404, errors: {} })
+
+/**
+ * Search, filter, sort and paginate an in-memory array the way a Laravel
+ * index endpoint would, returning `{ data, meta: { current_page, per_page, total, last_page } }`.
+ * Used by the mocks, and by resources whose API returns the whole list at once.
+ *
+ * Filters are exact matches on `record[key]`; `undefined`, `''` and `'all'` are ignored,
+ * booleans compare as 1 / 0.
+ */
+export function queryRecords(
+  records,
+  { search = '', page = 1, per_page = DEFAULT_PER_PAGE, sort = '-created_at', ...filters } = {},
+  { searchFields = ['name'] } = {},
+) {
+  const term = search.trim().toLowerCase()
+  let rows = records.filter((r) => {
+    const matchesSearch = !term || searchFields.some((f) => String(r[f] ?? '').toLowerCase().includes(term))
+    const matchesFilters = Object.entries(filters).every(
+      ([key, value]) => value === undefined || value === '' || value === 'all' || asParam(r[key]) === String(value),
+    )
+    return matchesSearch && matchesFilters
+  })
+
+  if (sort) {
+    const desc = sort.startsWith('-')
+    const key = desc ? sort.slice(1) : sort
+    rows = [...rows].sort((a, b) => (a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0) * (desc ? -1 : 1))
+  }
+
+  const total = rows.length
+  const last_page = Math.max(1, Math.ceil(total / per_page))
+  const current_page = Math.min(Math.max(1, Number(page)), last_page)
+  const start = (current_page - 1) * per_page
+
+  return {
+    data: rows.slice(start, start + per_page),
+    meta: { current_page, per_page, total, last_page },
+  }
+}
 
 /**
  * In-memory stand-in for a Laravel resource controller.
@@ -23,31 +65,8 @@ export function createMockResource(seed, { searchFields = ['name'] } = {}) {
   const find = (id) => records.find((r) => String(r.id) === String(id))
 
   return {
-    list({ search = '', page = 1, per_page = DEFAULT_PER_PAGE, sort = '-created_at', ...filters } = {}) {
-      const term = search.trim().toLowerCase()
-      let rows = records.filter((r) => {
-        const matchesSearch = !term || searchFields.some((f) => String(r[f] ?? '').toLowerCase().includes(term))
-        const matchesFilters = Object.entries(filters).every(
-          ([key, value]) => value === undefined || value === '' || value === 'all' || String(r[key]) === String(value),
-        )
-        return matchesSearch && matchesFilters
-      })
-
-      if (sort) {
-        const desc = sort.startsWith('-')
-        const key = desc ? sort.slice(1) : sort
-        rows = [...rows].sort((a, b) => (a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0) * (desc ? -1 : 1))
-      }
-
-      const total = rows.length
-      const last_page = Math.max(1, Math.ceil(total / per_page))
-      const current_page = Math.min(Math.max(1, Number(page)), last_page)
-      const start = (current_page - 1) * per_page
-
-      return delay({
-        data: rows.slice(start, start + per_page),
-        meta: { current_page, per_page, total, last_page },
-      })
+    list(params = {}) {
+      return delay(queryRecords(records, params, { searchFields }))
     },
 
     get(id) {

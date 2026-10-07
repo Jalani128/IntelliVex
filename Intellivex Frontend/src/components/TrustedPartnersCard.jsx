@@ -8,6 +8,7 @@ import { Star } from "lucide-react";
 export default function TrustedPartnersCard({
   title,
   highlight,
+  tail,
   description,
   rating = 5,
   logo,
@@ -22,6 +23,7 @@ export default function TrustedPartnersCard({
     >
       <h3 className="font-display text-[22px] font-medium leading-[1.2] text-white sm:text-[24px]">
         {title} <span className="text-gradient">{highlight}</span>
+        {tail && ` ${tail}`}
       </h3>
 
       <p className="mt-5 font-body text-[15px] leading-[1.55] text-white/75">{description}</p>

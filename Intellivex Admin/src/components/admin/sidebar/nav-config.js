@@ -8,7 +8,7 @@ import {
   LayoutDashboard,
   MessageSquareQuote,
   Package,
-  Settings,
+  PanelsTopLeft,
   Users,
 } from 'lucide-react'
 
@@ -27,6 +27,8 @@ export const NAV_GROUPS = [
   {
     label: 'Website Content',
     items: [
+      // Single-row page content (Home, About Us) — no records to create, so no create / edit routes.
+      { key: 'pages', label: 'Pages', singular: 'Page', path: '/admin/pages', icon: PanelsTopLeft, crud: false },
       { key: 'services', label: 'Services', singular: 'Service', path: '/admin/services', icon: Layers },
       { key: 'industries', label: 'Industries', singular: 'Industry', path: '/admin/industries', icon: Building2 },
       { key: 'projects', label: 'Portfolio', singular: 'Project', path: '/admin/projects', icon: BriefcaseBusiness },
@@ -38,7 +40,7 @@ export const NAV_GROUPS = [
     label: 'Company',
     items: [
       { key: 'testimonials', label: 'Testimonials', singular: 'Testimonial', path: '/admin/testimonials', icon: MessageSquareQuote },
-      { key: 'partnerships', label: 'Partnerships', singular: 'Partnership', path: '/admin/partnerships', icon: Handshake },
+      { key: 'partnerships', label: 'Partnerships', singular: 'Partner', path: '/admin/partnerships', icon: Handshake },
       { key: 'team', label: 'Team', singular: 'Team Member', path: '/admin/team', icon: Users },
     ],
   },
@@ -46,13 +48,9 @@ export const NAV_GROUPS = [
     label: 'Leads',
     items: [{ key: 'inquiries', label: 'Inquiries', singular: 'Inquiry', path: '/admin/inquiries', icon: Inbox, crud: false }],
   },
-  {
-    label: 'System',
-    items: [{ key: 'settings', label: 'Settings', path: '/admin/settings', icon: Settings, standalone: true }],
-  },
 ]
 
 export const NAV_ITEMS = NAV_GROUPS.flatMap((g) => g.items)
 
 /** Content modules that get list / detail / create / edit routes. */
-export const RESOURCE_MODULES = NAV_ITEMS.filter((item) => item.key !== 'dashboard' && !item.standalone)
+export const RESOURCE_MODULES = NAV_ITEMS.filter((item) => item.key !== 'dashboard')

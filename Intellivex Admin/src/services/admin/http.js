@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { API_BASE_URL } from './config'
+import { rewriteMedia } from './media'
 
 const TOKEN_KEY = 'iv-admin-token'
 
@@ -31,6 +32,12 @@ export const authToken = {
   },
 }
 
+/* Point uploaded-image URLs at a reachable host (see media.js). */
+http.interceptors.response.use((response) => {
+  response.data = rewriteMedia(response.data)
+  return response
+})
+
 http.interceptors.request.use((config) => {
   const token = authToken.get()
   if (token) config.headers.Authorization = `Bearer ${token}`
@@ -50,7 +57,13 @@ http.interceptors.response.use(
       window.dispatchEvent(new Event(UNAUTHORIZED_EVENT))
     }
     return Promise.reject({
-      message: res?.data?.message || error.message || 'Something went wrong',
+      message:
+        res?.data?.message ||
+        // No response at all: offline, CORS, or the browser rejected the API's SSL certificate.
+        (!res && error.code === 'ERR_NETWORK'
+          ? 'Can’t reach the API. Check your connection, and that the API has a valid SSL certificate.'
+          : error.message) ||
+        'Something went wrong',
       status: res?.status ?? 0,
       errors: res?.data?.errors ?? {},
     })

@@ -1,0 +1,334 @@
+{
+  "_source": "IntelliVex - Website Content.docx",
+  "_note": "\"upload:<file>\" = upload docs/website-content-assets/<file> to that image field (they are the icons/images the website already uses).",
+  "services": [
+    {
+      "title": "Software Engineering",
+      "highlight": null,
+      "slug": "engineering",
+      "card_variant": "default",
+      "short_description": "We engineer robust, cloud-native software tailored to your business, from architecture and APIs to deployment and long-term evolution.",
+      "icon": "upload:software-engineering.png",
+      "tags": [
+        {
+          "text": "Custom Software Development",
+          "sort_order": 0
+        },
+        {
+          "text": "Software Architecture & Microservices",
+          "sort_order": 1
+        },
+        {
+          "text": "API Development & Integration",
+          "sort_order": 2
+        },
+        {
+          "text": "DevOps & CI/CD",
+          "sort_order": 3
+        },
+        {
+          "text": "QA & Test Automation",
+          "sort_order": 4
+        },
+        {
+          "text": "Legacy Modernization",
+          "sort_order": 5
+        }
+      ],
+      "status": "published",
+      "is_featured": true,
+      "show_in_menu": true,
+      "show_on_services_page": true,
+      "sort_order": 0
+    },
+    {
+      "title": "Mobile Development",
+      "highlight": null,
+      "slug": "mobile-development",
+      "card_variant": "default",
+      "short_description": "We create high-performance, user-first mobile apps for iOS and Android that engage users, drive retention and grow revenue.",
+      "icon": "upload:mobile-development.png",
+      "tags": [
+        {
+          "text": "Native iOS Development",
+          "sort_order": 0
+        },
+        {
+          "text": "Native Android Development",
+          "sort_order": 1
+        },
+        {
+          "text": "Cross-Platform Apps (Flutter & React Native)",
+          "sort_order": 2
+        },
+        {
+          "text": "Mobile UI/UX Design",
+          "sort_order": 3
+        },
+        {
+          "text": "App Maintenance & Support",
+          "sort_order": 4
+        },
+        {
+          "text": "App Store Optimization (ASO)",
+          "sort_order": 5
+        }
+      ],
+      "status": "published",
+      "is_featured": true,
+      "show_in_menu": true,
+      "show_on_services_page": true,
+      "sort_order": 1
+    },
+    {
+      "title": "Cloud & Cybersecurity",
+      "highlight": null,
+      "slug": "cloud-security",
+      "card_variant": "default",
+      "short_description": "We architect secure, resilient cloud environments that protect your data, optimize costs and scale on demand.",
+      "icon": "upload:cloud-cybersecurity.png",
+      "tags": [
+        {
+          "text": "Cloud Migration & Modernization",
+          "sort_order": 0
+        },
+        {
+          "text": "AWS, Azure & Google Cloud",
+          "sort_order": 1
+        },
+        {
+          "text": "Cloud Architecture",
+          "sort_order": 2
+        },
+        {
+          "text": "Cybersecurity Assessments & Audits",
+          "sort_order": 3
+        },
+        {
+          "text": "Data Protection & Compliance",
+          "sort_order": 4
+        },
+        {
+          "text": "Managed Cloud & FinOps",
+          "sort_order": 5
+        }
+      ],
+      "status": "published",
+      "is_featured": true,
+      "show_in_menu": true,
+      "show_on_services_page": true,
+      "sort_order": 2
+    },
+    {
+      "title": "AI &",
+      "highlight": "Data Innovation",
+      "slug": "ai-data-innovation",
+      "card_variant": "innovation",
+      "short_description": "We turn your data into a competitive advantage with AI that automates work, predicts what’s next and unlocks new growth.",
+      "icon": null,
+      "tags": [
+        {
+          "text": "Generative AI Consulting",
+          "sort_order": 0
+        },
+        {
+          "text": "Agentic AI & AI Agents",
+          "sort_order": 1
+        },
+        {
+          "text": "Custom AI & LLM Development",
+          "sort_order": 2
+        },
+        {
+          "text": "Machine Learning & Predictive Analytics",
+          "sort_order": 3
+        },
+        {
+          "text": "Data Science & Business Intelligence",
+          "sort_order": 4
+        },
+        {
+          "text": "Intelligent Automation",
+          "sort_order": 5
+        },
+        {
+          "text": "AI Readiness Workshops",
+          "sort_order": 6
+        }
+      ],
+      "status": "published",
+      "is_featured": false,
+      "show_in_menu": false,
+      "show_on_services_page": true,
+      "sort_order": 3
+    },
+    {
+      "title": "Web Development",
+      "highlight": null,
+      "slug": "web-development",
+      "card_variant": "default",
+      "short_description": "We build fast, secure, conversion-focused websites and web apps that deliver seamless experiences on every device.",
+      "icon": "upload:web-development.png",
+      "tags": [
+        {
+          "text": "Custom Web Applications",
+          "sort_order": 0
+        },
+        {
+          "text": "E-Commerce Development",
+          "sort_order": 1
+        },
+        {
+          "text": "CMS Development",
+          "sort_order": 2
+        },
+        {
+          "text": "Progressive Web Apps (PWA)",
+          "sort_order": 3
+        },
+        {
+          "text": "Web UI/UX Design",
+          "sort_order": 4
+        },
+        {
+          "text": "Website Care & Maintenance",
+          "sort_order": 5
+        }
+      ],
+      "status": "published",
+      "is_featured": false,
+      "show_in_menu": false,
+      "show_on_services_page": true,
+      "sort_order": 4
+    },
+    {
+      "title": "Game Development",
+      "highlight": null,
+      "slug": "game-development",
+      "card_variant": "default",
+      "short_description": "We craft immersive, engaging games for mobile, web and PC, from creative concept to global launch and LiveOps.",
+      "icon": "upload:game-development.png",
+      "tags": [
+        {
+          "text": "Mobile Game Development",
+          "sort_order": 0
+        },
+        {
+          "text": "Multiplayer & Online Games",
+          "sort_order": 1
+        },
+        {
+          "text": "2D & 3D Game Art & Design",
+          "sort_order": 2
+        },
+        {
+          "text": "Unity Development",
+          "sort_order": 3
+        },
+        {
+          "text": "LiveOps & Post-Launch Updates",
+          "sort_order": 4
+        },
+        {
+          "text": "Gamification & Educational Games",
+          "sort_order": 5
+        }
+      ],
+      "status": "published",
+      "is_featured": false,
+      "show_in_menu": false,
+      "show_on_services_page": true,
+      "sort_order": 5
+    }
+  ],
+  "home-page": {
+    "differentiators_eyebrow": "Why IntelliVex",
+    "differentiators_title": "The IntelliVex Advantage",
+    "differentiators_highlight": "Advantage",
+    "differentiators_description": "We don’t just write code; we engineer outcomes. Our blend of technical depth, industry insight and a client-first mindset means every solution is future-proof, cost-efficient and built to deliver measurable business value from day one.",
+    "differentiators_items": [
+      "One partner, end-to-end: from strategy to support.",
+      "AI-first thinking built into every solution.",
+      "Dedicated AI, cloud and security specialists.",
+      "Agile sprints with full, real-time visibility.",
+      "Security-by-design, compliance-ready from day one.",
+      "A long-term partnership that continues beyond go-live."
+    ],
+    "services_eyebrow": "Overview",
+    "services_title": "Capabilities That Drive Results",
+    "services_highlight": "Results",
+    "cta_title_line1": "Reimagine your",
+    "cta_title_line2": "business with Intellivex",
+    "cta_description": "Let’s turn your ideas into intelligent, high-impact solutions. Talk to our experts and start building your competitive edge today.",
+    "cta_button_label": "Book a Free Consultation",
+    "cta_button_link": "/contact"
+  },
+  "about-page": {
+    "overview_eyebrow": "Who We Are",
+    "overview_title": "Engineering Intelligent Solutions for What’s Next",
+    "overview_highlight": "What’s Next",
+    "overview_description": "IntelliVex Technologies is a full-stack digital engineering company that turns bold ideas into market-ready products. We pair deep engineering expertise with design thinking to build technology that moves your business forward, not just technology that works.\n\nAI. Cloud. Apps. Games. One partner, engineered for impact.\n\nOur multidisciplinary team of engineers, designers, data scientists and business consultants partners with organizations across healthcare, finance, retail, education, logistics and entertainment. We believe technology should do more than function; it should transform how industries operate, compete, and grow. That is why every engagement is built on three non-negotiables: it must be intelligent, it must be secure, and it must deliver measurable ROI for our clients and the communities they serve.",
+    "partners_title": "Trusted Partners",
+    "partners_highlight": "Partners",
+    "partners_description": "From fast-moving startups to global enterprises, organizations choose IntelliVex for innovation they can rely on and delivery they can count on.",
+    "partners_rating": 5,
+    "partners_logo_url": "upload:trusted-partners-logo.png",
+    "vision_title": "Our Vision",
+    "vision_highlight": "Vision",
+    "vision_description": "To become a catalyst for the intelligent digital transformation of businesses worldwide—where technology, AI and human ingenuity turn complex challenges into new possibilities.",
+    "mission_title": "Our Mission",
+    "mission_highlight": "Mission",
+    "mission_description": "To empower businesses with intelligent, secure and future-proof digital solutions that solve real problems and unlock new growth. Through AI, cloud, custom software and immersive digital experiences, we turn complexity into competitive advantage and deliver results our clients can measure.",
+    "process_eyebrow": "Our Process",
+    "process_title": "From Idea to Impact",
+    "process_highlight": "Impact",
+    "process_description": "Great technology starts with a clear process. Our proven three-phase delivery model keeps you in control at every stage, from the first conversation to launch day and beyond. The result: faster time-to-market, full transparency and a solution built around your goals.",
+    "process_steps": [
+      {
+        "title": "Discover & Strategize",
+        "description": "We dive deep into your business, users and goals to define a clear strategy and a roadmap built for success."
+      },
+      {
+        "title": "Build & Iterate",
+        "description": "We design, build and test in agile sprints, with regular demos so your feedback shapes every feature."
+      },
+      {
+        "title": "Launch & Scale",
+        "description": "We launch, monitor and continuously optimize your solution, so it scales with your business and keeps delivering value."
+      }
+    ],
+    "differentiators_eyebrow": "Why IntelliVex",
+    "differentiators_title": "The IntelliVex Advantage",
+    "differentiators_highlight": "Advantage",
+    "differentiators_description": "We don’t just write code; we engineer outcomes. Our blend of technical depth, industry insight and a client-first mindset means every solution is future-proof, cost-efficient and built to deliver measurable business value from day one.",
+    "differentiators_items": [
+      "One partner, end-to-end: from strategy to support.",
+      "AI-first thinking built into every solution.",
+      "Dedicated AI, cloud and security specialists.",
+      "Agile sprints with full, real-time visibility.",
+      "Security-by-design, compliance-ready from day one.",
+      "A long-term partnership that continues beyond go-live."
+    ],
+    "cta_title_line1": "Reimagine your",
+    "cta_title_line2": "business with Intellivex",
+    "cta_description": "Let’s turn your ideas into intelligent, high-impact solutions. Talk to our experts and start building your competitive edge today.",
+    "cta_button_label": "Book a Free Consultation",
+    "cta_button_link": "/contact"
+  },
+  "services-page": {
+    "overview_eyebrow": "What We Do",
+    "overview_title": "Next-Gen Technology That Powers Growth",
+    "overview_highlight": "Powers Growth",
+    "overview_description": "At IntelliVex, we deliver a complete spectrum of technology services designed to help businesses innovate faster, scale smarter and lead their markets. Whatever the challenge, our experts engineer the right solution for your goals.\n\nTechnological capabilities. One accountable partner. Zero silos.\n\nOur capabilities span artificial intelligence and data science, custom software engineering, web and mobile app development, cloud infrastructure and cybersecurity, and immersive game development. Every engagement is led by specialists who speak the language of both technology and business. Whether you are a startup launching your first product or an enterprise modernizing legacy systems, we deliver solutions that grow with you.",
+    "overview_image_url": "upload:services-overview.png",
+    "overview_image_alt": "Intellivex service delivery",
+    "services_eyebrow": "Overview",
+    "services_title": "Capabilities That Drive Results",
+    "services_highlight": "Results",
+    "cta_title_line1": "Reimagine your",
+    "cta_title_line2": "business with Intellivex",
+    "cta_description": "Let’s turn your ideas into intelligent, high-impact solutions. Talk to our experts and start building your competitive edge today.",
+    "cta_button_label": "Book a Free Consultation",
+    "cta_button_link": "/contact"
+  }
+}

@@ -30,7 +30,7 @@ export const CONTACT_SECTION = {
   form: {
     title: "Get Free Consultation",
     fields: [
-      { name: "fullName", label: "Full Name", type: "text", autoComplete: "name" },
+      { name: "full_name", label: "Full Name", type: "text", autoComplete: "name" },
       { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
       { name: "email", label: "Email", type: "email", autoComplete: "email" },
       { name: "subject", label: "Subject", type: "text" },

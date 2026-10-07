@@ -1,5 +1,5 @@
 import { http, authToken } from './http'
-import { USE_MOCK } from './config'
+import { USE_MOCK_AUTH } from './config'
 import { delay } from './mockAdapter'
 import { adminAccountsMock } from '@/mock/admin/auth.mock'
 
@@ -37,7 +37,7 @@ const mockAuth = {
  */
 export const authApi = {
   async login({ username, password, remember = false }) {
-    const res = USE_MOCK
+    const res = USE_MOCK_AUTH
       ? await mockAuth.login({ username, password })
       : await http.post('/login', { username, password, remember }).then((r) => r.data)
     authToken.set(res.data.token, remember)
@@ -46,13 +46,13 @@ export const authApi = {
 
   async me() {
     if (!authToken.get()) throw { status: 401, message: 'Unauthenticated.', errors: {} }
-    const res = USE_MOCK ? await mockAuth.me() : await http.get('/me').then((r) => r.data)
+    const res = USE_MOCK_AUTH ? await mockAuth.me() : await http.get('/me').then((r) => r.data)
     return res.data
   },
 
   async logout() {
     try {
-      await (USE_MOCK ? mockAuth.logout() : http.post('/logout'))
+      await (USE_MOCK_AUTH ? mockAuth.logout() : http.post('/logout'))
     } finally {
       authToken.clear()
     }

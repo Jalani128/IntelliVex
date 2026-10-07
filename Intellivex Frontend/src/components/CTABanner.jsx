@@ -20,8 +20,8 @@ export default function CTABanner({ content = CTA }) {
           {/* Device mockup — overflows the band top and bottom on desktop */}
           <div className="relative flex justify-center lg:block lg:self-stretch">
             <motion.img
-              src={mockup}
-              alt="Intellivex platform on tablet"
+              src={content.image?.src ?? mockup}
+              alt={content.image ? content.image.alt : "Intellivex platform on tablet"}
               className="w-full max-w-[420px] drop-shadow-[0_24px_50px_rgba(0,0,0,0.35)] lg:absolute lg:-top-[97px] lg:left-[59px] lg:w-[461px] lg:max-w-none"
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}

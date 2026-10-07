@@ -32,3 +32,14 @@ export const initials = (name = '') =>
     .slice(0, 2)
     .map((p) => p[0].toUpperCase())
     .join('')
+
+/** URL slugs as Laravel's validation expects them: lowercase, digits, single dashes. */
+export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+/** "AI & Data Innovation" → "ai-data-innovation" */
+export const slugify = (value = '') =>
+  value
+    .toLowerCase()
+    .replace(/&/g, ' ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')

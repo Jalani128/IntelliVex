@@ -1,30 +1,29 @@
 import { Check } from "lucide-react";
 import Reveal from "./Reveal";
+import ProjectCard from "./ProjectCard";
 
+/**
+ * Key Challenges (title + two-column checklist) and Case Studies (the
+ * industry's linked portfolio projects). Each part is left out when empty.
+ */
 export default function IndustryDetailChallenges({ data }) {
   const { challenges, caseStudies } = data;
+  if (challenges.items.length === 0 && caseStudies.cards.length === 0) return null;
 
   return (
     <section className="relative bg-navy pb-14 pt-2 sm:pb-16 lg:pb-24 lg:pt-4">
       <div className="container-narrow relative">
-        {/* 1. Key Challenges We Solve */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[340px_1fr] lg:gap-14">
-          <Reveal y={20}>
-            <h3 className="font-display text-[28px] font-medium leading-[1.18] text-white sm:text-[34px] lg:text-[40px]">
-              Key Challenges <br className="hidden sm:inline" />
-              We Solve
-            </h3>
-          </Reveal>
-
-          <div className="flex flex-col">
-            <Reveal delay={0.08} y={18}>
-              <p className="font-body text-[14px] leading-[1.7] text-white/75 sm:text-[15px] lg:text-[16px]">
-                {challenges.description}
-              </p>
+        {/* 1. Key Challenges */}
+        {challenges.items.length > 0 && (
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-[340px_1fr] lg:gap-14">
+            <Reveal y={20}>
+              <h3 className="font-display text-[28px] font-medium leading-[1.18] text-white sm:text-[34px] lg:text-[40px]">
+                {challenges.title}
+              </h3>
             </Reveal>
 
-            {/* Checkmark items grid (2x2) */}
-            <div className="mt-6 grid grid-cols-1 gap-x-8 gap-y-4 sm:mt-7 sm:grid-cols-2 sm:gap-y-5">
+            {/* Checkmark items grid (2 columns) */}
+            <div className="grid grid-cols-1 content-start gap-x-8 gap-y-4 sm:grid-cols-2 sm:gap-y-5 lg:pt-3">
               {challenges.items.map((item, i) => (
                 <Reveal key={i} delay={0.12 + i * 0.05} y={14}>
                   <div className="flex items-start gap-3">
@@ -39,26 +38,26 @@ export default function IndustryDetailChallenges({ data }) {
               ))}
             </div>
           </div>
-        </div>
+        )}
 
-        {/* 2. Case Studies */}
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:mt-16 lg:mt-20 lg:grid-cols-[340px_1fr] lg:gap-14">
-          <Reveal y={20}>
-            <h3 className="font-display text-[28px] font-medium leading-[1.18] text-white sm:text-[34px] lg:text-[40px]">
-              {caseStudies.title}
-            </h3>
-          </Reveal>
+        {/* 2. Case Studies — linked portfolio projects */}
+        {caseStudies.cards.length > 0 && (
+          <div className={challenges.items.length > 0 ? "mt-14 sm:mt-16 lg:mt-20" : ""}>
+            <Reveal y={20}>
+              <h3 className="font-display text-[28px] font-medium leading-[1.18] text-white sm:text-[34px] lg:text-[40px]">
+                {caseStudies.title}
+              </h3>
+            </Reveal>
 
-          <div className="space-y-5 sm:space-y-6">
-            {caseStudies.paragraphs.map((text, i) => (
-              <Reveal key={i} delay={0.08 * (i + 1)} y={16}>
-                <p className="font-body text-[14px] leading-[1.7] text-white/75 sm:text-[15px] lg:text-[16px]">
-                  {text}
-                </p>
-              </Reveal>
-            ))}
+            <div className="mt-8 flex flex-col gap-8 sm:mt-10">
+              {caseStudies.cards.map((card, i) => (
+                <Reveal key={card.id} delay={0.08 * i} y={20}>
+                  <ProjectCard {...card} />
+                </Reveal>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

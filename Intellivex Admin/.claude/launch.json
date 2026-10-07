@@ -4,8 +4,36 @@
     {
       "name": "admin-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 5174
+    },
+    {
+      "name": "frontend-dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "../Intellivex Frontend/node_modules/vite/bin/vite.js",
+        "../Intellivex Frontend",
+        "--port",
+        "5173",
+        "--strictPort"
+      ],
+      "port": 5173
+    },
+    {
+      "name": "admin-dev-mock",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "node_modules/vite/bin/vite.js",
+        "--mode",
+        "mock",
+        "--port",
+        "5175",
+        "--strictPort"
+      ],
+      "port": 5175
     }
   ]
 }

@@ -1,8 +1,8 @@
+import { useState } from "react";
 import Eyebrow from "./Eyebrow";
 import Reveal from "./Reveal";
 import SiteLink from "./SiteLink";
 import DecorSquares from "./DecorSquares";
-import { CLIENT_PORTFOLIO_DATA } from "../data/testimonials";
 
 const SHAPES = [
   { className: "left-[2%] top-[10%]", size: 82, drift: 14, duration: 10, delay: 0.2 },
@@ -57,7 +57,30 @@ function ClientLogoMark({ type }) {
   );
 }
 
-export default function ClientPortfolio({ data = CLIENT_PORTFOLIO_DATA }) {
+/* Placeholder marks for clients without a logo, so the grid keeps its look. */
+const FALLBACK_MARKS = ["wave", "lgpsm", "geometric"];
+
+/** The uploaded logo; a placeholder mark when it's missing or fails to load. */
+function ClientLogo({ client, index }) {
+  const [failed, setFailed] = useState(false);
+  if (!client.logo || failed) return <ClientLogoMark type={FALLBACK_MARKS[index % FALLBACK_MARKS.length]} />;
+  return (
+    <img
+      src={client.logo}
+      alt={`${client.name} logo`}
+      onError={() => setFailed(true)}
+      className="max-h-16 w-auto max-w-[70%] object-contain transition-transform duration-500 group-hover:scale-110 sm:max-h-20"
+    />
+  );
+}
+
+/**
+ * Client Portfolio grid — `data`: { eyebrow, lead, highlight, tail, paragraphs, clients }.
+ * Each card links to /client-portfolio/{slug}. Left out when there are no clients.
+ */
+export default function ClientPortfolio({ data }) {
+  if (data.clients.length === 0) return null;
+
   return (
     <section className="relative overflow-hidden bg-navy pb-14 pt-4 sm:pb-18 sm:pt-6 lg:pb-24 lg:pt-8">
       <DecorSquares shapes={SHAPES} className="hidden lg:block" />
@@ -69,7 +92,8 @@ export default function ClientPortfolio({ data = CLIENT_PORTFOLIO_DATA }) {
 
         <Reveal delay={0.08} y={20}>
           <h2 className="mt-3.5 max-w-[940px] font-display text-[32px] font-medium leading-[1.18] text-white sm:text-[40px] lg:text-[48px]">
-            {data.titleLine} <span className="text-gradient">{data.highlight}</span>
+            {data.lead} <span className="text-gradient">{data.highlight}</span>
+            {data.tail && ` ${data.tail}`}
           </h2>
         </Reveal>
 
@@ -88,11 +112,11 @@ export default function ClientPortfolio({ data = CLIENT_PORTFOLIO_DATA }) {
           {data.clients.map((client, i) => (
             <Reveal key={client.id || i} delay={0.08 * (i + 1)} y={20}>
               <SiteLink
-                href={`/client-portfolio/${client.id}`}
+                href={client.href}
                 className="group flex flex-col cursor-pointer"
               >
                 <div className="surface-card flex h-[150px] items-center justify-center rounded-card p-6 transition-all duration-500 ease-[var(--ease-out-soft)] hover:border-accent/50 hover:shadow-[0_20px_50px_-20px_rgba(6,86,243,0.5)] sm:h-[170px] lg:h-[190px]">
-                  <ClientLogoMark type={client.type} />
+                  <ClientLogo client={client} index={i} />
                 </div>
                 <p className="mt-3 text-center font-body text-[13px] font-normal text-white/70 transition-colors duration-300 group-hover:text-white sm:text-[14px]">
                   {client.name}

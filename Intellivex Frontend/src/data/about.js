@@ -1,13 +1,5 @@
-import teamCurly from "../assets/Ellipse 9.png";
-import teamBlonde from "../assets/Ellipse 9 (1).png";
-import teamShirt from "../assets/Ellipse 9 (2).png";
 import logoipsumPinwheel from "../assets/lg-h23.png";
-
-const LOREM_LONG =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as faucibus ready pulvinar vulputate neque..semper. Ornare non nulla.";
-const LOREM_SHORT =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper.";
-const LOREM_LINE = "Lorem ipsum dolor sit amet consectetur adipiscing elit.";
+import { CTA, DIFFERENTIATORS } from "./home";
 
 export const ABOUT_HEADER = {
   title: "About Us",
@@ -15,64 +7,82 @@ export const ABOUT_HEADER = {
 };
 
 export const OVERVIEW = {
-  eyebrow: "WHAT WE CAN DO",
-  title: "Building Future-Ready Solutions for",
-  highlight: "Today's Challenges",
+  eyebrow: "WHO WE ARE",
+  title: "Engineering Intelligent Solutions for",
+  highlight: "What’s Next",
   paragraphs: [
-    LOREM_LONG,
-    LOREM_SHORT,
-    `${LOREM_LONG} Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as faucibus ready pulvinar vulputate neque..semper. Ornare non nulla.`,
+    "IntelliVex Technologies is a full-stack digital engineering company that turns bold ideas into market-ready products. We pair deep engineering expertise with design thinking to build technology that moves your business forward, not just technology that works.",
+    "AI. Cloud. Apps. Games. One partner, engineered for impact.",
+    "Our multidisciplinary team of engineers, designers, data scientists and business consultants partners with organizations across healthcare, finance, retail, education, logistics and entertainment. We believe technology should do more than function; it should transform how industries operate, compete, and grow. That is why every engagement is built on three non-negotiables: it must be intelligent, it must be secure, and it must deliver measurable ROI for our clients and the communities they serve.",
   ],
   partners: {
     title: "Trusted",
     highlight: "Partners",
-    description: LOREM_SHORT,
+    description:
+      "From fast-moving startups to global enterprises, organizations choose IntelliVex for innovation they can rely on and delivery they can count on.",
     rating: 5,
     logo: { src: logoipsumPinwheel, alt: "Logoipsum" },
   },
   pillars: [
-    { title: "Our", highlight: "Vision", description: `${LOREM_SHORT} ${LOREM_SHORT}` },
-    { title: "Our", highlight: "Mission", description: `${LOREM_SHORT} ${LOREM_SHORT}` },
+    {
+      title: "Our",
+      highlight: "Vision",
+      description:
+        "To become a catalyst for the intelligent digital transformation of businesses worldwide—where technology, AI and human ingenuity turn complex challenges into new possibilities.",
+    },
+    {
+      title: "Our",
+      highlight: "Mission",
+      description:
+        "To empower businesses with intelligent, secure and future-proof digital solutions that solve real problems and unlock new growth. Through AI, cloud, custom software and immersive digital experiences, we turn complexity into competitive advantage and deliver results our clients can measure.",
+    },
   ],
 };
 
 export const PROCESS = {
   eyebrow: "OUR PROCESS",
-  title: "How We",
-  highlight: "Deliver",
-  description: `${LOREM_SHORT} ${LOREM_SHORT}`,
+  title: "From Idea to",
+  highlight: "Impact",
+  description:
+    "Great technology starts with a clear process. Our proven three-phase delivery model keeps you in control at every stage, from the first conversation to launch day and beyond. The result: faster time-to-market, full transparency and a solution built around your goals.",
   steps: [
-    { step: "STEP 1", title: "Discover your Vision", description: LOREM_SHORT, offset: 253 },
-    { step: "STEP 2", title: "Refine Through Feedback", description: LOREM_SHORT, offset: 159 },
-    { step: "STEP 3", title: "Deliver Lasting Impact", description: LOREM_SHORT, offset: 0 },
+    {
+      step: "STEP 1",
+      title: "Discover & Strategize",
+      description:
+        "We dive deep into your business, users and goals to define a clear strategy and a roadmap built for success.",
+      offset: 253,
+    },
+    {
+      step: "STEP 2",
+      title: "Build & Iterate",
+      description:
+        "We design, build and test in agile sprints, with regular demos so your feedback shapes every feature.",
+      offset: 159,
+    },
+    {
+      step: "STEP 3",
+      title: "Launch & Scale",
+      description:
+        "We launch, monitor and continuously optimize your solution, so it scales with your business and keeps delivering value.",
+      offset: 0,
+    },
   ],
 };
 
-export const ABOUT_DIFFERENTIATORS = {
-  eyebrow: "WHY CHOOSE US",
-  title: "Key",
-  highlight: "Differentiators",
-  description: LOREM_LONG,
-  items: Array.from({ length: 6 }, () => LOREM_LINE),
-};
+/* Same block and copy as the home page. */
+export const ABOUT_DIFFERENTIATORS = DIFFERENTIATORS;
 
-export const LEADERSHIP = {
+/* "Our Leadership" heading shown while GET /api/team-section loads (or if it fails);
+   the heading, VIEW ALL button and members all come from the API. Matches the API defaults. */
+export const LEADERSHIP_HEADING = {
   eyebrow: "TEAM MEMBERS",
   title: "Our",
   highlight: "Leadership",
-  action: { label: "VIEW ALL", href: "/contact" },
-  team: [
-    { name: "Full Name", role: "Developer", image: teamCurly, alt: "Intellivex team member" },
-    { name: "Full Name", role: "Developer", image: teamBlonde, alt: "Intellivex team member" },
-    { name: "Full Name", role: "Developer", image: teamShirt, alt: "Intellivex team member" },
-  ],
 };
 
+/* Same banner copy as the home page; only the button target differs. */
 export const ABOUT_CTA = {
-  titleLine1: "Reimagine your",
-  titleLine2: "business with Intellivex",
-  description:
-    "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam do",
-  action: { label: "START A PROJECT", href: "/contact" },
+  ...CTA,
+  action: { ...CTA.action, href: "/contact" },
 };
-

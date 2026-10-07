@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "./Button";
 import SiteLink from "./SiteLink";
 import { NAV_LINKS } from "../data/home";
+import { useApiData } from "../hooks/useApiData";
+import { fetchMenuServices, toMenuItems } from "../services/services";
+import { fetchMenuIndustries, toIndustryMenuItem } from "../services/industries";
 import logo from "../assets/logo.svg";
 
 
@@ -27,6 +30,20 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [active, setActive] = useState(() => linkAt(pathname, hash));
   const [scrolled, setScrolled] = useState(false);
+
+  // Services and Industries dropdowns come from the API (show_in_menu). Services keeps its
+  // built-in links until then; Industries stays a plain link when none are in the menu.
+  const serviceMenu = useApiData(fetchMenuServices, toMenuItems, null);
+  const industryMenu = useApiData(fetchMenuIndustries, (rows) => rows.map(toIndustryMenuItem), null);
+  const links = useMemo(
+    () =>
+      NAV_LINKS.map((link) => {
+        if (link.label === "Services" && serviceMenu) return { ...link, dropdown: serviceMenu };
+        if (link.label === "Industries" && industryMenu) return { ...link, dropdown: industryMenu };
+        return link;
+      }),
+    [serviceMenu, industryMenu],
+  );
 
   useEffect(() => {
     setActive(linkAt(pathname, hash));
@@ -66,14 +83,16 @@ export default function Navbar() {
         scrolled ? "bg-navy/95 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.35)] backdrop-blur" : "py-5"
       }`}
     >
-      <div className="container-wide flex items-center justify-between gap-20 p-0">
+      {/* Wide screens keep the flush, edge-aligned bar; narrower ones keep the container gutter
+          so the logo isn't clipped and the menu button stays on screen. */}
+      <div className="container-wide flex items-center justify-between gap-4 min-[1280px]:gap-6 min-[1400px]:gap-20 min-[1400px]:px-0">
         <SiteLink href="#home" className="shrink-0" onClick={() => selectLink("Home")}>
-          <img src={logo} alt="Intellivex Technologies" className="h-30 w-auto sm:h-9 ml-[-15px]" />
+          <img src={logo} alt="Intellivex Technologies" className="h-9 w-auto min-[1400px]:ml-[-15px]" />
         </SiteLink>
 
         {/* Desktop navigation */}
         <nav className="hidden flex-1 items-center justify-center gap-1 xl:flex">
-          {NAV_LINKS.map((link) =>
+          {links.map((link) =>
             link.dropdown ? (
               <div key={link.label} className="group relative">
                 <SiteLink
@@ -145,7 +164,7 @@ export default function Navbar() {
             className="overflow-hidden border-t border-white/10 bg-navy-deep xl:hidden"
           >
             <div className="container-wide flex max-h-[75vh] flex-col gap-1 overflow-y-auto py-4">
-              {NAV_LINKS.map((link) =>
+              {links.map((link) =>
                 link.dropdown ? (
                   <div key={link.label}>
                     <button

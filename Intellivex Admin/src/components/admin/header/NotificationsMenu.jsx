@@ -57,9 +57,9 @@ export default function NotificationsMenu() {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm">
-                        <span className="font-medium">{inq.name}</span> asked about {inq.service}
+                        <span className="font-medium">{inq.full_name}</span> — {inq.subject}
                       </span>
-                      <span className="text-xs text-muted-foreground">{timeAgo(inq.created_at)}</span>
+                      <span className="text-xs text-muted-foreground">{timeAgo(inq.received_at)}</span>
                     </span>
                   </Link>
                 </DropdownMenuItem>

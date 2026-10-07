@@ -19,11 +19,13 @@ export default function ServiceBenefits({ content = SERVICE_BENEFITS }) {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <p className="mt-4 max-w-[1060px] font-body text-[15px] leading-[1.62] text-white/80 lg:text-[16px]">
-            {description}
-          </p>
-        </Reveal>
+        {description && (
+          <Reveal delay={0.1}>
+            <p className="mt-4 max-w-[1060px] font-body text-[15px] leading-[1.62] text-white/80 lg:text-[16px]">
+              {description}
+            </p>
+          </Reveal>
+        )}
 
         <ul className="mt-8 grid gap-x-8 gap-y-6 md:grid-cols-2">
           {items.map((text, i) => (

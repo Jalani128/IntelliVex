@@ -27,6 +27,7 @@ export default function WhyChooseUs({
           eyebrow={content.eyebrow}
           title={content.title}
           highlight={content.highlight}
+          tail={content.tail}
           description={content.description}
         />
 

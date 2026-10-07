@@ -1,4 +1,5 @@
-import { Minus, TrendingDown, TrendingUp } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ArrowUpRight, Minus, TrendingDown, TrendingUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Card } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -22,10 +23,13 @@ function Trend({ change }) {
   )
 }
 
-/** KPI tile: label, big number, % change vs the previous period. */
-export default function StatCard({ label, value, change, icon: Icon, caption = 'vs previous period', isLoading }) {
-  return (
-    <Card className="gap-0 p-5">
+/**
+ * KPI tile: label, big number, % change vs the previous period. `null` value → “—”, `null` change → no trend chip.
+ * With `to`, the whole tile links there.
+ */
+export default function StatCard({ label, value, change, icon: Icon, caption = 'vs previous period', isLoading, to }) {
+  const card = (
+    <Card className={cn('gap-0 p-5', to && 'h-full transition-colors group-hover:border-primary/40 group-hover:bg-accent/30')}>
       <div className="flex items-start justify-between gap-3">
         <p className="text-sm font-medium text-muted-foreground">{label}</p>
         {Icon && (
@@ -41,13 +45,21 @@ export default function StatCard({ label, value, change, icon: Icon, caption = '
         </>
       ) : (
         <>
-          <p className="-mt-1 font-display text-[32px] leading-10 font-medium tracking-tight">{formatNumber(value)}</p>
+          <p className="-mt-1 font-display text-[32px] leading-10 font-medium tracking-tight">{value == null ? '—' : formatNumber(value)}</p>
           <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-            <Trend change={change} />
+            {change != null && <Trend change={change} />}
             <span>{caption}</span>
+            {to && <ArrowUpRight className="ml-auto size-4 opacity-0 transition-opacity group-hover:opacity-100" />}
           </div>
         </>
       )}
     </Card>
+  )
+
+  if (!to) return card
+  return (
+    <Link to={to} aria-label={`${label}: open list`} className="group block rounded-xl focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none">
+      {card}
+    </Link>
   )
 }
