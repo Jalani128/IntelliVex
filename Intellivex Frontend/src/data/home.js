@@ -20,9 +20,12 @@ export const NAV_LINKS = [
     label: "Services",
     href: "/services",
     dropdown: [
+      { label: "AI & Data Innovation", href: "/services/ai-data-innovation-ai-data-innovation" },
       { label: "Software Engineering", href: "/services/engineering" },
       { label: "Mobile Development", href: "/services/mobile-development" },
       { label: "Cloud & Cybersecurity", href: "/services/cloud-security" },
+      { label: "Web Development", href: "/services/web-development" },
+      { label: "Game Development", href: "/services/game-development" },
     ],
   },
   { label: "Products", href: "/products" },
@@ -82,7 +85,7 @@ export const SERVICES = {
         "QA & Test Automation",
         "Legacy Modernization",
       ],
-      href: "#services",
+      href: "/services/engineering",
     },
     {
       icon: mobileIcon,
@@ -97,7 +100,7 @@ export const SERVICES = {
         "App Maintenance & Support",
         "App Store Optimization (ASO)",
       ],
-      href: "#services",
+      href: "/services/mobile-development",
     },
     {
       icon: cloudIcon,
@@ -112,7 +115,7 @@ export const SERVICES = {
         "Data Protection & Compliance",
         "Managed Cloud & FinOps",
       ],
-      href: "#services",
+      href: "/services/cloud-security",
     },
   ],
 };

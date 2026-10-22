@@ -2,7 +2,7 @@ import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import ServiceCard from "./ServiceCard";
 import AIInnovationCard from "./AIInnovationCard";
-import { AI_INNOVATION_CARD, SERVICE_CATALOG } from "../data/services";
+import { AI_INNOVATION_CARD, SERVICE_CATALOG, withSubServices } from "../data/services";
 import { useApiData } from "../hooks/useApiData";
 import { fetchCatalogServices, toCatalogItem, toServiceLinks } from "../services/services";
 
@@ -17,14 +17,16 @@ export default function ServiceCatalog({ heading = SERVICE_CATALOG }) {
   // The AI & Data Innovation card always comes first. Its pills list the services
   // added in Admin (each opens its own page); the built-in tags show until the API answers.
   // The API's innovation row only lends its link, so it isn't shown twice.
-  const aiHref = cards.find((c) => c.variant === "innovation")?.href;
+  const apiInnovation = cards.find((c) => c.variant === "innovation");
+  const aiHref = apiInnovation?.href;
   const items = [
     {
       ...AI_INNOVATION_CARD,
       href: aiHref,
+      description: apiInnovation?.description || AI_INNOVATION_CARD.description,
       tags: links.length ? links : AI_INNOVATION_CARD.tags,
     },
-    ...cards.filter((c) => c.variant !== "innovation"),
+    ...cards.filter((c) => c.variant !== "innovation").map(withSubServices),
   ];
 
   return (
@@ -37,7 +39,8 @@ export default function ServiceCatalog({ heading = SERVICE_CATALOG }) {
           tail={heading.tail}
         />
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {/* auto-rows-fr: every row as tall as the tallest, so all cards match in size. */}
+        <div className="mt-10 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((service, i) => (
             <Reveal key={service.title} delay={0.08 * i} className="h-full">
               {service.variant === "innovation" ? (

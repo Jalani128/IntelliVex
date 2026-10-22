@@ -4,6 +4,7 @@ import SectionHeading from "./SectionHeading";
 import ServiceCard from "./ServiceCard";
 import DecorSquares from "./DecorSquares";
 import { SERVICES } from "../data/home";
+import { withSubServices } from "../data/services";
 import { useApiData } from "../hooks/useApiData";
 import { fetchFeaturedServices, toServiceCard } from "../services/services";
 
@@ -14,7 +15,7 @@ export default function Services({ heading = SERVICES }) {
   // Featured services from the API (three cards in the design); built-in cards until then.
   const items = useApiData(
     fetchFeaturedServices,
-    (rows) => rows.slice(0, 3).map((s) => toServiceCard(s, SERVICES.items[0].icon)),
+    (rows) => rows.slice(0, 3).map((s) => withSubServices(toServiceCard(s, SERVICES.items[0].icon))),
     SERVICES.items,
   );
 
@@ -29,7 +30,7 @@ export default function Services({ heading = SERVICES }) {
           highlight={heading.highlight}
           tail={heading.tail}
           action={
-            <Button href="#services" variant="outline" size="sm">
+            <Button href="/services" variant="glow" size="sm">
               View All
             </Button>
           }

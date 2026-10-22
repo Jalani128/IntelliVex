@@ -46,7 +46,7 @@ export default function CTABanner({ content = CTA }) {
             </Reveal>
 
             <Reveal delay={0.2}>
-              <Button href={content.action.href} variant="light" size="sm" className="mt-6">
+              <Button href={content.action.href} variant="glow" size="sm" className="mt-6">
                 {content.action.label}
               </Button>
             </Reveal>

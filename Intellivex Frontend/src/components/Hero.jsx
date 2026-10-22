@@ -5,7 +5,7 @@ import Reveal from "./Reveal";
 import DecorSquares from "./DecorSquares";
 import ExperienceBadge from "./ExperienceBadge";
 import { HERO } from "../data/home";
-import heroArt from "../assets/hero.png";
+import HeroArt from "./HeroArt";
 
 /* Tile clusters scattered around the hero, each drifting on its own clock.
    On narrow screens they shift outward so they never sit under the copy. */
@@ -50,10 +50,10 @@ export default function Hero() {
             <div className="mt-8 flex flex-col items-center gap-8 lg:flex-row lg:flex-nowrap lg:items-start lg:gap-0">
               <Reveal delay={0.3} className="shrink-0">
                 <div className="flex flex-wrap items-center justify-center gap-4 lg:justify-start">
-                  <Button href="#contact" variant="light">
+                  <Button href="#contact" variant="glow">
                     Get Started
                   </Button>
-                  <Button href="#services" variant="primary">
+                  <Button href="/services" variant="glow">
                     Explore More
                   </Button>
                 </div>
@@ -65,21 +65,16 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Artwork */}
-          <motion.div
-            className="mt-10 flex justify-center lg:absolute lg:-right-[70px] lg:top-1/2 lg:mt-0 lg:w-[404px] lg:-translate-y-1/2"
-            initial={{ opacity: 0, scale: 0.86, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-          >
-            <motion.img
-              src={heroArt}
-              alt="Intellivex — strategic IT solutions"
+          {/* Artwork — GSAP builds it (HeroArt); the whole piece keeps its slow float. */}
+          <div className="mt-10 flex justify-center lg:absolute lg:-right-[70px] lg:top-1/2 lg:mt-0 lg:w-[404px] lg:-translate-y-1/2">
+            <motion.div
               className="w-[70%] max-w-[340px] drop-shadow-[0_30px_60px_rgba(6,86,243,0.45)] sm:w-[52%] lg:w-full lg:max-w-none"
               animate={reduced ? undefined : { y: [0, -18, 0] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
+            >
+              <HeroArt />
+            </motion.div>
+          </div>
         </div>
 
         {/* Partner logos */}

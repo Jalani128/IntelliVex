@@ -26,19 +26,25 @@ const App = () => (
       <Route path="/services" element={<Services />} />
       <Route path="/services/details" element={<ServiceDetail />} />
       <Route path="/services/data-science" element={<DataScience />} />
+
       {/* Any other service comes from the API by slug. */}
       <Route path="/services/:slug" element={<ServiceDetail />} />
+      {/* A sub-service of that service (its pills on the detail page link here). */}
+      <Route path="/services/:slug/:sub" element={<ServiceDetail />} />
       <Route path="/portfolio" element={<Portfolio />} />
+
       {/* Projects come from the API by slug; the old static detail URLs go to the list. */}
       <Route path="/portfolio/details" element={<Navigate to="/portfolio" replace />} />
       <Route path="/portfolio/:slug" element={<ProjectDetail />} />
       <Route path="/project/details" element={<Navigate to="/portfolio" replace />} />
       <Route path="/industries" element={<Industries />} />
+
       {/* Industries come from the API by slug; the old static detail URLs go to the list. */}
       <Route path="/industries/details" element={<Navigate to="/industries" replace />} />
       <Route path="/industries/:slug" element={<IndustryDetail />} />
       <Route path="/industry/details" element={<Navigate to="/industries" replace />} />
       <Route path="/testimonials" element={<Testimonials />} />
+
       {/* Clients come from the API by slug; the old static detail URLs go to the Testimonials page. */}
       <Route path="/client-portfolio/details" element={<Navigate to="/testimonials" replace />} />
       <Route path="/client-portfolio/:slug" element={<ClientPortfolioDetail />} />
@@ -49,6 +55,7 @@ const App = () => (
       <Route path="/partnership/details" element={<Partnership />} />
       <Route path="/partnership/:slug" element={<Partnership />} />
       <Route path="/products" element={<Products />} />
+      
       {/* Products come from the API by slug; the old static detail URLs go to the list. */}
       <Route path="/products/details" element={<Navigate to="/products" replace />} />
       <Route path="/products/:slug" element={<ProductDetail />} />

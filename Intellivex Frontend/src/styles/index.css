@@ -113,6 +113,40 @@
     @apply rounded-card border border-white/12 bg-white/[0.035];
   }
 
+  /* Glossy brand-blue button — soft light top-left, blue gradient, blue glow
+     ("CONTACT", "VIEW ALL", "CONTACT US"). Lifts and brightens on hover. */
+  .btn-glow {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background-image:
+      radial-gradient(120% 150% at 18% 0%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 46%),
+      linear-gradient(135deg, #3a82ff 0%, #0656f3 55%, #0447d8 100%);
+    box-shadow:
+      0 10px 24px -10px rgba(6, 86, 243, 0.85),
+      0 4px 10px -4px rgba(0, 0, 0, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+  /* Glossy blue tag pill — the sub-services on the service cards' hover face.
+     Same light-from-the-top-left gradient as .btn-glow, with a softer shadow. */
+  .tag-glow {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background-image:
+      radial-gradient(110% 160% at 15% 0%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%),
+      linear-gradient(135deg, #3a82ff 0%, #0656f3 55%, #0447d8 100%);
+    box-shadow:
+      0 6px 16px -8px rgba(6, 86, 243, 0.8),
+      0 3px 8px -4px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  .btn-glow:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow:
+      0 16px 32px -10px rgba(6, 86, 243, 0.95),
+      0 6px 14px -6px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  }
+
   
   .nav-pill {
     @apply relative cursor-pointer rounded-[8px] border border-transparent px-5 py-2.5 font-nav text-[16px] font-medium text-white;

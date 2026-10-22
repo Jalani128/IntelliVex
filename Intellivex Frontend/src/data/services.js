@@ -6,6 +6,8 @@ import webIcon from "../assets/webdev.png";
    frame — Cloud & Cybersecurity keeps "Cloud data.png". */
 import gameIcon from "../assets/cloud.png";
 import overviewImage from "../assets/services-overview.png";
+/* Solid white AI-chip glyph, drawn to match the other card icons. */
+import aiIcon from "../assets/ai-icon.svg";
 
 export const SERVICES_HEADER = {
   title: "Services",
@@ -26,11 +28,15 @@ export const SERVICES_OVERVIEW = {
 };
 
 /* Static AI & Data Innovation card — always the first card of the Services
-   page grid, whatever the API sends. No icon or description, just tag pills. */
+   page grid. Icon, heading, description and tag pills. The API's description
+   replaces this one when it answers. */
 export const AI_INNOVATION_CARD = {
   variant: "innovation",
+  icon: aiIcon,
   title: "AI &",
   highlight: "Data Innovation",
+  description:
+    "We turn your data into a competitive advantage with AI that automates work, predicts what’s next and unlocks new growth.",
   tags: [
     "AI & Data Innovation",
     "Data Science",
@@ -63,7 +69,7 @@ export const SERVICE_CATALOG = {
         "QA & Test Automation",
         "Legacy Modernization",
       ],
-      href: "/services/details",
+      href: "/services/engineering",
     },
     {
       icon: mobileIcon,
@@ -78,7 +84,7 @@ export const SERVICE_CATALOG = {
         "App Maintenance & Support",
         "App Store Optimization (ASO)",
       ],
-      href: "/services/details",
+      href: "/services/mobile-development",
     },
     {
       icon: cloudIcon,
@@ -93,7 +99,7 @@ export const SERVICE_CATALOG = {
         "Data Protection & Compliance",
         "Managed Cloud & FinOps",
       ],
-      href: "/services/details",
+      href: "/services/cloud-security",
     },
     {
       icon: webIcon,
@@ -108,7 +114,7 @@ export const SERVICE_CATALOG = {
         "Web UI/UX Design",
         "Website Care & Maintenance",
       ],
-      href: "/services/details",
+      href: "/services/web-development",
     },
     {
       /* No game icon has been supplied yet; this card keeps the existing mark. */
@@ -124,10 +130,34 @@ export const SERVICE_CATALOG = {
         "LiveOps & Post-Launch Updates",
         "Gamification & Educational Games",
       ],
-      href: "/services/details",
+      href: "/services/game-development",
     },
   ],
 };
+
+/*
+ * Sub-services per service, from the content file, keyed by service title.
+ * The API has no sub-service field yet, so cards fall back to these by name.
+ */
+const SUB_SERVICES = {
+  ...Object.fromEntries(SERVICE_CATALOG.items.map((item) => [item.title.toLowerCase(), item.tags])),
+  "ai & data innovation": [
+    "Generative AI Consulting",
+    "Agentic AI & AI Agents",
+    "Custom AI & LLM Development",
+    "Machine Learning & Predictive Analytics",
+    "Data Science & Business Intelligence",
+    "Intelligent Automation",
+    "AI Readiness Workshops",
+  ],
+};
+
+/** Sub-services of a service, by title, from the content file. */
+export const subServicesFor = (title) => SUB_SERVICES[title?.toLowerCase()] ?? [];
+
+/** Card with sub-services: its own (from the API) or the content file's for that service. */
+export const withSubServices = (card) =>
+  card.tags?.length ? card : { ...card, tags: subServicesFor(card.title) };
 
 /* Heading of "Recent Projects"; the cards are the first published projects from the API. */
 export const RECENT_PROJECTS = {

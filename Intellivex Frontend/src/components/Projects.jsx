@@ -41,7 +41,7 @@ export default function Projects({
           title={content.title}
           highlight={content.highlight}
           action={
-            <Button href="/portfolio" variant="outline" size="sm">
+            <Button href="/portfolio" variant="glow" size="sm">
               View All
             </Button>
           }

@@ -8,6 +8,8 @@ const VARIANTS = {
   primary: "bg-accent text-white hover:bg-white hover:text-navy",
   /* Hairline outline on dark — "VIEW ALL" */
   outline: "border border-white/25 text-white hover:border-white hover:bg-white hover:text-navy",
+  /* Glossy brand blue — the Home page buttons ("CONTACT", "VIEW ALL", "CONTACT US") */
+  glow: "btn-glow rounded-lg text-white",
   /* Bare text + arrow — "VIEW DETAILS" */
   ghost: "text-white hover:text-accent-soft",
 };

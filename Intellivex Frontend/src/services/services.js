@@ -1,4 +1,5 @@
 import { api } from "./api";
+import { subServicesFor } from "../data/services";
 
 /*
  * Public Services API (as deployed on the Laravel server):
@@ -91,6 +92,7 @@ export const toCatalogItem = (s, fallbackIcon) =>
     ? {
         variant: "innovation",
         ...splitTitle(s),
+        description: s.short_description,
         tags: cardTags(s),
         href: hrefOf(s),
       }
@@ -103,16 +105,39 @@ export const toCatalogItem = (s, fallbackIcon) =>
 export const toServiceLinks = (rows) =>
   rows.flatMap((s) => [s, ...(s.children ?? [])]).map((s) => ({ label: fullTitle(s), href: hrefOf(s) }));
 
-/** Header dropdown item. */
-export const toMenuItem = (s) => ({ label: fullTitle(s), href: hrefOf(s) });
+/** "DevOps & CI/CD" → "devops-ci-cd" — the sub-service part of /services/{slug}/{sub}. */
+export const subServiceSlug = (label) =>
+  label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 
 /**
- * Header dropdown list. The menu API returns top-level services with their
- * sub-services nested under `children`; a parent is listed as its sub-services
- * (Engineering, Mobile Development, …), a service without any as itself.
+ * A service's sub-services as links: its child services from Admin when it has
+ * any (each has its own page), otherwise its own `tags` — or the content file's
+ * list for it — opening /services/{slug}/{sub}.
  */
-export const toMenuItems = (rows) =>
-  rows.flatMap((s) => (s.children?.length ? s.children : [s])).map(toMenuItem);
+export function subServiceLinks(s) {
+  if (s.children?.length) return s.children.map((c) => ({ label: fullTitle(c), href: hrefOf(c) }));
+  const own = cardTags({ ...s, children: [] });
+  const labels = own.length ? own : subServicesFor(fullTitle(s));
+  return labels.map((label) => ({ label, href: `${hrefOf(s)}/${subServiceSlug(label)}` }));
+}
+
+/** Header dropdown item: a main service, with its sub-services for the side menu. */
+export const toMenuItem = (s) => ({
+  label: fullTitle(s),
+  href: hrefOf(s),
+  description: s.short_description,
+  icon: s.icon_url,
+  children: subServiceLinks(s),
+});
+
+/**
+ * Header dropdown list: the main services (top-level rows of the menu API, in
+ * sort order), each carrying its sub-services for the side menu.
+ */
+export const toMenuItems = (rows) => rows.map(toMenuItem);
 
 /**
  * Detail response → the three section components' `content` props.

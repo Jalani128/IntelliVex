@@ -27,7 +27,7 @@ export const SERVICE_STATUSES = [
 
 export const CARD_VARIANTS = [
   { value: 'default', label: 'Default card', hint: 'Icon, title, short description and tag pills.' },
-  { value: 'innovation', label: 'Innovation card', hint: 'No icon or description — title and tag pills only.' },
+  { value: 'innovation', label: 'Innovation card', hint: 'No icon — title, short description and tag pills.' },
 ]
 
 /** "AI &" + "Data Innovation" → "AI & Data Innovation" */

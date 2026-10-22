@@ -1,0 +1,30 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- AI chip: solid white body with "AI" cut out, pins on every side (matches the other card glyphs). -->
+  <defs>
+    <mask id="ai-cutout" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
+      <rect width="48" height="48" fill="white"/>
+      <!-- "A" -->
+      <path d="M15.2 31 L20.3 17 H23.7 L28.8 31 H25.6 L24.6 28 H19.4 L18.4 31 Z" fill="black"/>
+      <path d="M20.3 25.4 H23.7 L22 20.2 Z" fill="white"/>
+      <!-- "I" -->
+      <rect x="30.2" y="17" width="3" height="14" fill="black"/>
+    </mask>
+  </defs>
+  <g fill="white">
+    <rect x="10" y="10" width="28" height="28" rx="4.5" mask="url(#ai-cutout)"/>
+    <!-- pins: top / bottom -->
+    <rect x="15.5" y="3" width="3" height="5.5" rx="1.5"/>
+    <rect x="22.5" y="3" width="3" height="5.5" rx="1.5"/>
+    <rect x="29.5" y="3" width="3" height="5.5" rx="1.5"/>
+    <rect x="15.5" y="39.5" width="3" height="5.5" rx="1.5"/>
+    <rect x="22.5" y="39.5" width="3" height="5.5" rx="1.5"/>
+    <rect x="29.5" y="39.5" width="3" height="5.5" rx="1.5"/>
+    <!-- pins: left / right -->
+    <rect x="3" y="15.5" width="5.5" height="3" rx="1.5"/>
+    <rect x="3" y="22.5" width="5.5" height="3" rx="1.5"/>
+    <rect x="3" y="29.5" width="5.5" height="3" rx="1.5"/>
+    <rect x="39.5" y="15.5" width="5.5" height="3" rx="1.5"/>
+    <rect x="39.5" y="22.5" width="5.5" height="3" rx="1.5"/>
+    <rect x="39.5" y="29.5" width="5.5" height="3" rx="1.5"/>
+  </g>
+</svg>
