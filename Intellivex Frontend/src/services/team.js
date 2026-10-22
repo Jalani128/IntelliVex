@@ -1,10 +1,11 @@
 import { api } from "./api";
-import { siteHref, splitHeading } from "./portfolio";
+import { splitHeading } from "./portfolio";
 
 /*
  * Public Team API (TEAM_API.md):
- *   GET /api/team-section   "Our Leadership" heading, VIEW ALL button and up to
- *                           three published + featured members (by sort_order)
+ *   GET /api/team-section   "Our Leadership" heading and up to three published +
+ *                           featured members (by sort_order). Its VIEW ALL fields
+ *                           are ignored — the site has no team page to link to.
  */
 
 export const fetchTeamSection = () => api.get("team-section").then((r) => r.data.data);
@@ -35,7 +36,6 @@ export function toLeadership(data) {
     title: heading.highlight ? heading.lead : data.title,
     highlight: heading.highlight || data.highlight || "",
     tail: heading.tail,
-    action: data.show_view_all && data.view_all_label ? { label: data.view_all_label, href: siteHref(data.view_all_url) } : null,
     members: (data.members ?? []).map(toTeamMember),
   };
 }

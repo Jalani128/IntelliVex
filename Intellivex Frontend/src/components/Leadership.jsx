@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import Button from "./Button";
 import SectionHeading from "./SectionHeading";
 import TeamCard, { TeamCardSkeleton } from "./TeamCard";
 import { LEADERSHIP_HEADING } from "../data/about";
@@ -11,7 +10,7 @@ const PILL_BUTTON =
 
 const GRID = "grid gap-12 sm:grid-cols-2 lg:grid-cols-3";
 
-/** "Our Leadership" — heading, VIEW ALL button and members all come from GET /api/team-section. */
+/** "Our Leadership" — heading and members come from GET /api/team-section. No VIEW ALL button: there is no team page to link to. */
 export default function Leadership() {
   const [state, setState] = useState({ status: "loading", data: null });
   const alive = useRef(true);
@@ -44,13 +43,6 @@ export default function Leadership() {
           title={heading.title}
           highlight={heading.highlight}
           tail={heading.tail}
-          action={
-            heading.action && (
-              <Button href={heading.action.href} variant="light" size="sm">
-                {heading.action.label}
-              </Button>
-            )
-          }
         />
 
         <div className="mt-10 lg:mt-[38px]" aria-live="polite" aria-busy={status === "loading"}>
