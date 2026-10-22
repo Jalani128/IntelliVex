@@ -1,12 +1,9 @@
 import serviceImage from "../assets/serviceDetail.png";
+import { serviceDetailFor } from "./serviceDetails";
 
-/* Copy mirrors the Figma "Service Details" frame (node 186-621, 1440 × 2904),
-   which is set in the same placeholder text as the rest of the file. */
-const LOREM_LONG =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as faucibus ready pulvinar vulputate neque..semper. Ornare non nulla.";
-const LOREM_SHORT =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper.";
-const LOREM_LINE = "Lorem ipsum dolor sit amet consectetur adipiscing elit.";
+/* Layout mirrors the Figma "Service Details" frame (node 186-621, 1440 × 2904);
+   the copy is the AI & Data Innovation service document. */
+const AI_DOC = serviceDetailFor("AI & Data Innovation");
 
 export const SERVICE_DETAIL_HEADER = {
   title: "Service Details",
@@ -17,7 +14,7 @@ export const SERVICE_INTRO = {
   eyebrow: "Service",
   title: "AI &",
   highlight: "Data Innovation",
-  paragraphs: [LOREM_LONG, LOREM_SHORT],
+  paragraphs: AI_DOC.intro,
   /* The first pill is the service being viewed; the rest are its siblings. */
   tags: [
     { label: "AI & Data Innovation", active: true },
@@ -34,18 +31,11 @@ export const SERVICE_INTRO = {
 
 export const SERVICE_BENEFITS = {
   title: "Our Benefits",
-  description: LOREM_LONG,
-  items: Array.from({ length: 4 }, () => LOREM_LINE),
+  description: AI_DOC.benefits.description,
+  items: AI_DOC.benefits.items,
 };
 
 export const SERVICE_FAQ = {
   title: "Frequently Asked Questions",
-  items: [
-    { question: "Lorem ipsum dolor sit amet consectetur adipiscing elit." },
-    { question: "Lorem ipsum dolor sit amet elit." },
-    { question: "Lorem ipsum dolor sit consectetur adipiscing elit." },
-    { question: "Lorem ipsum dolor sit adipiscing elit." },
-    { question: "Lorem ipsum dolor sit amet consectetur." },
-    { question: "Loremamet consectetur adipiscing elit." },
-  ].map((item) => ({ ...item, answer: `${LOREM_SHORT} ${LOREM_SHORT}` })),
+  items: AI_DOC.faqs,
 };

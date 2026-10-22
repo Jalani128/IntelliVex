@@ -87,7 +87,7 @@ export function toAboutPage(d, fallback) {
       partners: {
         ...plate("partners", o.partners),
         rating: d.partners_rating ?? o.partners.rating,
-        logo: d.partners_logo_url ? { src: d.partners_logo_url, alt: o.partners.logo.alt } : o.partners.logo,
+        logo: d.partners_logo_url ? { src: d.partners_logo_url, alt: "Partner logo" } : o.partners.logo,
       },
       pillars: [plate("vision", o.pillars[0]), plate("mission", o.pillars[1])],
     },

@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 
 /**
  * The 306 × 324 plate that sits beside the About copy in the Figma
- * "About Us" frame: two-tone title, blurb, five stars and a partner logo.
+ * "About Us" frame: two-tone title, blurb, five stars and a partner logo (when the CMS has one).
  */
 export default function TrustedPartnersCard({
   title,
@@ -46,11 +46,13 @@ export default function TrustedPartnersCard({
           ))}
         </div>
 
-        <img
-          src={logo.src}
-          alt={logo.alt}
-          className="mt-6 h-6 w-auto opacity-90 transition-opacity duration-300 group-hover:opacity-100"
-        />
+        {logo?.src && (
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            className="mt-6 h-6 w-auto opacity-90 transition-opacity duration-300 group-hover:opacity-100"
+          />
+        )}
       </div>
     </motion.article>
   );

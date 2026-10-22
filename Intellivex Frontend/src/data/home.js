@@ -1,15 +1,6 @@
 import engineeringIcon from "../assets/Search.png";
 import mobileIcon from "../assets/Cellphone.png";
 import cloudIcon from "../assets/Cloud data.png";
-import logoipsumGlobe from "../assets/lg-h22.png";
-import logoipsumLeaf from "../assets/lg-h23.png";
-import logoipsumSquares from "../assets/lg-h24.png";
-
-/* Copy mirrors the Figma home page, which is set in placeholder text. */
-const LOREM_LONG =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as faucibus ready pulvinar vulputate neque..semper. Ornare non nulla.";
-const LOREM_SHORT =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper.";
 
 export const NAV_LINKS = [
   { label: "Home", href: "#home" },
@@ -41,14 +32,7 @@ export const HERO = {
   titleLine1: "Transform Your Business",
   titleLine2: "Through Strategic",
   highlight: "IT Solutions",
-  description: LOREM_LONG,
   stat: { value: "10+", label: "Years Of Experience" },
-  logos: [
-    { src: logoipsumGlobe, alt: "Logoipsum" },
-    { src: logoipsumLeaf, alt: "Logoipsum" },
-    { src: logoipsumSquares, alt: "Logoipsum" },
-    { src: logoipsumLeaf, alt: "Logoipsum" },
-  ],
 };
 
 export const DIFFERENTIATORS = {
@@ -140,13 +124,6 @@ export const TESTIMONIALS = {
   eyebrow: "Testimonials",
   title: "Real",
   highlight: "Reviews",
-  items: Array.from({ length: 3 }, () => ({
-    rating: 5,
-    quote: LOREM_SHORT,
-    name: "Intellivex",
-    role: "Business Solutions",
-    initials: "IV",
-  })),
 };
 
 export const FOOTER_LINKS = [
