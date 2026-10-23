@@ -20,8 +20,9 @@ export const NAV_LINKS = [
     ],
   },
   // Products / Industries pages are hidden until their content is ready (routes redirect in App.jsx).
-  { label: "Products", href: "/products" },
-  { label: "Industries", href: "/industries" },
+  // To re-enable them, restore:
+  //   { label: "Products", href: "/products" },
+  //   { label: "Industries", href: "/industries" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Partnerships", href: "/partnerships" },
