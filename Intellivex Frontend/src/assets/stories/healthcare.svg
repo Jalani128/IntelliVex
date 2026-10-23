@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#131f4e"/><stop offset="1" stop-color="#22336f"/></linearGradient>
+    <radialGradient id="glow" cx="0.72" cy="0.3" r="0.6"><stop offset="0" stop-color="#3076ff" stop-opacity="0.55"/><stop offset="1" stop-color="#3076ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="ac" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3076ff"/><stop offset="1" stop-color="#b9cdf2"/></linearGradient>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="2" fill="#ffffff" fill-opacity="0.06"/></pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#dots)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+
+  <!-- Patient dashboard -->
+  <rect x="190" y="150" width="700" height="460" rx="28" fill="#0e1a47" stroke="#3076ff" stroke-opacity="0.45" stroke-width="2"/>
+  <rect x="190" y="150" width="700" height="64" rx="28" fill="#ffffff" fill-opacity="0.04"/>
+  <circle cx="232" cy="182" r="8" fill="#3076ff"/><circle cx="260" cy="182" r="8" fill="#b9cdf2" fill-opacity="0.6"/><circle cx="288" cy="182" r="8" fill="#ffffff" fill-opacity="0.25"/>
+
+  <!-- Heart-rate line -->
+  <path d="M230 380 H360 L390 300 L430 460 L470 330 L500 380 H600 L625 345 L650 380 H850" fill="none" stroke="url(#ac)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Vitals tiles -->
+  <rect x="230" y="470" width="190" height="100" rx="18" fill="#ffffff" fill-opacity="0.06"/>
+  <rect x="250" y="495" width="80" height="14" rx="7" fill="#b9cdf2" fill-opacity="0.5"/><rect x="250" y="525" width="130" height="22" rx="11" fill="#ffffff" fill-opacity="0.85"/>
+  <rect x="445" y="470" width="190" height="100" rx="18" fill="#ffffff" fill-opacity="0.06"/>
+  <rect x="465" y="495" width="80" height="14" rx="7" fill="#b9cdf2" fill-opacity="0.5"/><rect x="465" y="525" width="110" height="22" rx="11" fill="#ffffff" fill-opacity="0.85"/>
+  <rect x="660" y="470" width="190" height="100" rx="18" fill="#ffffff" fill-opacity="0.06"/>
+  <rect x="680" y="495" width="80" height="14" rx="7" fill="#b9cdf2" fill-opacity="0.5"/><rect x="680" y="525" width="140" height="22" rx="11" fill="#ffffff" fill-opacity="0.85"/>
+
+  <!-- Medical cross badge -->
+  <circle cx="900" cy="560" r="120" fill="url(#ac)"/>
+  <path d="M875 495 h50 v40 h40 v50 h-40 v40 h-50 v-40 h-40 v-50 h40 z" fill="#ffffff"/>
+
+  <!-- Connected care nodes -->
+  <circle cx="980" cy="230" r="34" fill="#0e1a47" stroke="#b9cdf2" stroke-width="4"/>
+  <circle cx="1060" cy="340" r="24" fill="#0e1a47" stroke="#3076ff" stroke-width="4"/>
+  <path d="M890 300 L950 250 M1000 260 L1045 320" stroke="#b9cdf2" stroke-opacity="0.5" stroke-width="4" stroke-dasharray="8 10"/>
+</svg>
