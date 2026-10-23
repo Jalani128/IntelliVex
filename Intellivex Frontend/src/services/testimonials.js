@@ -1,5 +1,6 @@
 import { api } from "./api";
 import { siteHref, splitHeading } from "./portfolio";
+import { storyIllustrationFor } from "../data/testimonials";
 
 /*
  * Public Testimonials / Client Stories API (testimonials-backend-spec.md §6):
@@ -44,14 +45,21 @@ export const toReview = (r) => ({
   avatar: r.avatar_url,
 });
 
-/** Success-story card. `fallbackImage` covers stories without an image. */
-export const toStory = (s, fallbackImage) => ({
-  id: s.id,
-  title: s.title,
-  image: s.image_url || fallbackImage,
-  fallbackImage,
-  href: siteHref(s.link),
-});
+/**
+ * Success-story card. Stories without an uploaded image get the industry
+ * illustration matching their title / client (`context` adds text such as the
+ * client's industry), else `fallbackImage`.
+ */
+export const toStory = (s, fallbackImage, context = "") => {
+  const art = storyIllustrationFor(`${s.title ?? ""} ${s.client?.name ?? ""} ${context}`) || fallbackImage;
+  return {
+    id: s.id,
+    title: s.title,
+    image: s.image_url || art,
+    fallbackImage: art,
+    href: siteHref(s.link),
+  };
+};
 
 /** GET /api/testimonials-page → section props. */
 export function toTestimonialsPage(data, { eyebrows, fallbackStoryImage }) {
@@ -94,7 +102,9 @@ export function toTestimonialsPage(data, { eyebrows, fallbackStoryImage }) {
 /** GET /api/clients/{slug} → Client Portfolio Details props. */
 export function toClientDetail(c, { eyebrow, fallbackStoryImage }) {
   const heading = c.heading || c.portfolio_heading || c.name;
-  const stories = (c.success_stories ?? []).map((s) => toStory(s, fallbackStoryImage));
+  const clientText = `${c.name ?? ""} ${c.industry ?? ""}`;
+  const stories = (c.success_stories ?? []).map((s) => toStory(s, fallbackStoryImage, clientText));
+  const clientArt = storyIllustrationFor(clientText) || fallbackStoryImage;
   return {
     hero: {
       eyebrow: c.industry || eyebrow,
@@ -109,8 +119,8 @@ export function toClientDetail(c, { eyebrow, fallbackStoryImage }) {
       ? {
           title: "Success Stories",
           html: c.success_story,
-          // The client's first related story image, else the placeholder.
-          image: { src: stories[0]?.image || fallbackStoryImage, alt: stories[0]?.title || c.name, fallback: fallbackStoryImage },
+          // The client's first related story image, else its industry illustration.
+          image: { src: stories[0]?.image || clientArt, alt: stories[0]?.title || c.name, fallback: clientArt },
         }
       : null,
     stories,

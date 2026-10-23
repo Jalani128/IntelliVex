@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#131f4e"/><stop offset="1" stop-color="#22336f"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.25" r="0.6"><stop offset="0" stop-color="#3076ff" stop-opacity="0.5"/><stop offset="1" stop-color="#3076ff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="ac" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3076ff"/><stop offset="1" stop-color="#b9cdf2"/></linearGradient>
+    <pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="2" fill="#ffffff" fill-opacity="0.06"/></pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#dots)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+
+  <!-- Map grid -->
+  <g stroke="#b9cdf2" stroke-opacity="0.12" stroke-width="3">
+    <path d="M0 560 H1200 M0 660 H1200 M180 460 V800 M480 460 V800 M780 460 V800 M1050 460 V800"/>
+  </g>
+
+  <!-- Skyline -->
+  <rect x="120" y="300" width="120" height="300" rx="10" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="930" y="250" width="140" height="350" rx="10" fill="#ffffff" fill-opacity="0.05"/>
+  <rect x="1080" y="360" width="80" height="240" rx="10" fill="#ffffff" fill-opacity="0.04"/>
+
+  <!-- House -->
+  <path d="M390 380 L600 210 L810 380" fill="none" stroke="url(#ac)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="440" y="370" width="320" height="250" rx="16" fill="#0e1a47" stroke="#3076ff" stroke-opacity="0.6" stroke-width="3"/>
+  <rect x="560" y="490" width="80" height="130" rx="10" fill="url(#ac)"/>
+  <rect x="475" y="410" width="70" height="60" rx="8" fill="#b9cdf2" fill-opacity="0.55"/>
+  <rect x="655" y="410" width="70" height="60" rx="8" fill="#b9cdf2" fill-opacity="0.55"/>
+
+  <!-- Location pins -->
+  <path d="M250 520 c-30 0 -50 22 -50 48 c0 36 50 82 50 82 s50 -46 50 -82 c0 -26 -20 -48 -50 -48z" fill="url(#ac)"/>
+  <circle cx="250" cy="566" r="16" fill="#0e1a47"/>
+  <path d="M960 500 c-26 0 -44 20 -44 42 c0 32 44 72 44 72 s44 -40 44 -72 c0 -22 -18 -42 -44 -42z" fill="#b9cdf2"/>
+  <circle cx="960" cy="540" r="14" fill="#0e1a47"/>
+
+  <!-- Search bar -->
+  <rect x="330" y="80" width="540" height="76" rx="38" fill="#ffffff" fill-opacity="0.08" stroke="#b9cdf2" stroke-opacity="0.35" stroke-width="2"/>
+  <circle cx="385" cy="118" r="16" fill="none" stroke="#b9cdf2" stroke-width="5"/><path d="M397 130 L410 143" stroke="#b9cdf2" stroke-width="5" stroke-linecap="round"/>
+  <rect x="430" y="108" width="240" height="20" rx="10" fill="#ffffff" fill-opacity="0.35"/>
+  <rect x="760" y="92" width="96" height="52" rx="26" fill="url(#ac)"/>
+</svg>

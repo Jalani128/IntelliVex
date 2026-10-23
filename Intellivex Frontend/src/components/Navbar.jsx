@@ -71,8 +71,10 @@ function ServicesMegaMenu({ link, active, onSelect }) {
         <span aria-hidden="true" className="absolute inset-x-0 top-full h-8" />
       </SiteLink>
 
-      <div className="invisible absolute inset-x-0 top-full translate-y-2 px-6 opacity-0 transition-all duration-300 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-        <div className="mx-auto grid w-full max-w-[1080px] grid-cols-[340px_minmax(0,1fr)] overflow-hidden rounded-card border border-white/12 bg-navy-soft bg-card-glow shadow-[0_20px_45px_rgba(0,0,0,0.45)]">
+      {/* The wrapper spans the whole header but ignores the pointer, so only the card itself
+          keeps the menu open — moving off its left or right edge closes it. */}
+      <div className="pointer-events-none invisible absolute inset-x-0 top-full translate-y-2 px-6 opacity-0 transition-all duration-300 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="pointer-events-auto mx-auto grid w-full max-w-[1080px] grid-cols-[340px_minmax(0,1fr)] overflow-hidden rounded-card border border-white/12 bg-navy-soft bg-card-glow shadow-[0_20px_45px_rgba(0,0,0,0.45)]">
           {/* Main services */}
           <ul className="space-y-1 border-r border-white/10 bg-navy-deep/60 p-3">
             {items.map((item, i) => {
