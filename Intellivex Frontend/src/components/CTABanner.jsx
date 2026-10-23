@@ -39,11 +39,13 @@ export default function CTABanner({ content = CTA }) {
               </h2>
             </Reveal>
 
-            <Reveal delay={0.1}>
-              <p className="mt-3 max-w-[400px] font-body text-[14px] leading-[1.6] text-white/85">
-                {content.description}
-              </p>
-            </Reveal>
+            {content.description && (
+              <Reveal delay={0.1}>
+                <p className="mt-3 max-w-[400px] font-body text-[14px] leading-[1.6] text-white/85">
+                  {content.description}
+                </p>
+              </Reveal>
+            )}
 
             <Reveal delay={0.2}>
               <Button href={content.action.href} variant="glow" size="sm" className="mt-6">

@@ -58,11 +58,13 @@ export default function Partnership() {
               </h2>
             </Reveal>
 
-            <Reveal delay={0.14}>
-              <p className="mt-4 max-w-[780px] font-body text-[14px] leading-[1.7] text-white/75 sm:text-[15px]">
-                {PASSION_SECTION.description}
-              </p>
-            </Reveal>
+            {PASSION_SECTION.description && (
+              <Reveal delay={0.14}>
+                <p className="mt-4 max-w-[780px] font-body text-[14px] leading-[1.7] text-white/75 sm:text-[15px]">
+                  {PASSION_SECTION.description}
+                </p>
+              </Reveal>
+            )}
 
             <Reveal delay={0.2}>
               <Button href={PASSION_SECTION.action.href} variant="light" size="sm" className="mt-6">
@@ -72,7 +74,8 @@ export default function Partnership() {
           </div>
         </section>
 
-        {/* Section 2: Technology & Strategic Partners */}
+        {/* Section 2: Technology & Strategic Partners — hidden until it has copy or logos */}
+        {(STRATEGIC_PARTNERS.description || STRATEGIC_PARTNERS.logos.length > 0) && (
         <section id="strategic-partners" className="relative bg-navy py-12 sm:py-16 lg:py-20">
           <div className="container-narrow relative">
             <Reveal>
@@ -86,13 +89,16 @@ export default function Partnership() {
               </h2>
             </Reveal>
 
-            <Reveal delay={0.14}>
-              <p className="mt-4 max-w-[780px] font-body text-[14px] leading-[1.7] text-white/75 sm:text-[15px]">
-                {STRATEGIC_PARTNERS.description}
-              </p>
-            </Reveal>
+            {STRATEGIC_PARTNERS.description && (
+              <Reveal delay={0.14}>
+                <p className="mt-4 max-w-[780px] font-body text-[14px] leading-[1.7] text-white/75 sm:text-[15px]">
+                  {STRATEGIC_PARTNERS.description}
+                </p>
+              </Reveal>
+            )}
 
             {/* 4 Logos Row */}
+            {STRATEGIC_PARTNERS.logos.length > 0 && (
             <Reveal delay={0.2}>
               <div className="mt-10 grid grid-cols-2 items-center gap-8 sm:grid-cols-4 sm:gap-10 lg:mt-14">
                 {STRATEGIC_PARTNERS.logos.map((logo, idx) => (
@@ -115,10 +121,13 @@ export default function Partnership() {
                 ))}
               </div>
             </Reveal>
+            )}
           </div>
         </section>
+        )}
 
-        {/* Section 3: Partner / Integration Logos (3x2 Grid) */}
+        {/* Section 3: Partner / Integration Logos (3x2 Grid) — hidden until it has logos */}
+        {INTEGRATION_LOGOS.items.length > 0 && (
         <section id="integration-logos" className="relative bg-navy py-12 sm:py-16 lg:py-20">
           <div className="container-narrow relative">
             <Reveal>
@@ -157,6 +166,7 @@ export default function Partnership() {
             </Reveal>
           </div>
         </section>
+        )}
 
         {/* Section 4: Technology Integrations (Video Player Card) */}
         <section id="tech-integrations" className="relative bg-navy py-12 sm:py-16 lg:py-20">
@@ -247,9 +257,11 @@ export default function Partnership() {
                         {card.title}
                       </h3>
 
-                      <p className="mt-3 font-body text-[13.5px] leading-[1.65] text-white/70">
-                        {card.description}
-                      </p>
+                      {card.description && (
+                        <p className="mt-3 font-body text-[13.5px] leading-[1.65] text-white/70">
+                          {card.description}
+                        </p>
+                      )}
                     </div>
                   </article>
                 </Reveal>

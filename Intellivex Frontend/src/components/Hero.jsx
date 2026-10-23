@@ -40,11 +40,13 @@ export default function Hero() {
               </h1>
             </Reveal>
 
-            <Reveal delay={0.2}>
-              <p className="mx-auto mt-5 max-w-[560px] font-body text-[15px] leading-[1.55] text-white/75 lg:mx-0">
-                {HERO.description}
-              </p>
-            </Reveal>
+            {HERO.description && (
+              <Reveal delay={0.2}>
+                <p className="mx-auto mt-5 max-w-[560px] font-body text-[15px] leading-[1.55] text-white/75 lg:mx-0">
+                  {HERO.description}
+                </p>
+              </Reveal>
+            )}
 
             {/* Buttons and the stat plate share a row on desktop, as in Figma. */}
             <div className="mt-8 flex flex-col items-center gap-8 lg:flex-row lg:flex-nowrap lg:items-start lg:gap-0">
@@ -78,6 +80,7 @@ export default function Hero() {
         </div>
 
         {/* Partner logos */}
+        {HERO.logos?.length > 0 && (
         <Reveal delay={0.5}>
          <ul className="mx-auto mt-12 flex max-w-[1060px] items-center justify-between px-4 md:mt-16 md:px-0 lg:mt-[90px]">
   {HERO.logos.map((logo, i) => (
@@ -101,6 +104,7 @@ export default function Hero() {
   ))}
 </ul>
         </Reveal>
+        )}
       </div>
     </section>
   );

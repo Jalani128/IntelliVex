@@ -1,21 +1,12 @@
 import story1 from "../assets/story1.png";
 import suquare from "../assets/suquare.png";
 import playIcon from "../assets/playicon.png";
-import lgGlobe from "../assets/lg-h22.png";
-import lgLeaf from "../assets/lg-h23.png";
-import lgSquares from "../assets/lg-h24.png";
-import logoWave from "../assets/testimonial1.png";
-import logoOrange from "../assets/testimonial2.png";
-import logoLgpsm from "../assets/testimonial3.png";
 import searchIcon from "../assets/Search.png";
 import mobileIcon from "../assets/Cellphone.png";
 import cloudIcon from "../assets/Cloud data.png";
 
-const LOREM_LONG =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as faucibus ready pulvinar vulputate neque..semper. Ornare non nulla.";
-
-const LOREM_SHORT =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper.";
+/* The Figma placeholder copy and "Logoipsum" logos were removed; sections without
+   text or logos are hidden by the page until real content is added. */
 
 export const PARTNERSHIP_HEADER = {
   title: "Partnerships",
@@ -31,42 +22,27 @@ export const PASSION_SECTION = {
   titleLine1: "Passion and innovation Shape",
   highlight: "our",
   titleTail: "Journey",
-  description: LOREM_LONG,
   action: {
     label: "LET'S TALK TOGETHER",
     href: "/contact",
   },
 };
 
-/* Section 2: Technology & Strategic Partners + 4 logos */
+/* Section 2: Technology & Strategic Partners — description and logo row */
 export const STRATEGIC_PARTNERS = {
   eyebrow: "OVERVIEW",
   titleLine: "Technology & Strategic",
   highlight: "Partners",
-  description: LOREM_LONG,
-  logos: [
-    { src: lgGlobe, alt: "Logoipsum Globe" },
-    { src: lgLeaf, alt: "Logoipsum Leaf" },
-    { src: lgSquares, alt: "Logoipsum Dots" },
-    { src: lgLeaf, alt: "Logoipsum Leaf" },
-  ],
+  description: "",
+  logos: [],
 };
 
-/* Section 3: Partner / Integration Logos (3x2 Grid)
-   Row 1: Wave (testimonial1), LGPSM (testimonial3), Orange (testimonial2)
-   Row 2: LGPSM (testimonial3), Orange (testimonial2), Wave (testimonial1) */
+/* Section 3: Partner / Integration Logos (3x2 Grid) — { id, name, logo } */
 export const INTEGRATION_LOGOS = {
   eyebrow: "OVERVIEW",
   titleLine: "Partner / Integration",
   highlight: "Logos",
-  items: [
-    { id: 1, name: "Cloud Partner", logo: logoWave, slug: "1" },
-    { id: 2, name: "LGPSM", logo: logoLgpsm, slug: "2" },
-    { id: 3, name: "Geometric Partner", logo: logoOrange, slug: "3" },
-    { id: 4, name: "LGPSM", logo: logoLgpsm, slug: "4" },
-    { id: 5, name: "Geometric Partner", logo: logoOrange, slug: "5" },
-    { id: 6, name: "Cloud Partner", logo: logoWave, slug: "6" },
-  ],
+  items: [],
 };
 
 /* Section 4: Technology Integrations video container */
@@ -92,17 +68,14 @@ export const SUPPORTED_PLATFORMS = {
     {
       icon: searchIcon,
       title: "Engineering",
-      description: LOREM_SHORT,
     },
     {
       icon: mobileIcon,
       title: "Mobile Development",
-      description: LOREM_SHORT,
     },
     {
       icon: cloudIcon,
       title: "Cloud & Security",
-      description: LOREM_SHORT,
     },
   ],
 };
@@ -111,8 +84,6 @@ export const SUPPORTED_PLATFORMS = {
 export const PARTNERSHIP_CTA = {
   titleLine1: "Become a Partner or Discuss",
   titleLine2: "Integration",
-  description:
-    "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam do",
   action: { label: "BECOME A PARTNER", href: "/contact" },
 };
 
@@ -122,19 +93,12 @@ export const DEFAULT_PARTNERSHIP_DATA = {
   titleLine1: "Empowering Businesses With Advanced",
   highlight: "Tech",
   titleTail: "Solutions",
-  paragraphs: [
-    LOREM_LONG,
-    LOREM_SHORT,
-    `${LOREM_LONG} Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as faucibus ready pulvinar vulputate neque..semper. Ornare non nulla.`,
-  ],
+  paragraphs: [],
   partnerLogoType: "geometric",
 
   successStory: {
     title: "Success Stories",
-    paragraphs: [
-      LOREM_LONG,
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as",
-    ],
+    paragraphs: [],
     image: {
       src: story1,
       alt: "Strategic enterprise technology partnership collaboration",

@@ -1,12 +1,9 @@
 import dataScienceImage from "../assets/dataScience.png";
+import { serviceDetailFor } from "./serviceDetails";
 
-/* Copy mirrors the Figma "Data Science" frame (node 198-1090, 1440 wide). The
-   body copy is placeholder text; the contact block is real. */
-const LOREM_LONG =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as faucibus ready pulvinar vulputate neque..semper. Ornare non nulla.";
-const LOREM_SHORT =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper.";
-const LOREM_LINE = "Lorem ipsum dolor sit amet consectetur adipiscing elit.";
+/* Layout mirrors the Figma "Data Science" frame (node 198-1090, 1440 wide); the
+   body copy is the "Data Science & Business Intelligence" service document. */
+const DOC = serviceDetailFor("AI & Data Innovation", "Data Science & Business Intelligence");
 
 export const DATA_SCIENCE_HEADER = {
   title: "Data Science",
@@ -18,7 +15,7 @@ export const DATA_SCIENCE_INTRO = {
   eyebrow: "Service",
   title: "Data",
   highlight: "Science",
-  paragraphs: [LOREM_LONG, LOREM_SHORT],
+  paragraphs: DOC.intro,
   image: {
     src: dataScienceImage,
     alt: "Neural network layers over source code",
@@ -29,8 +26,8 @@ export const DATA_SCIENCE_INTRO = {
 
 export const DATA_SCIENCE_BENEFITS = {
   title: "Our Benefits",
-  description: LOREM_LONG,
-  items: Array.from({ length: 4 }, () => LOREM_LINE),
+  description: DOC.benefits.description,
+  items: DOC.benefits.items,
 };
 
 export const CONSULTATION = {

@@ -1,4 +1,3 @@
-import logoipsumPinwheel from "../assets/lg-h23.png";
 import { CTA, DIFFERENTIATORS } from "./home";
 
 export const ABOUT_HEADER = {
@@ -21,7 +20,6 @@ export const OVERVIEW = {
     description:
       "From fast-moving startups to global enterprises, organizations choose IntelliVex for innovation they can rely on and delivery they can count on.",
     rating: 5,
-    logo: { src: logoipsumPinwheel, alt: "Logoipsum" },
   },
   pillars: [
     {
@@ -74,7 +72,7 @@ export const PROCESS = {
 export const ABOUT_DIFFERENTIATORS = DIFFERENTIATORS;
 
 /* "Our Leadership" heading shown while GET /api/team-section loads (or if it fails);
-   the heading, VIEW ALL button and members all come from the API. Matches the API defaults. */
+   the heading and members come from the API. Matches the API defaults. */
 export const LEADERSHIP_HEADING = {
   eyebrow: "TEAM MEMBERS",
   title: "Our",

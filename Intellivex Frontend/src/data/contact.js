@@ -1,6 +1,3 @@
-const LOREM_LONG =
-  "Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer quam dolor nunc semper. Ornare non nulla as faucibus ready pulvinar vulputate neque..semper. Ornare non nulla.";
-
 export const CONTACT_HEADER = {
   title: "Contact Us",
   breadcrumbs: [{ label: "Home", to: "/" }, { label: "Contact Us" }],
