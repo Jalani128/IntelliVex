@@ -19,6 +19,7 @@ export const NAV_LINKS = [
       { label: "Game Development", href: "/services/game-development" },
     ],
   },
+  // Products / Industries pages are hidden until their content is ready (routes redirect in App.jsx).
   { label: "Products", href: "/products" },
   { label: "Industries", href: "/industries" },
   { label: "Portfolio", href: "/portfolio" },

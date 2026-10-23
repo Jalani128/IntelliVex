@@ -37,12 +37,10 @@ const App = () => (
       <Route path="/portfolio/details" element={<Navigate to="/portfolio" replace />} />
       <Route path="/portfolio/:slug" element={<ProjectDetail />} />
       <Route path="/project/details" element={<Navigate to="/portfolio" replace />} />
-      <Route path="/industries" element={<Industries />} />
-
-      {/* Industries come from the API by slug; the old static detail URLs go to the list. */}
-      <Route path="/industries/details" element={<Navigate to="/industries" replace />} />
-      <Route path="/industries/:slug" element={<IndustryDetail />} />
-      <Route path="/industry/details" element={<Navigate to="/industries" replace />} />
+      {/* Industries hidden until content is ready — to re-enable, restore:
+          /industries → <Industries />, /industries/:slug → <IndustryDetail />, and the nav link in data/home.js */}
+      <Route path="/industries/*" element={<Navigate to="/" replace />} />
+      <Route path="/industry/*" element={<Navigate to="/" replace />} />
       <Route path="/testimonials" element={<Testimonials />} />
 
       {/* Clients come from the API by slug; the old static detail URLs go to the Testimonials page. */}
@@ -54,12 +52,10 @@ const App = () => (
       <Route path="/partnership" element={<Partnership />} />
       <Route path="/partnership/details" element={<Partnership />} />
       <Route path="/partnership/:slug" element={<Partnership />} />
-      <Route path="/products" element={<Products />} />
-      
-      {/* Products come from the API by slug; the old static detail URLs go to the list. */}
-      <Route path="/products/details" element={<Navigate to="/products" replace />} />
-      <Route path="/products/:slug" element={<ProductDetail />} />
-      <Route path="/product/details" element={<Navigate to="/products" replace />} />
+      {/* Products hidden until content is ready — to re-enable, restore:
+          /products → <Products />, /products/:slug → <ProductDetail />, and the nav link in data/home.js */}
+      <Route path="/products/*" element={<Navigate to="/" replace />} />
+      <Route path="/product/*" element={<Navigate to="/" replace />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
