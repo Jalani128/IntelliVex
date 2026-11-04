@@ -6,11 +6,11 @@ import { FOOTER_LINKS } from "../data/home";
 import logo from "../assets/logo.svg";
 
 const SOCIAL_LINKS = [
-  { Icon: FaYoutube, label: "YouTube", href: "https://youtube.com" },
-  { Icon: FaFacebookF, label: "Facebook", href: "https://facebook.com" },
-  { Icon: FaXTwitter, label: "Twitter", href: "https://twitter.com" },
-  { Icon: FaInstagram, label: "Instagram", href: "https://instagram.com" },
-  { Icon: FaLinkedinIn, label: "LinkedIn", href: "https://linkedin.com" },
+  { Icon: FaYoutube, label: "YouTube", href: "#" },
+  { Icon: FaFacebookF, label: "Facebook", href: "#" },
+  { Icon: FaXTwitter, label: "Twitter", href: "#" },
+  { Icon: FaInstagram, label: "Instagram", href: "#" },
+  { Icon: FaLinkedinIn, label: "LinkedIn", href: "#" },
 ];
 
 export default function Footer() {
@@ -53,8 +53,7 @@ export default function Footer() {
                 key={label}
                 href={href}
                 aria-label={label}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={(e) => e.preventDefault()}
                 className="inline-flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-0.5 hover:text-accent-soft"
               >
                 <Icon className="w-4 h-4" />
