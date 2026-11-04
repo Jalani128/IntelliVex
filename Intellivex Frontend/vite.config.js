@@ -6,7 +6,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
   return {
-    base: mode === 'production' ? '/demo/' : '/',
+    // Served from the domain root (https://theintellivex.com/).
+    base: '/',
     plugins: [
       react(),
       tailwindcss(),
