@@ -5,8 +5,8 @@ import searchIcon from "../assets/Search.png";
 import mobileIcon from "../assets/Cellphone.png";
 import cloudIcon from "../assets/Cloud data.png";
 
-/* The Figma placeholder copy and "Logoipsum" logos were removed; sections without
-   text or logos are hidden by the page until real content is added. */
+/* Copy from "Intellivex Partnerships Page Content" (4 sections: overview,
+   platforms, capabilities, CTA). Sections the document doesn't cover are hidden. */
 
 export const PARTNERSHIP_HEADER = {
   title: "Partnerships",
@@ -16,24 +16,39 @@ export const PARTNERSHIP_HEADER = {
   ],
 };
 
-/* Section 1: Hero statement */
+/* Section 1: Hero / Overview */
 export const PASSION_SECTION = {
-  eyebrow: "OVERVIEW",
-  titleLine1: "Passion and innovation Shape",
-  highlight: "our",
-  titleTail: "Journey",
+  eyebrow: "PARTNER WITH INTELLIVEX",
+  titleLine1: "Better Technology,",
+  highlight: "Built Together",
+  titleTail: "",
+  description:
+    "We team up with software vendors, agencies and platform providers to deliver solutions none of us could build as well alone. You bring your product or your clients; we bring dependable engineering, clear communication and long-term support.",
   action: {
-    label: "LET'S TALK TOGETHER",
+    label: "LET'S TALK PARTNERSHIP",
     href: "/contact",
   },
 };
 
-/* Section 2: Technology & Strategic Partners — description and logo row */
+/*
+ * Section 2: Platforms we build on. Keep the heading as "Platforms We Build On"
+ * until Intellivex holds an official partner status (e.g. an AWS Partner Network
+ * listing); then it can become "Our Technology Partners" with the official badge.
+ * `platforms` lists tools by name — add `logos` ({ src, alt }) only with official
+ * logo files, following each brand's logo rules.
+ */
 export const STRATEGIC_PARTNERS = {
-  eyebrow: "OVERVIEW",
-  titleLine: "Technology & Strategic",
-  highlight: "Partners",
-  description: "",
+  eyebrow: "OUR ECOSYSTEM",
+  titleLine: "The Platforms",
+  highlight: "We Build On",
+  description:
+    "We work with proven, widely trusted platforms so your product rests on a stable, secure foundation. Our approach is pragmatic: we pick the tools that suit your goals and budget, not whatever is trending this month.",
+  platforms: [
+    { category: "Cloud", names: ["AWS", "Microsoft Azure", "Google Cloud"] },
+    { category: "Web & mobile", names: ["React", "Node.js", "Flutter"] },
+    { category: "DevOps", names: ["Docker", "Kubernetes", "GitHub"] },
+    { category: "Business tools", names: ["Stripe", "Shopify", "HubSpot"] },
+  ],
   logos: [],
 };
 
@@ -45,8 +60,10 @@ export const INTEGRATION_LOGOS = {
   items: [],
 };
 
-/* Section 4: Technology Integrations video container */
+/* Section 4: Technology Integrations video container — not in the content document,
+   and there is no video yet, so it is hidden. Set `show: true` once a video exists. */
 export const TECH_INTEGRATIONS = {
+  show: false,
   eyebrow: "OVERVIEW",
   titleLine: "Technology",
   highlight: "Integrations",
@@ -55,35 +72,43 @@ export const TECH_INTEGRATIONS = {
   videoAlt: "Technology Integrations Video",
 };
 
-/* Section 5: Platforms & Technologies Supported */
+/* Section 5: Capabilities cards */
 export const SUPPORTED_PLATFORMS = {
-  eyebrow: "OVERVIEW",
-  titleLine: "Platforms & Technologies",
-  highlight: "Supported",
+  eyebrow: "WHAT WE BRING",
+  titleLine: "Expertise That",
+  highlight: "Powers Integration",
   action: {
-    label: "VIEW ALL",
+    label: "VIEW ALL SERVICES",
     href: "/services",
   },
   items: [
     {
       icon: searchIcon,
-      title: "Engineering",
+      title: "Custom Engineering",
+      description:
+        "Robust web applications, APIs and backend systems built on clean, well-documented code, so your integration stays easy to maintain as you grow.",
     },
     {
       icon: mobileIcon,
       title: "Mobile Development",
+      description:
+        "Native and cross-platform apps for iOS and Android, designed for smooth performance and connected to the services your users rely on.",
     },
     {
       icon: cloudIcon,
       title: "Cloud & Security",
+      description:
+        "Cloud setup, migration and support with security built in from day one, following best practices for access control and data protection.",
     },
   ],
 };
 
 /* Section 6: CTA Banner */
 export const PARTNERSHIP_CTA = {
-  titleLine1: "Become a Partner or Discuss",
-  titleLine2: "Integration",
+  titleLine1: "Let's Build Something",
+  titleLine2: "Great Together",
+  description:
+    "Are you a software company, agency or SaaS platform looking for a reliable development partner? Let's talk about integrations, referrals or joint projects.",
   action: { label: "BECOME A PARTNER", href: "/contact" },
 };
 

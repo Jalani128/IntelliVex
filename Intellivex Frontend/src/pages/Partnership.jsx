@@ -41,7 +41,7 @@ export default function Partnership() {
           breadcrumbs={PARTNERSHIP_HEADER.breadcrumbs}
         />
 
-        {/* Section 1: Passion and Innovation Shape Our Journey */}
+        {/* Section 1: Hero / Overview */}
         <section id="passion-journey" className="relative bg-navy pb-12 pt-10 sm:pb-16 sm:pt-14 lg:pb-20 lg:pt-16">
           <DecorSquares shapes={SECTION_SHAPES_1} className="hidden lg:block" />
 
@@ -74,8 +74,10 @@ export default function Partnership() {
           </div>
         </section>
 
-        {/* Section 2: Technology & Strategic Partners — hidden until it has copy or logos */}
-        {(STRATEGIC_PARTNERS.description || STRATEGIC_PARTNERS.logos.length > 0) && (
+        {/* Section 2: Platforms we build on — hidden until it has copy, platforms or logos */}
+        {(STRATEGIC_PARTNERS.description ||
+          STRATEGIC_PARTNERS.platforms.length > 0 ||
+          STRATEGIC_PARTNERS.logos.length > 0) && (
         <section id="strategic-partners" className="relative bg-navy py-12 sm:py-16 lg:py-20">
           <div className="container-narrow relative">
             <Reveal>
@@ -97,7 +99,29 @@ export default function Partnership() {
               </Reveal>
             )}
 
-            {/* 4 Logos Row */}
+            {/* Platforms by category, named rather than shown as brand logos */}
+            {STRATEGIC_PARTNERS.platforms.length > 0 && (
+              <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4 lg:gap-6">
+                {STRATEGIC_PARTNERS.platforms.map((group, idx) => (
+                  <Reveal key={group.category} delay={0.08 * idx} y={20} className="h-full">
+                    <div className="surface-card h-full p-6 transition-colors duration-300 hover:border-accent/50">
+                      <p className="font-display text-[11px] font-semibold uppercase tracking-[0.14em] text-accent-soft">
+                        {group.category}
+                      </p>
+                      <ul className="mt-4 space-y-2.5">
+                        {group.names.map((name) => (
+                          <li key={name} className="font-display text-[18px] font-medium text-white">
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            )}
+
+            {/* Logo row (official logo files only) */}
             {STRATEGIC_PARTNERS.logos.length > 0 && (
             <Reveal delay={0.2}>
               <div className="mt-10 grid grid-cols-2 items-center gap-8 sm:grid-cols-4 sm:gap-10 lg:mt-14">
@@ -168,7 +192,8 @@ export default function Partnership() {
         </section>
         )}
 
-        {/* Section 4: Technology Integrations (Video Player Card) */}
+        {/* Section 4: Technology Integrations (Video Player Card) — hidden until there is a video */}
+        {TECH_INTEGRATIONS.show && (
         <section id="tech-integrations" className="relative bg-navy py-12 sm:py-16 lg:py-20">
           <DecorSquares shapes={SECTION_SHAPES_2} className="hidden lg:block" />
 
@@ -210,8 +235,9 @@ export default function Partnership() {
             </Reveal>
           </div>
         </section>
+        )}
 
-        {/* Section 5: Platforms & Technologies Supported */}
+        {/* Section 5: Capabilities cards */}
         <section id="supported-platforms" className="relative bg-navy py-12 sm:py-16 lg:py-20">
           <div className="container-narrow relative">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -270,7 +296,7 @@ export default function Partnership() {
           </div>
         </section>
 
-        {/* Section 6: Become a Partner CTA Banner */}
+        {/* Section 6: Call-to-action banner */}
         <CTABanner content={PARTNERSHIP_CTA} />
       </main>
 

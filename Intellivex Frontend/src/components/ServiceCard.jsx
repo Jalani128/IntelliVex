@@ -41,10 +41,11 @@ export default function ServiceCard({ icon, title, description, tags = [], href 
       {hasTags && (
         <div className="mt-6 flex flex-col transition-all duration-500 ease-[var(--ease-out-soft)] [@media(hover:hover)]:pointer-events-none [@media(hover:hover)]:absolute [@media(hover:hover)]:inset-0 [@media(hover:hover)]:mt-0 [@media(hover:hover)]:justify-center [@media(hover:hover)]:overflow-y-auto [@media(hover:hover)]:[scrollbar-width:none] [@media(hover:hover)]:[&::-webkit-scrollbar]:hidden [@media(hover:hover)]:px-8 [@media(hover:hover)]:py-6 [@media(hover:hover)]:translate-y-3 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-visible:translate-y-0 [@media(hover:hover)]:group-focus-visible:opacity-100 lg:[@media(hover:hover)]:px-8 lg:[@media(hover:hover)]:py-10">
           {/* The title stays as context on the hover face; touch screens already show it above. */}
-          <p className="hidden font-display text-[22px] font-medium leading-tight text-white [@media(hover:hover)]:block">{title}</p>
-          <ul className="flex flex-wrap gap-2.5 [@media(hover:hover)]:mt-5">
+          <p className="hidden text-center font-display text-[22px] font-medium leading-tight text-white [@media(hover:hover)]:block">{title}</p>
+          {/* Equal-width, centred pills. */}
+          <ul className="flex flex-col gap-2.5 [@media(hover:hover)]:mt-5">
             {tags.map((tag) => (
-              <li key={tag} className="tag-glow rounded-md px-3.5 py-1.5 font-body text-[13px] leading-[1.35] text-white">
+              <li key={tag} className="tag-glow rounded-full px-4 py-2 text-center font-body text-[13px] leading-[1.35] text-white">
                 {tag}
               </li>
             ))}
