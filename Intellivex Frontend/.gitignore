@@ -3,3 +3,8 @@ dist
 .DS_Store
 *.local
 .vscode
+
+# Build archives go to the server, not git
+dist.*
+*.rar
+*.zip
