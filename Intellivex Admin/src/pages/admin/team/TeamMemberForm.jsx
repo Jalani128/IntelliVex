@@ -174,6 +174,7 @@ function TeamMemberFormBody({ member }) {
                     types={PHOTO.types}
                     typesLabel={PHOTO.label}
                     maxMb={MAX.photoMb}
+                    crop
                   />
                   <FormDescription>Without a photo, the website shows the member’s initials.</FormDescription>
                   <FormMessage />
