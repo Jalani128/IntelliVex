@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from 'react'
 import { ImagePlus, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import ImageCropDialog from './ImageCropDialog'
 
 /** Common upload rules, matching the Laravel mime / max rules. */
 export const IMAGE_TYPES = {
@@ -15,6 +16,7 @@ export const IMAGE_TYPES = {
  * `contain` letterboxes the preview instead of cropping it — for logos and icons.
  * `types` / `typesLabel` / `maxMb` narrow what can be picked (see IMAGE_TYPES).
  * `previewClassName` replaces the preview background — e.g. the website navy for white icons.
+ * `crop` opens a square crop + zoom step (circle guide) before the file is accepted — for portraits.
  */
 export default function ImageUpload({
   value,
@@ -26,10 +28,12 @@ export default function ImageUpload({
   maxMb = 5,
   className,
   previewClassName = 'bg-muted',
+  crop = false,
 }) {
   const inputId = useId()
   const [preview, setPreview] = useState(null)
   const [error, setError] = useState('')
+  const [cropping, setCropping] = useState(null)
 
   useEffect(() => {
     if (value instanceof File) {
@@ -43,16 +47,22 @@ export default function ImageUpload({
   const handleFile = (file) => {
     if (!file) return
     if (types ? !types.includes(file.type) : !file.type.startsWith('image/')) return setError(`Please choose a ${typesLabel} file.`)
-    if (file.size > maxMb * 1024 * 1024) return setError(`Image must be under ${maxMb} MB.`)
+    // A cropped photo is re-encoded at ≤ 800 px, so only an uncropped file can be too big.
+    if (!crop && file.size > maxMb * 1024 * 1024) return setError(`Image must be under ${maxMb} MB.`)
     setError('')
-    onChange(file)
+    if (crop) setCropping(file)
+    else onChange(file)
   }
 
   return (
     <div className={className}>
       {preview ? (
         <div className={cn('relative overflow-hidden rounded-lg border', previewClassName)}>
-          <img src={preview} alt="" className={cn('aspect-video w-full', contain ? 'object-contain p-6' : 'object-cover')} />
+          {crop ? (
+            <img src={preview} alt="" className="mx-auto my-4 size-40 rounded-full object-cover" />
+          ) : (
+            <img src={preview} alt="" className={cn('aspect-video w-full', contain ? 'object-contain p-6' : 'object-cover')} />
+          )}
           <button
             type="button"
             onClick={() => onChange(null)}
@@ -84,8 +94,27 @@ export default function ImageUpload({
           </span>
         </label>
       )}
-      <input id={inputId} type="file" accept={types ? types.join(',') : 'image/*'} className="sr-only" onChange={(e) => handleFile(e.target.files[0])} />
+      <input
+        id={inputId}
+        type="file"
+        accept={types ? types.join(',') : 'image/*'}
+        className="sr-only"
+        onChange={(e) => {
+          handleFile(e.target.files[0])
+          e.target.value = '' // picking the same file again (after Cancel) fires again
+        }}
+      />
       {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
+      {cropping && (
+        <ImageCropDialog
+          file={cropping}
+          onCancel={() => setCropping(null)}
+          onDone={(file) => {
+            setCropping(null)
+            onChange(file)
+          }}
+        />
+      )}
     </div>
   )
 }
