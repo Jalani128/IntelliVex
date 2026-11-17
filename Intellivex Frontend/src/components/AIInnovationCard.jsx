@@ -73,17 +73,22 @@ export default function AIInnovationCard({ icon, title, highlight, description, 
 
       {/* Tag pills — shown on hover / focus (and clickable then); listed under the content on touch screens */}
       {hasTags && (
-        <div className="mt-6 flex flex-col transition-all duration-500 ease-[var(--ease-out-soft)] [@media(hover:hover)]:pointer-events-none [@media(hover:hover)]:absolute [@media(hover:hover)]:inset-0 [@media(hover:hover)]:mt-0 [@media(hover:hover)]:justify-center [@media(hover:hover)]:overflow-y-auto [@media(hover:hover)]:px-8 [@media(hover:hover)]:py-5 [@media(hover:hover)]:translate-y-3 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:pointer-events-auto [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-within:pointer-events-auto [@media(hover:hover)]:group-focus-within:translate-y-0 [@media(hover:hover)]:group-focus-within:opacity-100 lg:[@media(hover:hover)]:px-8 lg:[@media(hover:hover)]:py-10">
+        <div className="mt-6 flex flex-col transition-all duration-500 ease-[var(--ease-out-soft)] [@media(hover:hover)]:pointer-events-none [@media(hover:hover)]:absolute [@media(hover:hover)]:inset-0 [@media(hover:hover)]:mt-0 [@media(hover:hover)]:justify-center [@media(hover:hover)]:overflow-y-auto [@media(hover:hover)]:[scrollbar-width:none] [@media(hover:hover)]:[&::-webkit-scrollbar]:hidden [@media(hover:hover)]:px-8 [@media(hover:hover)]:py-6 [@media(hover:hover)]:translate-y-3 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:pointer-events-auto [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-within:pointer-events-auto [@media(hover:hover)]:group-focus-within:translate-y-0 [@media(hover:hover)]:group-focus-within:opacity-100 lg:[@media(hover:hover)]:px-8 lg:[@media(hover:hover)]:py-10">
           {/* The heading stays as context on the hover face; touch screens already show it above. */}
-          <p className="hidden max-w-[150px] font-display text-[22px] font-medium leading-[1.25] text-white [@media(hover:hover)]:block">
+          <p className="hidden text-center font-display text-[22px] font-medium leading-tight text-white [@media(hover:hover)]:block">
             {heading}
           </p>
-          <ul className="flex flex-wrap gap-2.5 [@media(hover:hover)]:mt-5">
-            {tags.map((tag) => {
+          {/* Same pills and staggered entrance as ServiceCard. */}
+          <ul className="flex flex-col gap-2.5 [@media(hover:hover)]:mt-5">
+            {tags.map((tag, i) => {
               const { label, href: tagHref } = typeof tag === "string" ? { label: tag } : tag;
-              const pill = "tag-glow block rounded-md px-3.5 py-1.5 font-body text-[13px] leading-[1.35] text-white transition-[filter] duration-300";
+              const pill = "tag-glow block rounded-full px-4 py-2 text-center font-body text-[13px] leading-[1.35] text-white transition-[filter] duration-300";
               return (
-                <li key={label}>
+                <li
+                  key={label}
+                  style={{ "--pill-delay": `${120 + i * 50}ms` }}
+                  className="transition-all duration-500 ease-[var(--ease-out-soft)] motion-reduce:transition-none [@media(hover:hover)]:translate-y-3 [@media(hover:hover)]:scale-95 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-hover:scale-100 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:[transition-delay:var(--pill-delay)] [@media(hover:hover)]:group-focus-within:translate-y-0 [@media(hover:hover)]:group-focus-within:scale-100 [@media(hover:hover)]:group-focus-within:opacity-100"
+                >
                   {tagHref ? (
                     <SiteLink href={tagHref} className={`${pill} hover:brightness-125`}>
                       {label}
