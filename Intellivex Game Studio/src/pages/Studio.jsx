@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CtaBanner from '../components/CtaBanner'
 import PageBanner from '../components/PageBanner'
 import Partners from '../components/Partners'
@@ -169,17 +169,41 @@ function TestimonialCard({ item, side }) {
   )
 }
 
+const AUTOPLAY_MS = 5000
+
 function Testimonials() {
   const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
   const n = TESTIMONIALS.length
   const at = (offset) => TESTIMONIALS[(index + offset + n) % n]
 
+  // Advances on its own; any change (arrow or timer) restarts the countdown.
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (paused || reduce || n < 2) return
+    const id = setTimeout(() => setIndex((i) => (i + 1) % n), AUTOPLAY_MS)
+    return () => clearTimeout(id)
+  }, [index, paused, n])
+
   return (
-    <section aria-labelledby="testimonials-title" className="mt-[160px] overflow-hidden pb-24 lg:pb-[127px]">
+    <section
+      aria-labelledby="testimonials-title"
+      aria-roledescription="carousel"
+      className="mt-[160px] overflow-hidden pb-24 lg:pb-[127px]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <div className="container-studio">
         <Heading eyebrow="What people’s say about us" center id="testimonials-title">Testimonials</Heading>
       </div>
-      <div className="mt-[58px] grid items-center gap-[33px] px-4 lg:grid-cols-[442px_487px_442px] lg:justify-center lg:px-0" aria-live="polite">
+      {/* Announce changes only when the visitor drives it, not on every autoplay tick. */}
+      <div
+        key={index}
+        className="mt-[58px] grid animate-fade-in items-center gap-[33px] px-4 motion-reduce:animate-none lg:grid-cols-[442px_487px_442px] lg:justify-center lg:px-0"
+        aria-live={paused ? 'polite' : 'off'}
+      >
         <div className="hidden justify-end lg:flex"><TestimonialCard item={at(-1)} side="left" /></div>
         <div className="flex justify-center"><TestimonialCard item={at(0)} /></div>
         <div className="hidden lg:flex"><TestimonialCard item={at(1)} side="right" /></div>
