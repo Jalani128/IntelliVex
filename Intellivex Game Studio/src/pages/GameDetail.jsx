@@ -24,7 +24,7 @@ export default function GameDetail() {
             <img
               src={game.image}
               alt={`${game.title} artwork`}
-              fetchPriority="high"
+              fetchpriority="high"
               className="aspect-[844/531] size-full object-cover"
               style={{ objectPosition: game.detailImagePosition }}
             />

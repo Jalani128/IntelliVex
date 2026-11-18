@@ -16,7 +16,7 @@ export default function PageBanner({ title, trail = [] }) {
         src={banner}
         alt=""
         aria-hidden
-        fetchPriority="high"
+        fetchpriority="high"
         className="absolute inset-x-0 top-0 -z-10 h-[350px] w-full object-cover [mask-image:linear-gradient(to_bottom,#000_199px,transparent_234px)]"
       />
       <h1 className="font-display text-[28px] leading-[1.02] font-bold uppercase sm:text-[36px]">{title}</h1>

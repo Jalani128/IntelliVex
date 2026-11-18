@@ -48,7 +48,7 @@ export default function HeroSlider({ slides }) {
             <img
               src={slide.image}
               alt=""
-              fetchPriority={i === 0 ? 'high' : 'low'}
+              fetchpriority={i === 0 ? 'high' : 'low'}
               className={`absolute inset-0 size-full object-cover transition-transform duration-[7000ms] ease-out [mask-image:linear-gradient(to_bottom,#000_81%,transparent_97%)] ${active ? 'scale-100' : 'scale-105'} ${slide.align === 'left' ? 'object-[70%_50%]' : slide.align === 'right' ? 'object-[30%_50%]' : 'object-center'}`}
             />
             {/* Keeps the copy readable on small screens, where it sits over the art. */}
