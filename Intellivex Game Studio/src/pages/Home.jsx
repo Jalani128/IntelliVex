@@ -1,0 +1,347 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import Button from '../components/Button'
+import HeroSlider from '../components/HeroSlider'
+import SectionHeading from '../components/SectionHeading'
+import {
+  EXPERTISE, FEATURED_GAMES, HERO_SLIDES, LATEST_NEWS, PARTNERS, PLATFORMS, STATS, STUDIO_FEATURES,
+} from '../data/home'
+import platformPc from '../assets/home/platform-pc.png'
+import platformMobile from '../assets/home/platform-mobile.png'
+import platformConsole from '../assets/home/platform-console.png'
+import sparkle from '../assets/home/arrow.svg'
+import lineH from '../assets/home/line-h.svg'
+import lineV from '../assets/home/line-v.svg'
+import worldFrame from '../assets/home/world-frame.svg'
+import world from '../assets/home/world.png'
+import dividerV from '../assets/home/divider-v.svg'
+import dividerH from '../assets/home/divider-h.svg'
+import btsBg from '../assets/home/bts-bg.jpg'
+import btsVideo from '../assets/home/bts-video.jpg'
+import btsCar from '../assets/home/bts-car.png'
+import play from '../assets/home/play.png'
+import navBase from '../assets/home/nav-base.png'
+import navArrow from '../assets/home/nav-arrow.svg'
+import readMoreArrow from '../assets/home/read-more-arrow.png'
+import ctaBanner from '../assets/home/cta-banner.jpg'
+
+const PLATFORM_ICONS = { pc: platformPc, mobile: platformMobile, console: platformConsole }
+const PLATFORM_LABELS = { pc: 'PC', mobile: 'Mobile', console: 'Console' }
+
+export default function Home() {
+  return (
+    <>
+      <HeroSlider slides={HERO_SLIDES} />
+      <PlatformsBar />
+      <FeaturedGames />
+      <StudioIntro />
+      <Expertise />
+      <BehindTheScenes />
+      <LatestNews />
+      <Partners />
+      <CtaBanner />
+    </>
+  )
+}
+
+/* ---------- Platforms strip ---------- */
+
+function PlatformsBar() {
+  return (
+    <section aria-label="Platforms" className="relative">
+      <img src={lineH} alt="" aria-hidden className="block h-px w-full" />
+      <ul className="container-studio grid grid-cols-2 gap-y-6 py-6 sm:grid-cols-3 lg:flex lg:justify-between lg:py-[22px]">
+        {PLATFORMS.map((p, i) => (
+          <li key={p.label} className="flex items-center lg:contents">
+            <div className="group flex flex-1 flex-col items-center gap-3 text-center">
+              <img src={p.icon} alt="" aria-hidden className="size-[50px] object-contain transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1 group-hover:scale-110" />
+              <span className="font-inter text-[15px] text-white sm:text-[18px]">{p.label}</span>
+            </div>
+            {i < PLATFORMS.length - 1 && (
+              <span aria-hidden className="relative hidden h-[65px] w-px self-center lg:block">
+                <img src={lineV} alt="" className="absolute top-1/2 left-1/2 h-px w-[65px] max-w-none -translate-1/2 rotate-90" />
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+      <img src={lineH} alt="" aria-hidden className="block h-px w-full" />
+    </section>
+  )
+}
+
+/* ---------- Featured games ---------- */
+
+function PlatformIcons({ platforms }) {
+  return (
+    <ul className="flex gap-2.5" aria-label="Platforms">
+      {platforms.map((p) => (
+        <li key={p}>
+          <img src={PLATFORM_ICONS[p]} alt={PLATFORM_LABELS[p]} title={PLATFORM_LABELS[p]} className="size-[22px] object-contain" />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/** Game poster; on hover it lifts and a "Learn more" bar rises in (Figma "Metro Life" state). */
+export function GameCard({ game }) {
+  return (
+    <Link
+      to={`/games/${game.slug}`}
+      className="group relative block h-[531px] rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
+    >
+      <div className="absolute inset-0 overflow-hidden rounded-[8px] border border-cyan transition-all duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-6 group-hover:border-transparent group-focus-visible:-translate-y-6">
+        <img
+          src={game.image}
+          alt=""
+          loading="lazy"
+          className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-105"
+          style={{ objectPosition: game.imagePosition }}
+        />
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-[256px] bg-gradient-to-b from-ink/0 from-[6%] to-ink to-[53%]" />
+        <div className="absolute inset-x-[21px] bottom-[17px] transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-12">
+          <h3 className="font-display text-[24px] leading-[1.02] font-semibold">{game.title}</h3>
+          <p className="mt-1 font-display text-[16px] leading-[1.02] text-cyan">{game.genre}</p>
+          <div className="mt-[18px]"><PlatformIcons platforms={game.platforms} /></div>
+        </div>
+      </div>
+      {/* Learn more bar */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 bottom-[-41px] flex h-[66px] translate-y-3 items-center justify-center gap-2 rounded-[24.42px] bg-blue font-display text-[14px] font-semibold uppercase opacity-0 shadow-[0_0_149px_0_#0369fa,inset_0_-3.3px_1.7px_rgba(0,0,0,0.25),inset_0_1.7px_0.8px_rgba(255,255,255,0.25)] transition-all duration-500 ease-[var(--ease-out-soft)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+      >
+        Learn more <img src={sparkle} alt="" className="size-3.5" />
+      </span>
+    </Link>
+  )
+}
+
+function FeaturedGames() {
+  return (
+    <section id="featured-games" className="container-studio scroll-mt-24 pt-20 pb-28 lg:pt-[104px] lg:pb-[110px]">
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <SectionHeading eyebrow="Featured Games" title="Bring Imagination to Life" />
+        <Button to="/games">View all games</Button>
+      </div>
+      <ul className="mt-[104px] grid gap-x-[31px] gap-y-20 sm:grid-cols-2 lg:grid-cols-4">
+        {FEATURED_GAMES.map((game) => (
+          <li key={game.slug}><GameCard game={game} /></li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+/* ---------- Studio intro ("We Build Extraordinary Worlds") ---------- */
+
+function StudioIntro() {
+  return (
+    <section className="relative overflow-hidden py-16 lg:py-[48px]">
+      <div className="container-studio relative grid items-center lg:grid-cols-[1fr_auto] lg:min-h-[612px]">
+        {/* Angled backdrop behind the card */}
+        <img src={worldFrame} alt="" aria-hidden className="pointer-events-none absolute top-[49px] left-[-20px] hidden h-[563px] w-[990px] rotate-180 lg:block" />
+
+        <div className="glass-card glass-card-cyan relative z-10 max-w-[610px] px-6 py-8 sm:px-[55px] sm:pt-[34px] sm:pb-[38px] lg:ml-[43px]">
+          <p className="font-display text-[14px] tracking-[0.14em] uppercase sm:text-[16px]">Featured Games</p>
+          <h2 className="mt-2.5 font-display text-[28px] leading-[1.02] font-bold tracking-[0.06em] sm:text-[36px]">
+            We Build<br />Extraordinary Worlds
+          </h2>
+
+          <div className="relative mt-7 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-[36px]">
+            <img src={dividerH} alt="" aria-hidden className="absolute top-1/2 left-0 hidden h-px w-full sm:block" />
+            <img src={dividerV} alt="" aria-hidden className="absolute top-1/2 left-1/2 hidden h-px w-[140px] max-w-none -translate-1/2 rotate-90 sm:block" />
+            {STUDIO_FEATURES.map((f) => (
+              <div key={f.label} className="flex items-center gap-4">
+                <img src={f.icon} alt="" aria-hidden className="size-[38px] shrink-0 object-contain" />
+                <p className="max-w-[150px] font-display text-[18px] leading-[1.02] font-medium">{f.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <Button to="/studio" className="mt-[34px]">Discover our Studio</Button>
+        </div>
+
+        <img
+          src={world}
+          alt="A floating island world from an IntelliVex game"
+          loading="lazy"
+          className="mx-auto mt-10 w-full max-w-[560px] animate-float motion-reduce:animate-none lg:-mt-12 lg:mr-[-44px] lg:w-[657px] lg:max-w-none"
+        />
+      </div>
+    </section>
+  )
+}
+
+/* ---------- Expertise ---------- */
+
+function Expertise() {
+  return (
+    <section className="container-studio py-16 lg:pt-[67px] lg:pb-[125px]">
+      <SectionHeading eyebrow="Our Expertise" title="From Concept to Complete Game" />
+      <ul className="mt-[62px] grid grid-cols-2 gap-[37px] gap-y-6 sm:grid-cols-3 lg:grid-cols-6 lg:gap-y-0">
+        {EXPERTISE.map((item) => (
+          <li key={item.title.join(' ')} className="group relative aspect-[182/272] overflow-hidden rounded-[5px] border-[0.6px] border-cyan">
+            <img
+              src={item.image}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-110"
+              style={{ objectPosition: item.imagePosition }}
+            />
+            <div aria-hidden className="absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-b from-ink/0 from-[21%] to-ink to-[61%]" />
+            <h3 className="absolute inset-x-2 bottom-[18px] text-center font-display text-[13px] leading-[1.1] font-semibold sm:text-[14.76px]">
+              <span className="block">{item.title[0]}</span>
+              <span className="block">{item.title[1]}</span>
+            </h3>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+/* ---------- Behind the scenes ---------- */
+
+function CarouselArrow({ direction, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={direction === 'prev' ? 'Previous video' : 'Next video'}
+      className="relative grid size-[42px] place-items-center transition-transform duration-300 hover:scale-110"
+    >
+      <img src={navBase} alt="" aria-hidden className="absolute size-[35px] -rotate-45 opacity-90" />
+      <img src={navArrow} alt="" aria-hidden className={`relative h-[9.5px] w-2.5 ${direction === 'prev' ? 'rotate-180' : ''}`} />
+    </button>
+  )
+}
+
+function BehindTheScenes() {
+  // One studio video for now; the arrows will page through more once the CMS supplies them.
+  const [slide, setSlide] = useState(0)
+  const videos = [btsVideo]
+  const go = (step) => setSlide((s) => (s + step + videos.length) % videos.length)
+
+  return (
+    <section className="relative isolate overflow-hidden pt-6 pb-16 lg:h-[814px] lg:pb-0">
+      <img src={btsBg} alt="" aria-hidden loading="lazy" className="absolute inset-0 -z-10 size-full object-cover opacity-60 [mask-image:linear-gradient(to_bottom,transparent,#000_50%,transparent_88%)]" />
+
+      <div className="container-studio relative">
+        <SectionHeading eyebrow="Behind the Scenes" title="Where Idea Become Real" />
+
+        <div className="mt-10 grid gap-10 lg:mt-[63px] lg:grid-cols-[501px_1fr_303px] lg:gap-0">
+          {/* Video card */}
+          <div className="glass-card relative h-fit self-start px-4 py-5 sm:px-[10px] lg:mt-[24px]">
+            <div className="flex items-center gap-1">
+              <CarouselArrow direction="prev" onClick={() => go(-1)} />
+              <button type="button" className="group relative flex-1 overflow-hidden rounded-[5px] border-[0.6px] border-cyan/60" aria-label="Play studio video">
+                <img src={videos[slide]} alt="Developers at work in the IntelliVex studio" loading="lazy" className="aspect-[383/231] w-full object-cover" />
+                <img src={play} alt="" aria-hidden className="absolute top-1/2 left-1/2 size-[50px] -translate-1/2 transition-transform duration-300 group-hover:scale-110" />
+              </button>
+              <CarouselArrow direction="next" onClick={() => go(1)} />
+            </div>
+          </div>
+
+          {/* Car — sits between the cards on wide screens */}
+          <img src={btsCar} alt="" aria-hidden loading="lazy" className="hidden self-end lg:mb-[-80px] lg:ml-[-96px] lg:block lg:w-[504px] lg:max-w-none" />
+
+          {/* Stats */}
+          <div className="glass-card py-[42px] pr-4 pl-[43px] lg:h-[436px]">
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-[39px] lg:grid-cols-1">
+              {STATS.map((s) => (
+                <div key={s.label} className="flex flex-col-reverse">
+                  <dt className="mt-1.5 font-display text-[16px] leading-[1.02] font-medium sm:text-[18px]">{s.label}</dt>
+                  <dd className="text-stat font-display text-[36px] leading-[1.02] font-bold">{s.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+
+        <Button to="/studio" className="mt-8 lg:mt-[35px] lg:ml-[114px]">Watch Studio Videos</Button>
+      </div>
+    </section>
+  )
+}
+
+/* ---------- Latest news ---------- */
+
+export function NewsCard({ item }) {
+  return (
+    <article className="glass-card group flex h-full flex-col overflow-hidden">
+      <div className="overflow-hidden rounded-[5px] border-[0.6px] border-cyan/60">
+        <img src={item.image} alt="" loading="lazy" className="aspect-[413/249] w-full object-cover transition-transform duration-700 ease-[var(--ease-out-soft)] group-hover:scale-105" />
+      </div>
+      <div className="flex flex-1 flex-col px-7 pt-[43px] pb-8">
+        <time className="font-lato text-[12px] font-bold text-cyan">{item.date}</time>
+        <h3 className="mt-2 font-lato text-[22px] leading-tight font-bold sm:text-[24px]">{item.title}</h3>
+        <p className="mt-3 max-w-[356px] font-lato text-[16px] leading-[1.18]">{item.excerpt}</p>
+        <Link
+          to={`/news/${item.slug}`}
+          className="mt-auto inline-flex w-fit items-center gap-2.5 pt-3 font-lato text-[12px] font-bold text-cyan uppercase after:absolute after:inset-0 hover:underline"
+        >
+          Read more
+          <img src={readMoreArrow} alt="" aria-hidden className="h-3 w-[13px] rotate-90 transition-transform duration-300 group-hover:translate-x-1" />
+        </Link>
+      </div>
+    </article>
+  )
+}
+
+function LatestNews() {
+  return (
+    <section className="container-studio py-16 lg:pt-[50px] lg:pb-[117px]">
+      <div className="flex flex-wrap items-end justify-between gap-6">
+        <SectionHeading eyebrow="Latest News" title="Stories, Updates & Milestones" />
+        <Button to="/news">View all news</Button>
+      </div>
+      <ul className="mt-[47px] grid gap-[21px] md:grid-cols-2 lg:grid-cols-3">
+        {LATEST_NEWS.map((item) => (
+          <li key={item.slug}><NewsCard item={item} /></li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+/* ---------- Partners ---------- */
+
+function Partners() {
+  return (
+    <section className="container-studio pb-16 lg:pb-[68px]">
+      <SectionHeading eyebrow="Our Partners" title="Trusted by Amazing Partners" />
+      <ul className="mt-[57px] flex flex-wrap items-center justify-center gap-x-12 gap-y-8 lg:justify-between">
+        {PARTNERS.map((p, i) => (
+          <li key={i}>
+            <img src={p.logo} alt={p.name} loading="lazy" style={{ width: p.width }} className="h-10 object-contain opacity-80 transition-opacity duration-300 hover:opacity-100" />
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+/* ---------- Call to action ---------- */
+
+function CtaBanner() {
+  return (
+    <section className="relative isolate flex min-h-[405px] items-center justify-center overflow-hidden px-4 py-16">
+      <img src={ctaBanner} alt="" aria-hidden loading="lazy" className="absolute inset-0 -z-10 size-full object-cover" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-ink/40 lg:hidden" />
+      <div className="max-w-[330px] text-center lg:-translate-x-[57px]">
+        <p className="font-display text-[11.65px] tracking-[0.14em] uppercase">Game development studio</p>
+        <h2 className="text-neon mt-1.5 font-display text-[26px] leading-[1.02] font-extrabold tracking-[0.14em] uppercase sm:text-[30px]">
+          Turn Your Game Idea Into Reality
+        </h2>
+        <p className="mx-auto mt-3 max-w-[314px] font-lato text-[16px] leading-[1.18]">
+          Lorem ipsum dolor sit amet consectetur adipiscing elit. Mauris any nullam the as integer
+        </p>
+        <div className="mt-5 flex flex-wrap justify-center gap-3">
+          <Button to="/contact" size="sm">Get in touch</Button>
+          <Button to="/careers" size="sm">Explore careers</Button>
+        </div>
+      </div>
+    </section>
+  )
+}
