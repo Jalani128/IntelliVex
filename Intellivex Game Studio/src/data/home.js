@@ -13,8 +13,6 @@ import catCloud from '../assets/home/cat-cloud.png'
 import catImmersive from '../assets/home/cat-immersive.png'
 import shadowRealms from '../assets/home/game-shadow-realms.jpg'
 import metroLife from '../assets/home/game-metro-life.jpg'
-import buildVerse from '../assets/home/game-build-verse.jpg'
-import baristaRush from '../assets/home/game-barista-rush.jpg'
 import exp2d3d from '../assets/home/exp-2d3d.jpg'
 import expGameDev from '../assets/home/exp-gamedev.jpg'
 import expArVr from '../assets/home/exp-arvr.jpg'
@@ -52,13 +50,8 @@ export const PLATFORMS = [
   { label: 'Immersive Experiences', icon: catImmersive },
 ]
 
-/** `platforms` picks the small icons under the genre (pc, mobile, console). */
-export const FEATURED_GAMES = [
-  { slug: 'shadow-realms', title: 'Shadow Realms', genre: 'Action RPG', image: shadowRealms, imagePosition: '30% 0%', platforms: ['pc', 'mobile', 'console'] },
-  { slug: 'metro-life', title: 'Metro Life', genre: 'Racing / Simulation', image: metroLife, imagePosition: '52% 0%', platforms: ['pc', 'mobile', 'console'] },
-  { slug: 'build-verse', title: 'Build Verse', genre: 'Creative Sandbox', image: buildVerse, imagePosition: '17% 0%', platforms: ['pc', 'mobile', 'console'] },
-  { slug: 'barista-rush', title: 'Barista Rush', genre: 'Simulation', image: baristaRush, imagePosition: '52% 30%', platforms: ['pc', 'mobile', 'console'] },
-]
+/** The home row shows every game. */
+export { GAMES as FEATURED_GAMES } from './games'
 
 export const STUDIO_FEATURES = [
   { label: 'Original IP Development', icon: featIp },
