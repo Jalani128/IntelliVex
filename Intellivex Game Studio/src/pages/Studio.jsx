@@ -103,7 +103,7 @@ function Stats() {
 
 function TeamCard({ member }) {
   return (
-    <figure className="group relative h-[375px] w-[286px] shrink-0 snap-start">
+    <figure className="group relative h-[375px] w-[286px] shrink-0 snap-center sm:snap-start">
       {/* Tilted glass plate (Figma "Rectangle 25"), drawn larger than the card for its glow. */}
       <img src={teamCard} alt="" aria-hidden className="pointer-events-none absolute top-[-7.44%] left-[-20.98%] h-[131.2%] w-[141.9%] max-w-none transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-2" />
       <div className="relative flex h-full flex-col items-center pt-[71px] transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-2">
@@ -131,12 +131,12 @@ function Team() {
       <Heading eyebrow="Meet The Crew" id="team-title">Team Members</Heading>
       <div
         ref={track}
-        className="-mx-4 mt-[63px] flex snap-x snap-mandatory gap-[35px] overflow-x-auto px-[calc(1rem+60px)] pt-8 pb-16 [scrollbar-width:none] lg:mx-0 lg:justify-between lg:overflow-visible lg:px-[13px]"
+        className="-mx-4 mt-[63px] flex snap-x snap-mandatory gap-[35px] overflow-x-auto px-[calc(50%-143px)] sm:scroll-px-[76px] sm:px-[76px] pt-8 pb-16 [scrollbar-width:none] min-[1360px]:mx-0 min-[1360px]:justify-between min-[1360px]:overflow-visible min-[1360px]:px-[13px]"
       >
         {TEAM.map((member, i) => <TeamCard key={i} member={member} />)}
       </div>
-      {/* Arrows page the row once there are more people than fit (and on small screens). */}
-      <div className={`mt-2 flex justify-center gap-4 ${TEAM.length <= 4 ? 'lg:hidden' : ''}`}>
+      {/* Four cards (with their tilted plates) only fit side by side from ~1360px; below that the row scrolls. */}
+      <div className={`mt-2 flex justify-center gap-4 ${TEAM.length <= 4 ? 'min-[1360px]:hidden' : ''}`}>
         <ArrowButton direction="prev" label="Previous team members" onClick={() => scroll(-1)} />
         <ArrowButton direction="next" label="Next team members" onClick={() => scroll(1)} />
       </div>

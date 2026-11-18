@@ -147,7 +147,7 @@ export default function Contact() {
       <PageBanner title="Contact" trail={[{ label: 'Contact' }]} />
 
       <section className="container-studio pt-[59px] pb-24 lg:pb-[97px]">
-        <div className="mx-auto grid max-w-[1061px] gap-12 lg:grid-cols-[550px_421px] lg:justify-between">
+        <div className="mx-auto grid max-w-[1061px] gap-12 lg:grid-cols-[minmax(0,550px)_421px] lg:justify-between">
           <a href={CONTACT.mapUrl} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-[6px] rounded-tr-[14px] border border-[#4458a6] transition-[border-color] duration-300 hover:border-cyan">
             <img src={map} alt="Map showing Azure Business Center, Baku (opens Google Maps)" className="aspect-[550/400] w-full object-cover object-[64%_center]" />
           </a>

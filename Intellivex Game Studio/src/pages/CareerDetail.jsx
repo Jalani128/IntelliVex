@@ -49,7 +49,7 @@ export default function CareerDetail() {
           </section>
         </div>
 
-        <aside aria-label="Role details" className="glass-card glass-card-cyan h-fit px-[66px] pt-[37px] pb-9 lg:min-h-[581px]">
+        <aside aria-label="Role details" className="glass-card glass-card-cyan h-fit px-8 pt-[37px] sm:px-[66px] pb-9 lg:min-h-[581px]">
           <dl className="space-y-5">
             {job.facts.map((f) => (
               <div key={f.label}>

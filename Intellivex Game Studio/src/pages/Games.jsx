@@ -47,7 +47,7 @@ export default function Games() {
         <div aria-live="polite">
           <h2 className="sr-only">{activeLabel}</h2>
           {games.length ? (
-            <ul className="grid gap-x-[31px] gap-y-[74px] pb-10 sm:grid-cols-2 xl:grid-cols-3">
+            <ul className="grid gap-x-[31px] gap-y-12 pb-10 sm:grid-cols-2 sm:gap-y-[74px] xl:grid-cols-3">
               {games.map((game) => (
                 <li key={game.slug}><GameCard game={game} /></li>
               ))}

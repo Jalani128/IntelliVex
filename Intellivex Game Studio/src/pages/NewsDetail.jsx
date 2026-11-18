@@ -34,7 +34,7 @@ export default function NewsDetail() {
           ))}
         </article>
 
-        <aside aria-labelledby="recent-title" className="glass-card glass-card-cyan h-fit px-[41px] pt-[37px] pb-9 lg:min-h-[565px]">
+        <aside aria-labelledby="recent-title" className="glass-card glass-card-cyan h-fit px-6 pt-[37px] sm:px-[41px] pb-9 lg:min-h-[565px]">
           <h2 id="recent-title" className="font-display text-[24px] leading-[1.02] font-semibold tracking-[0.06em]">Recent Posts</h2>
           <ul className="mt-[31px] space-y-8">
             {recent.map((n) => (

@@ -74,7 +74,7 @@ function FeaturedGames() {
         <SectionHeading eyebrow="Featured Games" title="Bring Imagination to Life" />
         <Button to="/games">View all games</Button>
       </div>
-      <ul className="mt-[104px] grid gap-x-[31px] gap-y-20 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-12 grid gap-x-[31px] gap-y-12 sm:grid-cols-2 sm:gap-y-20 lg:mt-[104px] lg:grid-cols-4">
         {FEATURED_GAMES.map((game) => (
           <li key={game.slug}><GameCard game={game} /></li>
         ))}
