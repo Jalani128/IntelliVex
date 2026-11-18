@@ -4,6 +4,7 @@ import Header, { NAV } from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import Games from './pages/Games'
+import GameDetail from './pages/GameDetail'
 import ComingSoon from './pages/ComingSoon'
 
 /** New page → start at the top (hash links like /studio#team keep their target). */
@@ -24,6 +25,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/games" element={<Games />} />
+          <Route path="/games/:slug" element={<GameDetail />} />
           {/* Built next, from their Figma frames. */}
           {NAV.slice(1).map((item) => (
             <Route key={item.to} path={`${item.to}/*`} element={<ComingSoon title={item.label} />} />
