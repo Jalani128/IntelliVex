@@ -12,6 +12,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["--prefix", "Intellivex Admin", "run", "dev"],
       "port": 5174
+    },
+    {
+      "name": "gamestudio-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "Intellivex Game Studio", "run", "dev"],
+      "port": 5176
     }
   ]
 }
