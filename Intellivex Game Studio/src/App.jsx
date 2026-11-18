@@ -9,6 +9,7 @@ import Studio from './pages/Studio'
 import Careers from './pages/Careers'
 import CareerDetail from './pages/CareerDetail'
 import News from './pages/News'
+import NewsDetail from './pages/NewsDetail'
 import ComingSoon from './pages/ComingSoon'
 
 /** New page → start at the top; a hash link like /studio#team scrolls to that section. */
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/careers" element={<Careers />} />
           <Route path="/careers/:slug" element={<CareerDetail />} />
           <Route path="/news" element={<News />} />
+          <Route path="/news/:slug" element={<NewsDetail />} />
           {/* Built next, from their Figma frames. */}
           {NAV.slice(1).map((item) => (
             <Route key={item.to} path={`${item.to}/*`} element={<ComingSoon title={item.label} />} />
