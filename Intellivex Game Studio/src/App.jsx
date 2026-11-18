@@ -5,13 +5,16 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Games from './pages/Games'
 import GameDetail from './pages/GameDetail'
+import Studio from './pages/Studio'
 import ComingSoon from './pages/ComingSoon'
 
-/** New page → start at the top (hash links like /studio#team keep their target). */
+/** New page → start at the top; a hash link like /studio#team scrolls to that section. */
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
   useEffect(() => {
-    if (!hash) window.scrollTo(0, 0)
+    const target = hash && document.getElementById(decodeURIComponent(hash.slice(1)))
+    if (target) target.scrollIntoView()
+    else window.scrollTo(0, 0)
   }, [pathname, hash])
   return null
 }
@@ -26,6 +29,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/:slug" element={<GameDetail />} />
+          <Route path="/studio" element={<Studio />} />
           {/* Built next, from their Figma frames. */}
           {NAV.slice(1).map((item) => (
             <Route key={item.to} path={`${item.to}/*`} element={<ComingSoon title={item.label} />} />
