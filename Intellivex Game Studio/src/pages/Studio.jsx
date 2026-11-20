@@ -127,7 +127,7 @@ function Team() {
   }
 
   return (
-    <section id="team" aria-labelledby="team-title" className="container-studio mt-[150px] scroll-mt-24">
+    <section id="team" aria-labelledby="team-title" className="container-studio mt-[150px] scroll-mt-24 overflow-x-clip">
       <Heading eyebrow="Meet The Crew" id="team-title">Team Members</Heading>
       <div
         ref={track}
