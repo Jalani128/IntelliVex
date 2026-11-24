@@ -11,10 +11,19 @@ import { NAV_ITEMS, STUDIO_NAV_ITEMS } from '../sidebar/nav-config'
 export function useBreadcrumbs() {
   const { pathname } = useLocation()
   const crumbs = [{ label: 'Dashboard', to: '/admin' }]
-  const studioPage = STUDIO_NAV_ITEMS.find((n) => n.path === pathname.replace(/\/+$/, ''))
-  if (studioPage) return [...crumbs, { label: 'Game Studio', to: '/admin/studio' }, { label: studioPage.label }]
-
   const [, , moduleSegment, id, action] = pathname.replace(/\/+$/, '').split('/')
+
+  // Game Studio: /admin/studio/{section}[/create | /{id}/edit]
+  if (moduleSegment === 'studio') {
+    const [, , , section, recordId, recordAction] = pathname.replace(/\/+$/, '').split('/')
+    const studio = STUDIO_NAV_ITEMS.find((n) => n.path === `/admin/studio/${section}`)
+    crumbs.push({ label: 'Game Studio', to: '/admin/studio' })
+    if (!studio) return [...crumbs, { label: 'Not found' }]
+    if (!recordId) return [...crumbs, { label: studio.label }]
+    crumbs.push({ label: studio.label, to: studio.path })
+    return [...crumbs, { label: recordId === 'create' ? `New ${studio.singular}` : recordAction === 'edit' ? `Edit ${studio.singular}` : 'Not found' }]
+  }
+
   const item = NAV_ITEMS.find((n) => n.path === `/admin/${moduleSegment}`)
   if (!moduleSegment) return crumbs
   if (!item) return [...crumbs, { label: 'Not found' }]

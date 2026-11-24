@@ -68,15 +68,20 @@ export const STUDIO_NAV_GROUPS = [
   {
     label: 'Game Studio',
     items: [
-      { key: 'studio-home', label: 'Home page', path: '/admin/studio/home', icon: LayoutDashboard },
-      { key: 'studio-games', label: 'Games', path: '/admin/studio', icon: Gamepad2 },
-      { key: 'studio-news', label: 'News', path: '/admin/studio/news', icon: Newspaper },
+      { key: 'studio-games', label: 'Games', singular: 'Game', path: '/admin/studio/games', icon: Gamepad2 },
+      { key: 'studio-news', label: 'News', singular: 'Article', path: '/admin/studio/news', icon: Newspaper },
+      { key: 'studio-careers', label: 'Careers', singular: 'Role', path: '/admin/studio/careers', icon: BriefcaseBusiness },
+      { key: 'studio-team', label: 'Team', singular: 'Team Member', path: '/admin/studio/team', icon: Users },
+      { key: 'studio-testimonials', label: 'Testimonials', singular: 'Testimonial', path: '/admin/studio/testimonials', icon: MessageSquareQuote },
+      { key: 'studio-partners', label: 'Partners', singular: 'Partner', path: '/admin/studio/partners', icon: Handshake },
+    ],
+  },
+  {
+    label: 'Studio Pages',
+    items: [
+      { key: 'studio-home', label: 'Home Page', path: '/admin/studio/home', icon: LayoutDashboard },
       { key: 'studio-about', label: 'Our Studio', path: '/admin/studio/about', icon: PanelsTopLeft },
-      { key: 'studio-team', label: 'Team', path: '/admin/studio/team', icon: Users },
-      { key: 'studio-testimonials', label: 'Testimonials', path: '/admin/studio/testimonials', icon: MessageSquareQuote },
-      { key: 'studio-partners', label: 'Partners', path: '/admin/studio/partners', icon: Handshake },
-      { key: 'studio-contact', label: 'Contact page', path: '/admin/studio/contact', icon: Contact },
-      { key: 'studio-careers', label: 'Careers', path: '/admin/studio/careers', icon: BriefcaseBusiness },
+      { key: 'studio-contact', label: 'Contact Page', path: '/admin/studio/contact', icon: Contact },
     ],
   },
   {
@@ -89,8 +94,8 @@ export const STUDIO_NAV_GROUPS = [
   },
   {
     label: 'Switch',
-    items: [{ key: 'main-dashboard', label: 'Main website', path: '/admin', icon: LayoutDashboard }],
+    items: [{ key: 'main-dashboard', label: 'Main website', path: '/admin', icon: LayoutDashboard, end: true }],
   },
-].map((group) => ({ ...group, items: group.items.map((item) => ({ ...item, end: true })) }))
+]
 
 export const STUDIO_NAV_ITEMS = STUDIO_NAV_GROUPS.flatMap((g) => g.items)
