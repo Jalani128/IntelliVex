@@ -2,11 +2,16 @@ import {
   BookOpenText,
   BriefcaseBusiness,
   Building2,
+  Contact,
+  FileText,
+  Gamepad2,
   Handshake,
   Inbox,
   Layers,
   LayoutDashboard,
+  Mail,
   MessageSquareQuote,
+  Newspaper,
   Package,
   PanelsTopLeft,
   Users,
@@ -54,3 +59,38 @@ export const NAV_ITEMS = NAV_GROUPS.flatMap((g) => g.items)
 
 /** Content modules that get list / detail / create / edit routes. */
 export const RESOURCE_MODULES = NAV_ITEMS.filter((item) => item.key !== 'dashboard')
+
+/**
+ * Game Studio website. Shown as the whole sidebar while under /admin/studio.
+ * Kept out of NAV_ITEMS: these pages are registered by hand in routes/index.jsx.
+ */
+export const STUDIO_NAV_GROUPS = [
+  {
+    label: 'Game Studio',
+    items: [
+      { key: 'studio-home', label: 'Home page', path: '/admin/studio/home', icon: LayoutDashboard },
+      { key: 'studio-games', label: 'Games', path: '/admin/studio', icon: Gamepad2 },
+      { key: 'studio-news', label: 'News', path: '/admin/studio/news', icon: Newspaper },
+      { key: 'studio-about', label: 'Our Studio', path: '/admin/studio/about', icon: PanelsTopLeft },
+      { key: 'studio-team', label: 'Team', path: '/admin/studio/team', icon: Users },
+      { key: 'studio-testimonials', label: 'Testimonials', path: '/admin/studio/testimonials', icon: MessageSquareQuote },
+      { key: 'studio-partners', label: 'Partners', path: '/admin/studio/partners', icon: Handshake },
+      { key: 'studio-contact', label: 'Contact page', path: '/admin/studio/contact', icon: Contact },
+      { key: 'studio-careers', label: 'Careers', path: '/admin/studio/careers', icon: BriefcaseBusiness },
+    ],
+  },
+  {
+    label: 'Studio Leads',
+    items: [
+      { key: 'studio-inquiries', label: 'Inquiries', path: '/admin/studio/inquiries', icon: Inbox },
+      { key: 'studio-subscribers', label: 'Subscribers', path: '/admin/studio/subscribers', icon: Mail },
+      { key: 'studio-applications', label: 'Applications', path: '/admin/studio/applications', icon: FileText },
+    ],
+  },
+  {
+    label: 'Switch',
+    items: [{ key: 'main-dashboard', label: 'Main website', path: '/admin', icon: LayoutDashboard }],
+  },
+].map((group) => ({ ...group, items: group.items.map((item) => ({ ...item, end: true })) }))
+
+export const STUDIO_NAV_ITEMS = STUDIO_NAV_GROUPS.flatMap((g) => g.items)

@@ -2,15 +2,17 @@ import { Link, useParams } from 'react-router-dom'
 import CtaBanner from '../components/CtaBanner'
 import PageBanner from '../components/PageBanner'
 import Partners from '../components/Partners'
-import { findNews, NEWS } from '../data/news'
+import { useStudioNews } from '../hooks/useStudioNews'
 import ComingSoon from './ComingSoon'
 
 export default function NewsDetail() {
   const { slug } = useParams()
-  const post = findNews(slug)
+  const { articles, loading } = useStudioNews()
+  const post = articles.find((item) => item.slug === slug)
+  if (loading && !post) return <div className="container-studio py-24">Loading article…</div>
   if (!post) return <ComingSoon title="Article not found" />
 
-  const recent = NEWS.filter((n) => n.slug !== slug).slice(0, 4)
+  const recent = articles.filter((n) => n.slug !== slug).slice(0, 4)
 
   return (
     <>

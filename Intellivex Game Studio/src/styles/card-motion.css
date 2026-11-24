@@ -1,0 +1,30 @@
+﻿/* Card motion stays optional and keeps all content visible without JavaScript. */
+@media (prefers-reduced-motion: no-preference) {
+  .card-reveal {
+    transition: opacity 600ms ease var(--reveal-delay), transform 600ms var(--ease-out-soft) var(--reveal-delay);
+  }
+  .card-reveal-pending { opacity: 0; transform: translateY(28px); }
+  .card-reveal-pending:focus-within { opacity: 1; transform: none; }
+  .animated-editorial-card {
+    transition: transform 450ms var(--ease-out-soft), box-shadow 450ms ease, border-color 450ms ease;
+  }
+  .animated-editorial-card:active { transform: scale(0.985); }
+  .game-poster { transition: transform 500ms var(--ease-out-soft), box-shadow 500ms ease, border-color 500ms ease; }
+  .game-card:active .game-poster { transform: scale(0.985); }
+  @media (hover: hover) {
+    .animated-editorial-card:hover, .animated-editorial-card:focus-within {
+      transform: translateY(-8px);
+      border-color: #07f9fb;
+      box-shadow: 0 16px 42px rgba(3, 105, 250, 0.28), inset 0 0 70px rgba(7, 249, 251, 0.18);
+    }
+    .game-card:hover .game-poster, .game-card:focus-visible .game-poster {
+      box-shadow: 0 14px 45px rgba(7, 249, 251, 0.38);
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-reveal { opacity: 1; transform: none; transition: none; }
+  .game-card *, .animated-editorial-card, .animated-editorial-card * { transition: none !important; animation: none !important; }
+  .game-card:hover .game-poster, .game-card:focus-visible .game-poster,
+  .animated-editorial-card:hover, .animated-editorial-card:focus-within { transform: none; }
+}

@@ -1,16 +1,17 @@
+import RevealItem from '../components/RevealItem'
 import { Link, useSearchParams } from 'react-router-dom'
 import CtaBanner from '../components/CtaBanner'
 import PageBanner from '../components/PageBanner'
 import Pagination from '../components/Pagination'
 import Partners from '../components/Partners'
-import { NEWS } from '../data/news'
+import { useStudioNews } from '../hooks/useStudioNews'
 import readMoreArrow from '../assets/home/read-more-arrow.png'
 
 const PER_PAGE = 6
 
 function ArticleCard({ item }) {
   return (
-    <article className="glass-card glass-card-cyan group relative flex h-full flex-col p-4 pb-6 transition-transform duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1.5">
+    <article className="glass-card glass-card-cyan animated-editorial-card group relative flex h-full flex-col p-4 pb-6">
       <div className="overflow-hidden rounded-[15.6px]">
         <img
           src={item.image}
@@ -37,10 +38,11 @@ function ArticleCard({ item }) {
 }
 
 export default function News() {
+  const { articles } = useStudioNews()
   const [params, setParams] = useSearchParams()
-  const pages = Math.max(1, Math.ceil(NEWS.length / PER_PAGE))
+  const pages = Math.max(1, Math.ceil(articles.length / PER_PAGE))
   const current = Math.min(Math.max(1, Number(params.get('page')) || 1), pages)
-  const shown = NEWS.slice((current - 1) * PER_PAGE, current * PER_PAGE)
+  const shown = articles.slice((current - 1) * PER_PAGE, current * PER_PAGE)
 
   return (
     <>
@@ -51,8 +53,9 @@ export default function News() {
         <h2 id="news-title" className="mt-2 font-display text-[28px] leading-[1.02] font-semibold tracking-[0.06em] sm:text-[36px]">Latest News</h2>
 
         <ul className="mt-10 grid gap-x-[22px] gap-y-[39px] md:grid-cols-2 lg:grid-cols-3">
-          {shown.map((item) => <li key={item.slug}><ArticleCard item={item} /></li>)}
+          {shown.map((item, i) => <RevealItem key={item.slug} index={i}><ArticleCard item={item} /></RevealItem>)}
         </ul>
+        {!shown.length && <p className="mt-10 text-mist">No news articles yet.</p>}
 
         <Pagination
           current={current}

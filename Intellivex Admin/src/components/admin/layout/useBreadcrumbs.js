@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom'
-import { NAV_ITEMS } from '../sidebar/nav-config'
+import { NAV_ITEMS, STUDIO_NAV_ITEMS } from '../sidebar/nav-config'
 
 /**
  * Derive breadcrumbs from the URL + nav config:
@@ -11,6 +11,8 @@ import { NAV_ITEMS } from '../sidebar/nav-config'
 export function useBreadcrumbs() {
   const { pathname } = useLocation()
   const crumbs = [{ label: 'Dashboard', to: '/admin' }]
+  const studioPage = STUDIO_NAV_ITEMS.find((n) => n.path === pathname.replace(/\/+$/, ''))
+  if (studioPage) return [...crumbs, { label: 'Game Studio', to: '/admin/studio' }, { label: studioPage.label }]
 
   const [, , moduleSegment, id, action] = pathname.replace(/\/+$/, '').split('/')
   const item = NAV_ITEMS.find((n) => n.path === `/admin/${moduleSegment}`)

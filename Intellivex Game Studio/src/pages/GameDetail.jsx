@@ -4,13 +4,15 @@ import CtaBanner from '../components/CtaBanner'
 import { PlatformIcons } from '../components/GameCard'
 import PageBanner from '../components/PageBanner'
 import Partners from '../components/Partners'
-import { findGame } from '../data/games'
+import { useStudioGames } from '../hooks/useStudioGames'
 import ComingSoon from './ComingSoon'
 import check from '../assets/games/check.png'
 
 export default function GameDetail() {
   const { slug } = useParams()
-  const game = findGame(slug)
+  const { games, loading } = useStudioGames()
+  const game = games.find((item) => item.slug === slug)
+  if (loading && !game) return <div className="container-studio py-24">Loading game�</div>
   if (!game) return <ComingSoon title="Game not found" />
 
   return (
