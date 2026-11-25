@@ -6,6 +6,7 @@ import PageBanner from '../components/PageBanner'
 import Partners from '../components/Partners'
 import { GAME_CATEGORIES } from '../data/games'
 import { useStudioGames } from '../hooks/useStudioGames'
+import PageLoader from '../components/PageLoader'
 
 const DEFAULT_CATEGORY = 'mobile'
 
@@ -18,11 +19,12 @@ export default function Games() {
   const [params, setParams] = useSearchParams()
   const active = GAME_CATEGORIES.some((c) => c.key === params.get('category')) ? params.get('category') : DEFAULT_CATEGORY
   const activeLabel = GAME_CATEGORIES.find((c) => c.key === active).label
-  const { games: allGames } = useStudioGames()
+  const { games: allGames, loading } = useStudioGames()
   const games = allGames.filter((g) => g.categories.includes(active))
 
   const choose = (key) => setParams(key === DEFAULT_CATEGORY ? {} : { category: key }, { replace: true, preventScrollReset: true })
 
+  if (loading) return <PageLoader />
   return (
     <>
       <PageBanner title="Games" trail={[{ label: 'Games' }]} />

@@ -1,8 +1,10 @@
-﻿import { createContext, useContext, useEffect, useState } from 'react'
+﻿import { createContext, useContext } from 'react'
 import { JOBS } from '../data/careers'
+import { useStudioApi } from '../lib/studioApi'
 
-const CareerContext = createContext({ jobs: JOBS, loading: true, fallback: true })
-export const STUDIO_API = (import.meta.env.VITE_STUDIO_API_URL || 'https://api.theintellivex.com/intellivex/public/api').replace(/\/$/, '')
+export { STUDIO_API } from '../lib/studioApi'
+
+const CareerContext = createContext({ jobs: [], loading: true, fallback: false })
 
 function mapJob(job) {
   return {
@@ -17,19 +19,11 @@ function mapJob(job) {
 }
 
 export function StudioCareersProvider({ children }) {
-  const [state, setState] = useState({ jobs: JOBS, loading: true, fallback: true })
-  useEffect(() => {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 8000)
-    let active = true
-    fetch(`${STUDIO_API}/studio/jobs`, { signal: controller.signal, headers: { Accept: 'application/json' } })
-      .then((response) => { if (!response.ok) throw new Error('Careers API unavailable'); return response.json() })
-      .then((response) => { if (!Array.isArray(response.data)) throw new Error('Invalid careers data'); if (active) setState({ jobs: response.data.map(mapJob), loading: false, fallback: false }) })
-      .catch(() => { if (active) setState({ jobs: JOBS, loading: false, fallback: true }) })
-      .finally(() => clearTimeout(timeout))
-    return () => { active = false; clearTimeout(timeout); controller.abort() }
-  }, [])
-  return <CareerContext.Provider value={state}>{children}</CareerContext.Provider>
+  const { status, data } = useStudioApi('/studio/jobs')
+  const ok = status === 'ok' && Array.isArray(data)
+  const failed = status === 'error' || (status === 'ok' && !ok)
+  const value = { jobs: ok ? data.map(mapJob) : failed ? JOBS : [], loading: status === 'loading', fallback: failed }
+  return <CareerContext.Provider value={value}>{children}</CareerContext.Provider>
 }
 
 export function useStudioCareers() { return useContext(CareerContext) }

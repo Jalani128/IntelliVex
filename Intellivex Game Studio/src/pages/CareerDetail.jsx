@@ -7,6 +7,7 @@ import Partners from '../components/Partners'
 import { STUDIO_API, useStudioCareers } from '../hooks/useStudioCareers'
 import ComingSoon from './ComingSoon'
 import check from '../assets/games/check.png'
+import PageLoader from '../components/PageLoader'
 
 const H2 = 'font-display text-[28px] leading-[1.02] font-semibold tracking-[0.06em] sm:text-[36px]'
 const BODY = 'font-lato text-[17px] leading-[1.18] sm:text-[19.5px]'
@@ -15,7 +16,7 @@ export default function CareerDetail() {
   const { slug } = useParams()
   const { jobs, loading, fallback } = useStudioCareers()
   const job = jobs.find((item) => item.slug === slug)
-  if (loading && !job) return <div className="container-studio py-24">Loading role…</div>
+  if (loading) return <PageLoader />
   if (!job) return <ComingSoon title="Role not found" />
 
   const [intro, ...sections] = job.sections

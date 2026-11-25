@@ -7,8 +7,8 @@ import Pagination from '../components/Pagination'
 import Partners from '../components/Partners'
 import { useStudioCareers } from '../hooks/useStudioCareers'
 import searchIcon from '../assets/careers/search.svg'
-import chevron from '../assets/careers/chevron-down.svg'
 import readMoreArrow from '../assets/home/read-more-arrow.png'
+import PageLoader from '../components/PageLoader'
 
 const PER_PAGE = 6
 const FIELD = 'h-14 rounded-[8px] border border-[#096363] bg-[#0d233a] font-lato text-[18px] text-white transition-colors duration-300 focus:border-cyan focus:outline-none sm:text-[19.5px]'
@@ -31,34 +31,34 @@ export function JobCard({ job }) {
 }
 
 export default function Careers() {
-  const { jobs: allJobs } = useStudioCareers()
+  const { jobs: allJobs, loading } = useStudioCareers()
   const categories = [...new Set(allJobs.map((job) => job.category))]
   const [params, setParams] = useSearchParams()
-  const q = params.get('q') ?? ''
+  // The input keeps its own text: the URL updates a tick later, and reading it back would drop keystrokes.
+  const [q, setQ] = useState(() => params.get('q') ?? '')
   const category = params.get('category') ?? ''
   const page = Math.max(1, Number(params.get('page')) || 1)
-  // The form edits a draft; Search (or Enter) applies it to the URL.
-  const [draft, setDraft] = useState({ q, category })
 
   const term = q.trim().toLowerCase()
-  const jobs = allJobs.filter(
-    (j) => (!category || j.category === category) && (!term || `${j.title} ${j.summary} ${j.category}`.toLowerCase().includes(term)),
-  )
+  const matchesTerm = (j) => !term || `${j.title} ${j.summary} ${j.category}`.toLowerCase().includes(term)
+  const jobs = allJobs.filter((j) => (!category || j.category === category) && matchesTerm(j))
+  // Chip counts follow the search text, so each chip says how many roles it would show.
+  const counts = allJobs.filter(matchesTerm).reduce((acc, j) => ({ ...acc, [j.category]: (acc[j.category] ?? 0) + 1 }), {})
+  const totalForTerm = Object.values(counts).reduce((a, b) => a + b, 0)
   const pages = Math.max(1, Math.ceil(jobs.length / PER_PAGE))
   const current = Math.min(page, pages)
   const shown = jobs.slice((current - 1) * PER_PAGE, current * PER_PAGE)
 
   const update = (next) => {
+    if ('q' in next) setQ(next.q)
     const merged = { q, category, page: current, ...next }
     const clean = Object.fromEntries(Object.entries(merged).filter(([k, v]) => v && !(k === 'page' && v === 1)))
     setParams(clean, { replace: true, preventScrollReset: true })
   }
 
-  const submit = (e) => {
-    e.preventDefault()
-    update({ q: draft.q.trim(), category: draft.category, page: 1 })
-  }
+  const chips = [{ value: '', label: 'All roles', count: totalForTerm }, ...categories.map((c) => ({ value: c, label: c, count: counts[c] ?? 0 }))]
 
+  if (loading) return <PageLoader />
   return (
     <>
       <PageBanner title="Careers" trail={[{ label: 'Careers' }]} />
@@ -67,36 +67,56 @@ export default function Careers() {
         <p className="font-display text-[20px] tracking-[0.06em] text-cyan sm:text-[24px]">Open Roles</p>
         <h2 id="jobs-title" className="mt-2 font-display text-[28px] leading-[1.02] font-semibold tracking-[0.06em] sm:text-[36px]">Now Hiring</h2>
 
-        <form onSubmit={submit} role="search" className="mt-[50px] grid gap-4 sm:grid-cols-[1fr_174px] lg:grid-cols-[1fr_174px_213px] lg:gap-6">
-          <label className="relative block sm:col-span-2 lg:col-span-1">
+        {/* Filters apply as you type or tap; the URL keeps them so results can be shared. */}
+        <form onSubmit={(e) => e.preventDefault()} role="search" className="glass-card glass-card-cyan mt-[50px] p-4 sm:p-6">
+          <label className="relative block">
             <span className="sr-only">Search roles</span>
             <img src={searchIcon} alt="" aria-hidden className="pointer-events-none absolute top-1/2 left-[22px] size-5 -translate-y-1/2" />
             <input
               type="search"
-              value={draft.q}
-              onChange={(e) => setDraft((d) => ({ ...d, q: e.target.value }))}
-              placeholder="Search....."
-              className={`${FIELD} w-full pr-4 pl-[55px] placeholder:text-[#8c99a7]`}
+              value={q}
+              onChange={(e) => update({ q: e.target.value, page: 1 })}
+              placeholder="Search by role, skill or team"
+              className={`${FIELD} w-full pr-14 pl-[55px] placeholder:text-[#8c99a7] [&::-webkit-search-cancel-button]:hidden`}
             />
+            {q && (
+              <button
+                type="button"
+                onClick={() => update({ q: '', page: 1 })}
+                aria-label="Clear search"
+                className="absolute top-1/2 right-3 grid size-9 -translate-y-1/2 place-items-center rounded-full text-[22px] leading-none text-[#8c99a7] transition-colors duration-300 hover:bg-white/10 hover:text-white"
+              >
+                ×
+              </button>
+            )}
           </label>
-          <label className="relative block">
-            <span className="sr-only">Category</span>
-            <select
-              value={draft.category}
-              onChange={(e) => setDraft((d) => ({ ...d, category: e.target.value }))}
-              className={`${FIELD} w-full appearance-none pr-12 pl-[22px] [&>option]:bg-ink`}
-            >
-              <option value="">Category</option>
-              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
-            <img src={chevron} alt="" aria-hidden className="pointer-events-none absolute top-1/2 right-[22px] h-2 w-4 -translate-y-1/2 rotate-180" />
-          </label>
-          <button
-            type="submit"
-            className="h-14 rounded-[10px] bg-blue font-display text-[14px] font-semibold uppercase shadow-[0_0_80px_0_rgba(3,105,250,0.6),inset_0_-3.3px_1.7px_rgba(0,0,0,0.25),inset_0_1.7px_0.8px_rgba(255,255,255,0.25)] transition-[filter] duration-300 hover:brightness-110"
-          >
-            Search
-          </button>
+
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+            <div role="group" aria-label="Filter by team" className="flex flex-wrap gap-2.5">
+              {chips.map((chip) => {
+                const active = category === chip.value
+                return (
+                  <button
+                    key={chip.label}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => update({ category: chip.value, page: 1 })}
+                    className={`inline-flex h-10 items-center gap-2 rounded-full border px-4 font-display text-[14px] font-medium tracking-[0.04em] transition-colors duration-300 ${
+                      active
+                        ? 'border-blue bg-blue text-white shadow-[0_0_24px_0_rgba(3,105,250,0.5)]'
+                        : 'border-[#096363] bg-[#0d233a] text-white/80 hover:border-cyan hover:text-white'
+                    }`}
+                  >
+                    {chip.label}
+                    <span className={`rounded-full px-2 py-0.5 font-lato text-[12px] tabular-nums ${active ? 'bg-white/20' : 'bg-white/10 text-cyan'}`}>{chip.count}</span>
+                  </button>
+                )
+              })}
+            </div>
+            <p className="font-lato text-[15px] text-[#8c99a7]" aria-live="polite">
+              {jobs.length} {jobs.length === 1 ? 'role' : 'roles'}{category && ` in ${category}`}{term && ` matching “${q.trim()}”`}
+            </p>
+          </div>
         </form>
 
         <div aria-live="polite">
@@ -109,7 +129,7 @@ export default function Careers() {
               <p className="font-display text-[22px] font-semibold">No roles match your search</p>
               <button
                 type="button"
-                onClick={() => { setDraft({ q: '', category: '' }); setParams({}, { replace: true, preventScrollReset: true }) }}
+                onClick={() => update({ q: '', category: '', page: 1 })}
                 className="mx-auto mt-3 font-lato text-cyan underline-offset-4 hover:underline"
               >
                 Show all roles
