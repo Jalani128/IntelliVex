@@ -1,30 +1,13 @@
-import { useEffect, useState } from 'react'
 import SectionHeading from './SectionHeading'
 import { PARTNERS } from '../data/home'
+import { media, useStudioApi } from '../lib/studioApi'
 
-const API = (import.meta.env.VITE_STUDIO_API_URL || 'https://api.theintellivex.com/intellivex/public/api').replace(/\/$/, '')
-const MEDIA = (import.meta.env.VITE_STUDIO_MEDIA_URL || 'https://api.theintellivex.com/intellivex/public/storage').replace(/\/$/, '')
-
-/** Published partners from the CMS; the built-in logos stay until the API returns some with a logo. */
+/** Published partners from the CMS; the built-in logos only when the API fails or has none with a logo. */
 function usePartners() {
-  const [partners, setPartners] = useState(PARTNERS)
-  useEffect(() => {
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 8000)
-    fetch(`${API}/studio/partners`, { signal: controller.signal, headers: { Accept: 'application/json' } })
-      .then((response) => { if (!response.ok) throw new Error('Partners API unavailable'); return response.json() })
-      .then(({ data }) => {
-        const list = (Array.isArray(data) ? data : []).filter((p) => p.image_url).map((p) => {
-          const at = p.image_url.indexOf('/storage/')
-          return { name: p.name, logo: at >= 0 ? `${MEDIA}/${p.image_url.slice(at + 9)}` : p.image_url }
-        })
-        if (list.length) setPartners(list)
-      })
-      .catch(() => {})
-      .finally(() => clearTimeout(timeout))
-    return () => { clearTimeout(timeout); controller.abort() }
-  }, [])
-  return partners
+  const { status, data } = useStudioApi('/studio/partners')
+  if (status === 'loading') return []
+  const list = (Array.isArray(data) ? data : []).filter((p) => p.image_url).map((p) => ({ name: p.name, logo: media(p.image_url) }))
+  return list.length ? list : PARTNERS
 }
 
 function LogoRow({ hidden = false, partners }) {

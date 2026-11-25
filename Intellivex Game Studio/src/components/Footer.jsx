@@ -7,13 +7,9 @@ import iconCall from '../assets/home/icon-call.svg'
 import iconEmail from '../assets/home/icon-email.svg'
 import iconLocation from '../assets/home/icon-location.svg'
 import { useStudioGames } from '../hooks/useStudioGames'
+import { useStudioContact } from '../hooks/useStudioContact'
 
-// Contact details and social links are the design's placeholders until the studio's real ones arrive.
-const CONTACT = [
-  { icon: iconLocation, text: ['8819 Ohio St. South Gate,', 'CA 90280'] },
-  { icon: iconEmail, text: ['Ourstudio@hello.com'], href: 'mailto:Ourstudio@hello.com' },
-  { icon: iconCall, text: ['+1 386-688-3295'], href: 'tel:+13866883295' },
-]
+// Social links are the design's placeholders until the studio's real ones arrive.
 
 const STUDIO_LINKS = [
   { label: 'About Us', to: '/studio' },
@@ -34,6 +30,13 @@ const link = 'text-mute transition-colors duration-300 hover:text-cyan'
 
 export default function Footer() {
   const { games } = useStudioGames()
+  // Same address, email and phone as the Contact page (edited there in the admin).
+  const contact = useStudioContact()
+  const items = [
+    { icon: iconLocation, text: contact.address },
+    { icon: iconEmail, text: [contact.email], href: `mailto:${contact.email}` },
+    { icon: iconCall, text: [contact.phones[0]], href: `tel:${contact.phones[0]?.replace(/[^\d+]/g, '')}` },
+  ].filter((item) => item.text.length && item.text[0])
   return (
     <footer className="bg-ink pt-16 pb-8 lg:pt-[78px]">
       <div className="container-studio grid gap-10 sm:grid-cols-2 lg:grid-cols-[252px_1fr_auto_auto_auto] lg:gap-x-[clamp(32px,5vw,78px)]">
@@ -44,7 +47,7 @@ export default function Footer() {
         <div>
           <h2 className={heading}>Get in Touch</h2>
           <ul className="mt-6 space-y-4 font-display text-[16px] leading-[1.5]">
-            {CONTACT.map((item) => (
+            {items.map((item) => (
               <li key={item.text[0]} className="flex gap-4">
                 <img src={item.icon} alt="" aria-hidden className="size-6 shrink-0" />
                 {item.href ? (
@@ -86,7 +89,7 @@ export default function Footer() {
             ))}
           </ul>
           <p className="mt-6 max-w-[230px] font-display text-[16px] leading-[1.5] text-mute">
-            Lorem ipsum dolor sit amet, consec tetur adipiscing elit, sed do eiusmod.
+            Original games for mobile, PC and console, made in Baku for players everywhere.
           </p>
         </div>
       </div>

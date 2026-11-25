@@ -4,12 +4,13 @@ import PageBanner from '../components/PageBanner'
 import Partners from '../components/Partners'
 import { useStudioNews } from '../hooks/useStudioNews'
 import ComingSoon from './ComingSoon'
+import PageLoader from '../components/PageLoader'
 
 export default function NewsDetail() {
   const { slug } = useParams()
   const { articles, loading } = useStudioNews()
   const post = articles.find((item) => item.slug === slug)
-  if (loading && !post) return <div className="container-studio py-24">Loading article…</div>
+  if (loading) return <PageLoader />
   if (!post) return <ComingSoon title="Article not found" />
 
   const recent = articles.filter((n) => n.slug !== slug).slice(0, 4)

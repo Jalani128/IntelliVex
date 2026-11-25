@@ -7,12 +7,13 @@ import Partners from '../components/Partners'
 import { useStudioGames } from '../hooks/useStudioGames'
 import ComingSoon from './ComingSoon'
 import check from '../assets/games/check.png'
+import PageLoader from '../components/PageLoader'
 
 export default function GameDetail() {
   const { slug } = useParams()
   const { games, loading } = useStudioGames()
   const game = games.find((item) => item.slug === slug)
-  if (loading && !game) return <div className="container-studio py-24">Loading game�</div>
+  if (loading) return <PageLoader />
   if (!game) return <ComingSoon title="Game not found" />
 
   return (

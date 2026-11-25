@@ -6,6 +6,7 @@ import { BUDGETS, GAME_CATEGORIES } from '../data/contact'
 import { STUDIO_API } from '../hooks/useStudioCareers'
 import { useStudioContact } from '../hooks/useStudioContact'
 import chevron from '../assets/careers/chevron-down.svg'
+import PageLoader from '../components/PageLoader'
 
 const FIELD = 'block w-full rounded-[16px] border border-cyan bg-ink/40 px-7 font-display text-[16px] text-white placeholder:text-white transition-shadow duration-300 focus:shadow-[0_0_0_3px_rgba(7,249,251,0.25)] focus:outline-none aria-[invalid=true]:border-[#ff6b6b]'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -155,6 +156,7 @@ function Subscribe({ contact }) {
 
 export default function Contact() {
   const contact = useStudioContact()
+  if (contact.loading) return <PageLoader />
   return (
     <>
       <PageBanner title={contact.pageTitle} trail={[{ label: contact.pageTitle }]} />

@@ -5,9 +5,11 @@ import Partners from '../components/Partners'
 import { useStudioProfile } from '../hooks/useStudioProfile'
 import teamCard from '../assets/studio/team-card.jpg'
 import stars from '../assets/studio/stars.svg'
+import PageLoader from '../components/PageLoader'
 
 export default function Studio() {
   const profile = useStudioProfile()
+  if (profile.loading) return <PageLoader />
   return (
     <>
       <PageBanner title="Our Studio" trail={[{ label: 'Our Studio' }]} />

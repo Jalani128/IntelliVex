@@ -10,6 +10,7 @@ import GameCard from '../components/GameCard'
 import HeroSlider from '../components/HeroSlider'
 import Partners from '../components/Partners'
 import SectionHeading from '../components/SectionHeading'
+import PageLoader from '../components/PageLoader'
 import {
   EXPERTISE, HERO_SLIDES, LATEST_NEWS, PLATFORMS, STATS, STUDIO_FEATURES,
 } from '../data/home'
@@ -29,6 +30,8 @@ import readMoreArrow from '../assets/home/read-more-arrow.png'
 
 export default function Home() {
   const page = useStudioHome()
+  const { loading: gamesLoading } = useStudioGames()
+  const { loading: newsLoading } = useStudioNews()
   const slides = HERO_SLIDES.map((slide, i) => ({
     ...slide,
     image: page.image(`hero_${i}`, slide.image),
@@ -36,6 +39,7 @@ export default function Home() {
     lines: slide.lines.map((line, n) => page.text(`hero_${i}_line_${n}`, line)),
     text: page.text(`hero_${i}_text`, slide.text),
   }))
+  if (page.loading || gamesLoading || newsLoading) return <PageLoader />
   return (
     <>
       <HeroSlider slides={slides} page={page} />

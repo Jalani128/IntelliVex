@@ -6,6 +6,7 @@ import Pagination from '../components/Pagination'
 import Partners from '../components/Partners'
 import { useStudioNews } from '../hooks/useStudioNews'
 import readMoreArrow from '../assets/home/read-more-arrow.png'
+import PageLoader from '../components/PageLoader'
 
 const PER_PAGE = 6
 
@@ -38,12 +39,13 @@ function ArticleCard({ item }) {
 }
 
 export default function News() {
-  const { articles } = useStudioNews()
+  const { articles, loading } = useStudioNews()
   const [params, setParams] = useSearchParams()
   const pages = Math.max(1, Math.ceil(articles.length / PER_PAGE))
   const current = Math.min(Math.max(1, Number(params.get('page')) || 1), pages)
   const shown = articles.slice((current - 1) * PER_PAGE, current * PER_PAGE)
 
+  if (loading) return <PageLoader />
   return (
     <>
       <PageBanner title="News" trail={[{ label: 'News' }]} />
