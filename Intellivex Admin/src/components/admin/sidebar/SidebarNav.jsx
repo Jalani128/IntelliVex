@@ -1,7 +1,7 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { NAV_GROUPS } from './nav-config'
+import { NAV_GROUPS, STUDIO_NAV_GROUPS } from './nav-config'
 
 function NavItem({ item, collapsed, onNavigate }) {
   const Icon = item.icon
@@ -38,9 +38,10 @@ function NavItem({ item, collapsed, onNavigate }) {
 }
 
 export default function SidebarNav({ collapsed = false, onNavigate }) {
+  const groups = useLocation().pathname.startsWith('/admin/studio') ? STUDIO_NAV_GROUPS : NAV_GROUPS
   return (
     <nav aria-label="Admin navigation" className="flex flex-col gap-5">
-      {NAV_GROUPS.map((group) => (
+      {groups.map((group) => (
         <div key={group.label} className="flex flex-col gap-1">
           {collapsed ? (
             <div className="mx-auto mb-1 h-px w-6 bg-sidebar-border first:hidden" aria-hidden />

@@ -11,7 +11,7 @@ const ALIGN = {
   center: 'lg:ml-[361px] lg:mt-[150px]',
 }
 
-export default function HeroSlider({ slides }) {
+export default function HeroSlider({ slides, page }) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
 
@@ -70,8 +70,8 @@ export default function HeroSlider({ slides }) {
                     <p className="mt-4 max-w-[355px] font-display text-[15px] leading-[1.5] text-mist">{slide.text}</p>
                   )}
                   <div className={`mt-6 flex gap-4 ${slide.align === 'center' ? 'flex-wrap' : 'flex-col items-start'}`}>
-                    <Button href="#featured-games">Watch demo</Button>
-                    <Button to="/games">Explore our games</Button>
+                    <Button href="#featured-games">{page?.text('hero_demo_button', 'Watch demo') ?? 'Watch demo'}</Button>
+                    <Button to="/games">{page?.text('hero_games_button', 'Explore our games') ?? 'Explore our games'}</Button>
                   </div>
                 </div>
               </div>

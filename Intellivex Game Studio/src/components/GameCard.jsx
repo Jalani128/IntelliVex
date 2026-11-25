@@ -24,9 +24,9 @@ export default function GameCard({ game }) {
   return (
     <Link
       to={`/games/${game.slug}`}
-      className="group relative block h-[531px] rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
+      className="game-card group relative block h-[531px] rounded-[8px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan"
     >
-      <div className="absolute inset-0 overflow-hidden rounded-[8px] border border-cyan transition-all duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-6 group-hover:border-transparent group-focus-visible:-translate-y-6">
+      <div className="game-poster absolute inset-0 overflow-hidden rounded-[8px] border border-cyan group-hover:-translate-y-6 group-hover:border-transparent group-focus-visible:-translate-y-6">
         <img
           src={game.image}
           alt=""

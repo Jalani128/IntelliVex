@@ -78,7 +78,7 @@ export default function Header() {
         aria-label="Main"
         className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ease-[var(--ease-out-soft)] lg:hidden ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
       >
-        <ul className="min-h-0 container-studio font-display text-[17px] font-semibold">
+        <ul className="container-studio max-h-[calc(100dvh-79px)] min-h-0 overflow-y-auto font-display text-[17px] font-semibold">
           {NAV.map((item) => (
             <li key={item.to} className="border-t border-white/10">
               <NavLink to={item.to} end={item.to === '/'} className={linkClass} tabIndex={open ? 0 : -1}>

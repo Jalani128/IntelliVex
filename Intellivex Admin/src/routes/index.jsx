@@ -7,6 +7,10 @@ import ModulePlaceholder from '@/components/admin/common/ModulePlaceholder'
 import PageLoader from '@/components/admin/common/PageLoader'
 import { RESOURCE_MODULES } from '@/components/admin/sidebar/nav-config'
 
+const StudioRecordList = lazy(() => import('@/pages/admin/studio/StudioRecordList'))
+const StudioRecordForm = lazy(() => import('@/pages/admin/studio/StudioRecordForm'))
+const StudioPageContent = lazy(() => import('@/pages/admin/studio/StudioPageContent'))
+const StudioInbox = lazy(() => import('@/pages/admin/studio/StudioInbox'))
 const Dashboard = lazy(() => import('@/pages/admin/Dashboard'))
 const NotFound = lazy(() => import('@/pages/admin/NotFound'))
 const Login = lazy(() => import('@/pages/auth/Login'))
@@ -121,6 +125,25 @@ const moduleRoutes = RESOURCE_MODULES.map((item) => {
   }
 })
 
+/**
+ * Game Studio website (/admin/studio/…). Record types (keys of STUDIO_RECORDS in
+ * pages/admin/studio/records.jsx) get list / create / edit; `key` remounts pages that switch type.
+ */
+const studioRoutes = [
+  { index: true, element: <Navigate to="games" replace /> },
+  ...['games', 'news', 'careers', 'team', 'testimonials', 'partners'].map((type) => ({
+    path: type,
+    children: [
+      { index: true, element: page(<StudioRecordList key={type} type={type} />) },
+      { path: 'create', element: page(<StudioRecordForm key={type} type={type} />) },
+      { path: ':id/edit', element: page(<StudioRecordForm key={type} type={type} />) },
+    ],
+  })),
+  ...['home', 'about', 'contact'].map((type) => ({ path: type, element: page(<StudioPageContent key={type} page={type} />) })),
+  ...['inquiries', 'subscribers', 'applications'].map((type) => ({ path: type, element: page(<StudioInbox key={type} type={type} />) })),
+  { path: '*', element: page(<NotFound />) },
+]
+
 export const router = createBrowserRouter([
   {
     // Auth context sits inside the router so guards and pages can navigate.
@@ -141,6 +164,7 @@ export const router = createBrowserRouter([
         ),
         children: [
           { index: true, element: page(<Dashboard />) },
+          { path: 'studio', children: studioRoutes },
           ...moduleRoutes,
           { path: '*', element: page(<NotFound />) },
         ],

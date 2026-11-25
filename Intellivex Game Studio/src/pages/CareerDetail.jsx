@@ -1,9 +1,10 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Button from '../components/Button'
 import CtaBanner from '../components/CtaBanner'
 import PageBanner from '../components/PageBanner'
 import Partners from '../components/Partners'
-import { findJob } from '../data/careers'
+import { STUDIO_API, useStudioCareers } from '../hooks/useStudioCareers'
 import ComingSoon from './ComingSoon'
 import check from '../assets/games/check.png'
 
@@ -12,7 +13,9 @@ const BODY = 'font-lato text-[17px] leading-[1.18] sm:text-[19.5px]'
 
 export default function CareerDetail() {
   const { slug } = useParams()
-  const job = findJob(slug)
+  const { jobs, loading, fallback } = useStudioCareers()
+  const job = jobs.find((item) => item.slug === slug)
+  if (loading && !job) return <div className="container-studio py-24">Loading role…</div>
   if (!job) return <ComingSoon title="Role not found" />
 
   const [intro, ...sections] = job.sections
@@ -58,16 +61,49 @@ export default function CareerDetail() {
               </div>
             ))}
           </dl>
-          {job.applyUrl ? (
-            <Button href={job.applyUrl} target="_blank" rel="noopener noreferrer" icon={false} className="mt-[50px] w-fit">Apply now</Button>
-          ) : (
+          {fallback ? (
             <Button to="/contact" icon={false} className="mt-[50px] w-fit">Apply now</Button>
+          ) : (
+            <Button href="#apply" icon={false} className="mt-[50px] w-fit">Apply now</Button>
           )}
         </aside>
       </article>
+
+      {!fallback && <ApplicationForm slug={job.slug} />}
 
       <Partners />
       <CtaBanner />
     </>
   )
+}
+
+function ApplicationForm({ slug }) {
+  const [state, setState] = useState('idle')
+  const [message, setMessage] = useState('')
+  const submit = async (event) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    setState('sending'); setMessage('')
+    try {
+      const response = await fetch(`${STUDIO_API}/studio/jobs/${encodeURIComponent(slug)}/applications`, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
+      const data = await response.json().catch(() => ({}))
+      if (!response.ok) throw new Error(data.message || 'Unable to submit your application. Please try again.')
+      form.reset(); setState('success'); setMessage('Your application has been submitted successfully.')
+    } catch (error) { setState('error'); setMessage(error.message || 'Unable to submit your application. Please try again.') }
+  }
+  const input = 'w-full rounded-lg border border-cyan bg-ink px-4 py-3 font-lato text-base text-white'
+  return <section id="apply" className="container-studio scroll-mt-24 pb-24">
+    <form onSubmit={submit} className="glass-card glass-card-cyan mx-auto max-w-3xl space-y-5 p-6 sm:p-10">
+      <h2 className={H2}>Apply for this role</h2>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="block space-y-2"><span>Name</span><input className={input} name="name" required maxLength={150} autoComplete="name" /></label>
+        <label className="block space-y-2"><span>Email</span><input className={input} type="email" name="email" required maxLength={254} autoComplete="email" /></label>
+        <label className="block space-y-2"><span>Phone (optional)</span><input className={input} name="phone" type="tel" maxLength={30} autoComplete="tel" /></label>
+        <label className="block space-y-2"><span>CV (PDF, DOC or DOCX; max 5 MB)</span><input className={input} name="cv" type="file" accept=".pdf,.doc,.docx" required /></label>
+      </div>
+      <label className="block space-y-2"><span>Message (optional)</span><textarea className={input} name="message" rows={5} maxLength={5000} /></label>
+      <button type="submit" disabled={state === 'sending'} className="rounded-xl bg-blue px-6 py-3 font-display font-semibold disabled:opacity-50">{state === 'sending' ? 'Sending…' : 'Submit application'}</button>
+      {message && <p role={state === 'error' ? 'alert' : 'status'} className="font-lato text-base">{message}</p>}
+    </form>
+  </section>
 }

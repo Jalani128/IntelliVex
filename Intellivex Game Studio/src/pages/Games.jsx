@@ -1,9 +1,11 @@
+import RevealItem from '../components/RevealItem'
 import { useSearchParams } from 'react-router-dom'
 import CtaBanner from '../components/CtaBanner'
 import GameCard from '../components/GameCard'
 import PageBanner from '../components/PageBanner'
 import Partners from '../components/Partners'
-import { GAME_CATEGORIES, GAMES } from '../data/games'
+import { GAME_CATEGORIES } from '../data/games'
+import { useStudioGames } from '../hooks/useStudioGames'
 
 const DEFAULT_CATEGORY = 'mobile'
 
@@ -16,7 +18,8 @@ export default function Games() {
   const [params, setParams] = useSearchParams()
   const active = GAME_CATEGORIES.some((c) => c.key === params.get('category')) ? params.get('category') : DEFAULT_CATEGORY
   const activeLabel = GAME_CATEGORIES.find((c) => c.key === active).label
-  const games = GAMES.filter((g) => g.categories.includes(active))
+  const { games: allGames } = useStudioGames()
+  const games = allGames.filter((g) => g.categories.includes(active))
 
   const choose = (key) => setParams(key === DEFAULT_CATEGORY ? {} : { category: key }, { replace: true, preventScrollReset: true })
 
@@ -48,8 +51,8 @@ export default function Games() {
           <h2 className="sr-only">{activeLabel}</h2>
           {games.length ? (
             <ul className="grid gap-x-[31px] gap-y-12 pb-10 sm:grid-cols-2 sm:gap-y-[74px] xl:grid-cols-3">
-              {games.map((game) => (
-                <li key={game.slug}><GameCard game={game} /></li>
+              {games.map((game, i) => (
+                <RevealItem key={game.slug} index={i}><GameCard game={game} /></RevealItem>
               ))}
             </ul>
           ) : (

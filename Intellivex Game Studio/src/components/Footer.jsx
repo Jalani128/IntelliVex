@@ -6,7 +6,7 @@ import dribbble from '../assets/home/social-dribbble.svg'
 import iconCall from '../assets/home/icon-call.svg'
 import iconEmail from '../assets/home/icon-email.svg'
 import iconLocation from '../assets/home/icon-location.svg'
-import { FEATURED_GAMES } from '../data/home'
+import { useStudioGames } from '../hooks/useStudioGames'
 
 // Contact details and social links are the design's placeholders until the studio's real ones arrive.
 const CONTACT = [
@@ -33,6 +33,7 @@ const heading = 'font-display text-[16px] leading-[22px] font-bold text-blue-sof
 const link = 'text-mute transition-colors duration-300 hover:text-cyan'
 
 export default function Footer() {
+  const { games } = useStudioGames()
   return (
     <footer className="bg-ink pt-16 pb-8 lg:pt-[78px]">
       <div className="container-studio grid gap-10 sm:grid-cols-2 lg:grid-cols-[252px_1fr_auto_auto_auto] lg:gap-x-[clamp(32px,5vw,78px)]">
@@ -59,7 +60,7 @@ export default function Footer() {
         <div>
           <h2 className={heading}>Our Games</h2>
           <ul className="mt-6 space-y-4 font-display text-[16px] leading-[1.5] font-medium">
-            {FEATURED_GAMES.map((game) => (
+            {games.map((game) => (
               <li key={game.slug}><Link to={`/games/${game.slug}`} className={link}>{game.title}</Link></li>
             ))}
           </ul>

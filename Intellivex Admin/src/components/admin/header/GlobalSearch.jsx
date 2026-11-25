@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { CornerDownLeft, Plus, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
-import { NAV_ITEMS, RESOURCE_MODULES } from '../sidebar/nav-config'
+import { NAV_ITEMS, RESOURCE_MODULES, STUDIO_NAV_ITEMS } from '../sidebar/nav-config'
 
 const COMMANDS = [
   ...NAV_ITEMS.map((item) => ({ id: item.key, group: 'Pages', label: item.label, path: item.path, icon: item.icon })),
+  ...STUDIO_NAV_ITEMS.filter((item) => item.key !== 'main-dashboard').map((item) => ({ id: item.key, group: 'Game Studio', label: `Studio: ${item.label}`, path: item.path, icon: item.icon })),
   ...RESOURCE_MODULES.filter((m) => m.crud !== false).map((m) => ({
     id: `${m.key}-create`,
     group: 'Quick actions',

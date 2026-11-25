@@ -1,10 +1,11 @@
+import RevealItem from '../components/RevealItem'
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import CtaBanner from '../components/CtaBanner'
 import PageBanner from '../components/PageBanner'
 import Pagination from '../components/Pagination'
 import Partners from '../components/Partners'
-import { JOB_CATEGORIES, JOBS } from '../data/careers'
+import { useStudioCareers } from '../hooks/useStudioCareers'
 import searchIcon from '../assets/careers/search.svg'
 import chevron from '../assets/careers/chevron-down.svg'
 import readMoreArrow from '../assets/home/read-more-arrow.png'
@@ -14,7 +15,7 @@ const FIELD = 'h-14 rounded-[8px] border border-[#096363] bg-[#0d233a] font-lato
 
 export function JobCard({ job }) {
   return (
-    <article className="glass-card glass-card-cyan group relative flex h-full flex-col px-[30px] pt-[43px] pb-[42px] transition-transform duration-500 ease-[var(--ease-out-soft)] hover:-translate-y-1.5">
+    <article className="glass-card glass-card-cyan animated-editorial-card group relative flex h-full flex-col px-[30px] pt-[43px] pb-[42px]">
       <p className="font-display text-[20px] leading-[1.02] tracking-[0.06em] text-cyan sm:text-[23.5px]">{job.category}</p>
       <h3 className="mt-4 font-display text-[26px] leading-[1.02] font-semibold tracking-[0.06em] sm:text-[31px]">{job.title}</h3>
       <p className="mt-4 font-lato text-[17px] leading-[1.18] sm:text-[19.5px]">{job.summary}</p>
@@ -30,6 +31,8 @@ export function JobCard({ job }) {
 }
 
 export default function Careers() {
+  const { jobs: allJobs } = useStudioCareers()
+  const categories = [...new Set(allJobs.map((job) => job.category))]
   const [params, setParams] = useSearchParams()
   const q = params.get('q') ?? ''
   const category = params.get('category') ?? ''
@@ -38,7 +41,7 @@ export default function Careers() {
   const [draft, setDraft] = useState({ q, category })
 
   const term = q.trim().toLowerCase()
-  const jobs = JOBS.filter(
+  const jobs = allJobs.filter(
     (j) => (!category || j.category === category) && (!term || `${j.title} ${j.summary} ${j.category}`.toLowerCase().includes(term)),
   )
   const pages = Math.max(1, Math.ceil(jobs.length / PER_PAGE))
@@ -84,7 +87,7 @@ export default function Careers() {
               className={`${FIELD} w-full appearance-none pr-12 pl-[22px] [&>option]:bg-ink`}
             >
               <option value="">Category</option>
-              {JOB_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
             <img src={chevron} alt="" aria-hidden className="pointer-events-none absolute top-1/2 right-[22px] h-2 w-4 -translate-y-1/2 rotate-180" />
           </label>
@@ -99,7 +102,7 @@ export default function Careers() {
         <div aria-live="polite">
           {shown.length ? (
             <ul className="mt-[49px] grid gap-x-[25px] gap-y-[30px] md:grid-cols-2 lg:grid-cols-3">
-              {shown.map((job) => <li key={job.slug}><JobCard job={job} /></li>)}
+              {shown.map((job, i) => <RevealItem key={job.slug} index={i}><JobCard job={job} /></RevealItem>)}
             </ul>
           ) : (
             <div className="glass-card mt-[49px] grid min-h-[260px] place-content-center px-6 text-center">

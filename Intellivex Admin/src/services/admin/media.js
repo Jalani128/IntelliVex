@@ -18,6 +18,7 @@ export function mediaUrl(url) {
 
 /** Rewrites every image URL in an API response (nested objects and lists included). */
 export function rewriteMedia(value) {
+  if (typeof Blob !== 'undefined' && value instanceof Blob) return value
   if (!MEDIA_URL || value === null || typeof value !== 'object') return value
   if (Array.isArray(value)) return value.map(rewriteMedia)
   return Object.fromEntries(Object.entries(value).map(([key, v]) => [key, IMAGE_KEY.test(key) ? mediaUrl(v) : rewriteMedia(v)]))
