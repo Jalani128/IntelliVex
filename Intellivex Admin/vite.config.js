@@ -23,7 +23,8 @@ export default defineConfig(({ mode }) => {
       proxy: env.VITE_API_PROXY_TARGET
         ? {
             '/api': { target: env.VITE_API_PROXY_TARGET, changeOrigin: true, secure: false },
-            '/storage': { target: env.VITE_API_PROXY_TARGET, changeOrigin: true, secure: false },
+            // Cloudflare hotlink protection rejects a localhost Referer with 403.
+            '/storage': { target: env.VITE_API_PROXY_TARGET, changeOrigin: true, secure: false, headers: { referer: env.VITE_API_PROXY_TARGET } },
           }
         : undefined,
     },
