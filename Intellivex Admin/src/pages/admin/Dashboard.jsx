@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
 import { CalendarDays } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import PageHeader from '@/components/admin/layout/PageHeader'
@@ -38,7 +36,6 @@ export default function Dashboard() {
         description="Overview of the IntelliVex website — content, leads and team activity."
         actions={
           <>
-            <Button asChild variant="outline"><Link to="/admin/studio">Game Studio</Link></Button>
             <Select value={range} onValueChange={setRange}>
               <SelectTrigger className="w-[170px] bg-card" aria-label="Date range">
                 <CalendarDays className="text-muted-foreground" />

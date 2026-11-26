@@ -5,7 +5,9 @@ import {
   Contact,
   FileText,
   Gamepad2,
+  Globe,
   Handshake,
+  House,
   Inbox,
   Layers,
   LayoutDashboard,
@@ -60,13 +62,23 @@ export const NAV_ITEMS = NAV_GROUPS.flatMap((g) => g.items)
 /** Content modules that get list / detail / create / edit routes. */
 export const RESOURCE_MODULES = NAV_ITEMS.filter((item) => item.key !== 'dashboard')
 
+/** The two websites this admin edits; the sidebar switch at the top moves between them. */
+export const SITES = [
+  { key: 'main', label: 'Main website', path: '/admin', icon: Globe },
+  { key: 'studio', label: 'Game Studio', path: '/admin/studio', icon: Gamepad2 },
+]
+
 /**
  * Game Studio website. Shown as the whole sidebar while under /admin/studio.
  * Kept out of NAV_ITEMS: these pages are registered by hand in routes/index.jsx.
  */
 export const STUDIO_NAV_GROUPS = [
   {
-    label: 'Game Studio',
+    label: 'Overview',
+    items: [{ key: 'studio-dashboard', label: 'Dashboard', path: '/admin/studio', icon: LayoutDashboard, end: true }],
+  },
+  {
+    label: 'Studio Content',
     items: [
       { key: 'studio-games', label: 'Games', singular: 'Game', path: '/admin/studio/games', icon: Gamepad2 },
       { key: 'studio-news', label: 'News', singular: 'Article', path: '/admin/studio/news', icon: Newspaper },
@@ -79,7 +91,7 @@ export const STUDIO_NAV_GROUPS = [
   {
     label: 'Studio Pages',
     items: [
-      { key: 'studio-home', label: 'Home Page', path: '/admin/studio/home', icon: LayoutDashboard },
+      { key: 'studio-home', label: 'Home Page', path: '/admin/studio/home', icon: House },
       { key: 'studio-about', label: 'Our Studio', path: '/admin/studio/about', icon: PanelsTopLeft },
       { key: 'studio-contact', label: 'Contact Page', path: '/admin/studio/contact', icon: Contact },
     ],
@@ -91,10 +103,6 @@ export const STUDIO_NAV_GROUPS = [
       { key: 'studio-subscribers', label: 'Subscribers', path: '/admin/studio/subscribers', icon: Mail },
       { key: 'studio-applications', label: 'Applications', path: '/admin/studio/applications', icon: FileText },
     ],
-  },
-  {
-    label: 'Switch',
-    items: [{ key: 'main-dashboard', label: 'Main website', path: '/admin', icon: LayoutDashboard, end: true }],
   },
 ]
 

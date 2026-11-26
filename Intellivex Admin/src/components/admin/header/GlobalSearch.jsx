@@ -7,7 +7,7 @@ import { NAV_ITEMS, RESOURCE_MODULES, STUDIO_NAV_ITEMS } from '../sidebar/nav-co
 
 const COMMANDS = [
   ...NAV_ITEMS.map((item) => ({ id: item.key, group: 'Pages', label: item.label, path: item.path, icon: item.icon })),
-  ...STUDIO_NAV_ITEMS.filter((item) => item.key !== 'main-dashboard').map((item) => ({ id: item.key, group: 'Game Studio', label: `Studio: ${item.label}`, path: item.path, icon: item.icon })),
+  ...STUDIO_NAV_ITEMS.map((item) => ({ id: item.key, group: 'Game Studio', label: `Studio: ${item.label}`, path: item.path, icon: item.icon })),
   ...RESOURCE_MODULES.filter((m) => m.crud !== false).map((m) => ({
     id: `${m.key}-create`,
     group: 'Quick actions',

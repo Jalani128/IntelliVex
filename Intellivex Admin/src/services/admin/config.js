@@ -14,3 +14,6 @@ export const DEFAULT_PER_PAGE = 10
 
 /** Public website origin, for "View on website" links (no trailing slash). */
 export const SITE_URL = (import.meta.env.VITE_SITE_URL || '').replace(/\/+$/, '')
+
+/** Game Studio website origin, for its dashboard's "View website" link. */
+export const STUDIO_SITE_URL = (import.meta.env.VITE_STUDIO_SITE_URL || 'https://gamestudio.theintellivex.com').replace(/\/+$/, '')
