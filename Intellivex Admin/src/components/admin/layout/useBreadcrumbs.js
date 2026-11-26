@@ -13,15 +13,19 @@ export function useBreadcrumbs() {
   const crumbs = [{ label: 'Dashboard', to: '/admin' }]
   const [, , moduleSegment, id, action] = pathname.replace(/\/+$/, '').split('/')
 
-  // Game Studio: /admin/studio/{section}[/create | /{id}/edit]
+  // Game Studio has its own dashboard: Game Studio / {section}[ / New … | Edit …]
   if (moduleSegment === 'studio') {
     const [, , , section, recordId, recordAction] = pathname.replace(/\/+$/, '').split('/')
     const studio = STUDIO_NAV_ITEMS.find((n) => n.path === `/admin/studio/${section}`)
-    crumbs.push({ label: 'Game Studio', to: '/admin/studio' })
-    if (!studio) return [...crumbs, { label: 'Not found' }]
-    if (!recordId) return [...crumbs, { label: studio.label }]
-    crumbs.push({ label: studio.label, to: studio.path })
-    return [...crumbs, { label: recordId === 'create' ? `New ${studio.singular}` : recordAction === 'edit' ? `Edit ${studio.singular}` : 'Not found' }]
+    const home = { label: 'Game Studio', to: '/admin/studio' }
+    if (!section) return [home, { label: 'Dashboard' }]
+    if (!studio) return [home, { label: 'Not found' }]
+    if (!recordId) return [home, { label: studio.label }]
+    return [
+      home,
+      { label: studio.label, to: studio.path },
+      { label: recordId === 'create' ? `New ${studio.singular}` : recordAction === 'edit' ? `Edit ${studio.singular}` : 'Not found' },
+    ]
   }
 
   const item = NAV_ITEMS.find((n) => n.path === `/admin/${moduleSegment}`)

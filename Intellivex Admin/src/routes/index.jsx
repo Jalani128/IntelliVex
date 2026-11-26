@@ -7,6 +7,7 @@ import ModulePlaceholder from '@/components/admin/common/ModulePlaceholder'
 import PageLoader from '@/components/admin/common/PageLoader'
 import { RESOURCE_MODULES } from '@/components/admin/sidebar/nav-config'
 
+const StudioDashboard = lazy(() => import('@/pages/admin/studio/StudioDashboard'))
 const StudioRecordList = lazy(() => import('@/pages/admin/studio/StudioRecordList'))
 const StudioRecordForm = lazy(() => import('@/pages/admin/studio/StudioRecordForm'))
 const StudioPageContent = lazy(() => import('@/pages/admin/studio/StudioPageContent'))
@@ -126,11 +127,11 @@ const moduleRoutes = RESOURCE_MODULES.map((item) => {
 })
 
 /**
- * Game Studio website (/admin/studio/…). Record types (keys of STUDIO_RECORDS in
+ * Game Studio website (/admin/studio/…): its own dashboard at the index. Record types (keys of STUDIO_RECORDS in
  * pages/admin/studio/records.jsx) get list / create / edit; `key` remounts pages that switch type.
  */
 const studioRoutes = [
-  { index: true, element: <Navigate to="games" replace /> },
+  { index: true, element: page(<StudioDashboard />) },
   ...['games', 'news', 'careers', 'team', 'testimonials', 'partners'].map((type) => ({
     path: type,
     children: [

@@ -58,6 +58,37 @@ export const studioApplicationsApi = {
   },
 }
 
+const countStatuses = (rows) => {
+  const published = rows.filter((row) => row.status === 'published').length
+  return { total: rows.length, published, draft: rows.length - published }
+}
+const newestFirst = (rows) => [...rows].sort((a, b) => String(b.created_at).localeCompare(String(a.created_at))).slice(0, 5)
+
+/**
+ * Game Studio dashboard (GET /studio/dashboard): `{ sections: { games: { total, published, draft }, … },
+ * leads: { inquiries, subscribers, applications }, recent_inquiries, recent_applications }`.
+ */
+export const studioDashboardApi = {
+  get: () =>
+    USE_MOCK
+      ? delay({
+          sections: Object.fromEntries(
+            [
+              ['games', studioGamesMock],
+              ['news', studioNewsMock],
+              ['jobs', studioJobsMock],
+              ['members', studioMembersMock],
+              ['reviews', studioReviewsMock],
+              ['partners', studioPartnersMock],
+            ].map(([key, rows]) => [key, countStatuses(rows)]),
+          ),
+          leads: { inquiries: studioInquiriesMock.length, subscribers: studioSubscribersMock.length, applications: studioApplicationsMock.length },
+          recent_inquiries: newestFirst(studioInquiriesMock),
+          recent_applications: newestFirst(studioApplicationsMock),
+        })
+      : http.get('/studio/dashboard').then((r) => r.data.data),
+}
+
 /**
  * Single-row page content: `{ content: { key: text }, images: { slot: url } }`.
  * Text saves with PUT; each image uploads on its own as soon as it's picked.
