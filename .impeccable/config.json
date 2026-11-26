@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "Intellivex Admin/src/styles/index.css"
+        ],
+        "createdAt": "2026-11-25T07:58:07.970Z",
+        "reason": "Claude triage: L204 is the .rich-text blockquote rule (standard quote border in editor content), not a card side-tab; predates this session"
+      }
+    ]
+  }
+}

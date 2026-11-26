@@ -70,20 +70,21 @@
   --sidebar-ring: #3076ff;
 }
 
+/* Dark surfaces are near-neutral (only a faint cool tint) so the blue brand accents stand out instead of everything reading navy. */
 .dark {
-  --background: #0e1740;
-  --foreground: #eef2ff;
-  --card: #152159;
-  --card-foreground: #eef2ff;
-  --popover: #152159;
-  --popover-foreground: #eef2ff;
+  --background: #0d1017;
+  --foreground: #edf0f5;
+  --card: #151922;
+  --card-foreground: #edf0f5;
+  --popover: #1a1f2a;
+  --popover-foreground: #edf0f5;
   --primary: #3076ff;
   --primary-foreground: #ffffff;
-  --secondary: #22336f;
-  --secondary-foreground: #eef2ff;
-  --muted: #1c2a66;
-  --muted-foreground: #9fabd0;
-  --accent: #22336f;
+  --secondary: #1f2531;
+  --secondary-foreground: #edf0f5;
+  --muted: #1b2029;
+  --muted-foreground: #9aa3b2;
+  --accent: #1f2737;
   --accent-foreground: #ffffff;
   --destructive: #f2555a;
   --border: rgba(255, 255, 255, 0.09);
@@ -100,7 +101,7 @@
   --chart-4: #f5b740;
   --chart-5: #2dd4bf;
 
-  --sidebar: #0b1336;
+  --sidebar: #10141d;
 }
 
 @theme inline {
